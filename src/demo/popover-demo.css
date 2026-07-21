@@ -1,0 +1,101 @@
+.popover-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.popover-example {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 9%);
+  border-radius: 10px;
+  background: #111114;
+}
+
+.popover-example--light {
+  border-color: rgb(15 23 42 / 9%);
+  background: #f8fafc;
+  color: #1e293b;
+}
+
+.popover-example__header {
+  display: flex;
+  min-height: 72px;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px;
+  border-bottom: 1px solid rgb(255 255 255 / 8%);
+}
+
+.popover-example--light .popover-example__header {
+  border-bottom-color: rgb(15 23 42 / 8%);
+}
+
+.popover-example__header p {
+  margin: 6px 0 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #858590;
+}
+
+.popover-example__surface {
+  display: grid;
+  min-height: 104px;
+  place-items: center;
+  padding: 18px 14px;
+}
+
+.popover-example__empty {
+  font: 400 11px/1.4 var(--hn-font-mono);
+  color: #70707b;
+}
+
+/* 边缘防遮挡演示：高 260 的相对定位容器，四角各放触发按钮，
+   overflow: hidden 用于证明浮层被 JS clamp 后仍能完整显示 */
+.popover-edge-safe {
+  position: relative;
+  min-height: 260px;
+  overflow: hidden;
+  padding: 12px;
+}
+
+.popover-edge-safe__btn {
+  position: absolute;
+}
+
+.popover-edge-safe__btn--tl {
+  top: 12px;
+  left: 12px;
+}
+
+.popover-edge-safe__btn--tr {
+  top: 12px;
+  right: 12px;
+}
+
+.popover-edge-safe__btn--bl {
+  bottom: 12px;
+  left: 12px;
+}
+
+.popover-edge-safe__btn--br {
+  right: 12px;
+  bottom: 12px;
+}
+
+/* 贴边演示：按钮水平排列即可，浮层本身用 position: fixed 脱离容器 */
+.popover-screen-edge {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 24px 14px;
+}
+
+@media (max-width: 640px) {
+  .popover-grid {
+    grid-template-columns: 1fr;
+  }
+}

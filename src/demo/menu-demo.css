@@ -1,0 +1,27 @@
+/* Menu Demo 特有样式
+ * 卡片容器、表面定位与禁用项提示颜色，与 popover-demo.css 中的全局类配合使用。
+ */
+
+/* 独立菜单的卡片容器：给纯 Menu 一个明确的边框背景，避免在浅色 surface 上消失 */
+.menu-demo-card {
+  width: 220px;
+  padding: 6px;
+  border: 1px solid rgb(255 255 255 / 9%);
+  border-radius: 10px;
+  background: #111114;
+}
+
+/* 下拉菜单示例的表面：相对定位容器，Popover 在表面内居中展示（演示聚焦主题继承，
+   真实场景的定位锚定由使用方按 Popover 文档自行控制） */
+.menu-demo-popover-surface {
+  position: relative;
+  /* 子菜单 panel 会向右展开并溢出表面容器，需要放开 overflow 以免被裁剪 */
+  overflow: visible;
+}
+
+/* 在窄屏下与 popover-demo 一致，统一堆叠成单列 */
+@media (max-width: 640px) {
+  .menu-demo-card {
+    width: 100%;
+  }
+}

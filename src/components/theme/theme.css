@@ -1,0 +1,74 @@
+@layer hamster-note.components {
+  /*
+   * .hn-theme 只提供主题变量的作用域，不参与布局。
+   *
+   * 用 display: contents 让包裹 div 在盒模型上「消失」：子元素直接参与
+   * 外层布局，ThemeProvider 不会额外产生一层盒子、不会打断 flex/grid
+   * 的对齐与间距。因此：
+   *  - 不要在 .hn-theme 上设置 background / border-radius / padding 等
+   *    视觉样式（它们不会生效，因为 contents 没有盒）；
+   *  - 主题变量的覆盖完全通过 CSS 自定义属性继承实现，子树所有组件经
+   *    var(--hn-color-accent) 等拿到 ThemeProvider 内联下发的新值。
+   */
+  .hn-theme {
+    display: contents;
+  }
+
+  /*
+   * 自定义颜色的派生值。
+   *
+   * 预设色（violet/blue/teal/orange/pink）的 hover 与 focusRing 由
+   * ThemeProvider 从 THEME_ACCENTS 读取后内联下发，保证与 TS 配置精确一致；
+   * 自定义色（任意 CSS 颜色字符串）无法预先算出派生值，这里用 color-mix
+   * 在 sRGB 空间内实时混合：
+   *  - accent-hover：主色混入 16% 白，模拟预设色 hover 提亮的规律；
+   *  - focus-ring：主色 42% 不透明度叠在 transparent 上，与预设色焦点环
+   *    的 rgb(... / 42%) 视觉规律一致。
+   *
+   * color-mix 在 Chrome 111+ / Safari 16.2+ / Firefox 113+ 已可用，
+   * 覆盖组件库的目标浏览器（React 19 生态）。
+   */
+  .hn-theme[data-accent='custom'] {
+    --hn-color-accent-hover: color-mix(in srgb, var(--hn-color-accent), #ffffff 16%);
+    --hn-focus-ring: 0 0 0 3px color-mix(in srgb, var(--hn-color-accent) 42%, transparent);
+  }
+}
+
+/*
+ * 明暗模式 token 覆盖。
+ *
+ * 明暗（mode）与 accent 主色是两个正交轴：accent 只重定义 --hn-color-accent
+ * 三件套，mode 重定义 --hn-color-surface / --hn-color-text / --hn-color-border
+ * 等全套表面与文字 token，两者在同一包裹层上共存（data-mode + data-accent +
+ * 内联 accent style 互不冲突）。
+ *
+ * 这两组规则刻意放在 @layer 之外（unlayered）：tokens.css 的 :root 默认值位于
+ * @layer hamster-note.tokens 内，而 unlayered 规则在级联中优先于所有 layered
+ * 规则，因此 .hn-theme[data-mode] 能可靠覆盖 :root 的同名 token。
+ */
+
+/* 浅色模式：重定义全套颜色 token（dark 值即 :root 默认值，无需对齐 accent） */
+.hn-theme[data-mode='light'] {
+  --hn-color-surface: #ffffff;
+  --hn-color-surface-hover: #f4f4f6;
+  --hn-color-text: #18181b;
+  --hn-color-text-muted: #63636d;
+  --hn-color-border: rgb(0 0 0 / 10%);
+  --hn-color-border-strong: rgb(0 0 0 / 18%);
+  --hn-color-danger: #e11d48;
+  --hn-color-success: #16a34a;
+  --hn-color-warning: #d97706;
+}
+
+/* 深色模式：与 :root 默认值一致；显式声明使 light 内可嵌套强制回深色 */
+.hn-theme[data-mode='dark'] {
+  --hn-color-surface: #111114;
+  --hn-color-surface-hover: #17171b;
+  --hn-color-text: #f4f4f5;
+  --hn-color-text-muted: #92929d;
+  --hn-color-border: rgb(255 255 255 / 10%);
+  --hn-color-border-strong: rgb(255 255 255 / 17%);
+  --hn-color-danger: #fb7185;
+  --hn-color-success: #4ade80;
+  --hn-color-warning: #fbbf24;
+}

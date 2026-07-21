@@ -1,0 +1,152 @@
+/*
+ * Loading 设计说明
+ * ───────────────────────────────────────────────────────────────────────────
+ * 加载指示器组件，支持三种使用形态共用同一套 spinner 视觉：
+ *   1. 内联 spinner（.hn-loading）：display:inline-flex，可带 text；
+ *   2. 局部覆盖 spinner（.hn-loading--cover）：绝对定位铺满最近 positioned 祖先，
+ *      需要父级 position: relative；带半透明遮罩 + 居中 spinner + text；
+ *   3. 全屏单例 spinner（.hn-loading-overlay）：position:fixed 铺满视口，高 z-index，
+ *      由 loading.ts 的 showLoading / hideLoading 命令式 API 驱动。
+ *
+ * spinner 是内联 SVG，颜色完全跟随 currentColor（stroke=currentColor），因此使用方
+ * 通过外层 color 或覆盖 --hn-color-accent 即可控制 spinner 颜色，与 Icon / Kbd 同样
+ * 复用全局 token 的哲学。旋转动画用 CSS keyframe（transform: rotate），仅在 svg 上
+ * 运行，不会触发父级 layout / paint。
+ *
+ * 尺寸：small 16px / medium 20px / large 28px，与 Button 的三档尺寸语义保持一致。
+ *
+ * 动画：900ms 线性无限旋转。尊重 prefers-reduced-motion：把动画时长拉长到 2.4s 并
+ * 改用 steps 让旋转明显放缓，避免对前庭敏感用户造成不适（与 dialog / drawer 的
+ * 「直接到终态」策略不同 —— 这里 spinner 的语义就是「持续转动」，完全停止会让用户
+ * 误以为卡死，所以选择「放慢」而非「关闭」）。
+ *
+ * 层叠：全屏 .hn-loading-overlay 用 z-index 1200，与 Drawer 同档，高于 Dialog 的 1100，
+ * 让全屏 loading 能盖住同时打开的 Dialog / Drawer。
+ */
+
+@layer hamster-note.components {
+  /* —— 基础：内联 spinner —— */
+  .hn-loading {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    /* 颜色默认跟随 accent 主色；使用方可通过外层 color 或覆盖 --hn-color-accent 改色 */
+    color: var(--hn-color-accent);
+    font-family: var(--hn-font-sans);
+    /* 让 spinner 与文字基线对齐更稳 */
+    line-height: 0;
+  }
+
+  /* spinner svg：旋转动画落在 svg 上，transform 不影响 layout */
+  .hn-loading__spinner {
+    display: block;
+    flex-shrink: 0;
+    /* 旋转一圈 900ms，线性无限循环；动画时长可通过 --hn-loading-duration 覆盖 */
+    animation: hn-loading-spin var(--hn-loading-duration, 900ms) linear infinite;
+    /* transform-origin 居中，保证旋转视觉稳定 */
+    transform-origin: 50% 50%;
+  }
+
+  /* 提示文案：使用 muted 文本色 + body 字号，与 dialog 描述同档。
+     line-height 单独设置以抵消父级 line-height:0，保证多行文案行高正常。 */
+  .hn-loading__text {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--hn-color-text-muted);
+    white-space: nowrap;
+  }
+
+  /* —— 尺寸修饰：通过 --hn-loading-duration 不区分尺寸，尺寸只影响 svg 画布（在 TSX 里写死）
+        这里只做 text 字号的微调 —— */
+  .hn-loading--small .hn-loading__text {
+    font-size: 12px;
+  }
+
+  .hn-loading--large .hn-loading__text {
+    font-size: 14px;
+  }
+
+  /* —— 局部覆盖形态：绝对定位铺满最近 positioned 祖先 ——
+     契约：父级必须是 position: relative（或 absolute / fixed / sticky），否则
+     .hn-loading--cover 会锚到更上层 positioned 祖先甚至初始包含块。 */
+  .hn-loading--cover {
+    position: absolute;
+    inset: 0;
+    /* 居中 spinner + text，纵向堆叠（cover 形态下 text 放 spinner 下方更自然） */
+    flex-direction: column;
+    gap: 12px;
+    /* 半透明遮罩：用 surface 色低 alpha，让背后的内容隐约可辨但明确被「遮挡」 */
+    background: color-mix(in srgb, var(--hn-color-surface) 72%, transparent);
+    /* 轻度模糊强化「正在处理」的视觉聚焦，与 dialog backdrop 同款手法但更克制 */
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    /* cover 形态下圆角跟随父级（border-radius 不设置，继承父级裁切） */
+    border-radius: inherit;
+    /* cover 形态下 text 颜色提亮到主文本色，确保在遮罩上可读 */
+    color: var(--hn-color-accent);
+  }
+
+  .hn-loading--cover .hn-loading__text {
+    color: var(--hn-color-text);
+  }
+
+  /* —— 全屏单例形态：position:fixed 铺满视口，由 loading.ts 驱动 ——
+     不由 <Loading cover> 直接渲染，而是作为 .hn-loading-overlay 的子节点存在；
+     这里定义 overlay 容器本身的样式。 */
+  .hn-loading-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 14px;
+    /* 与 dialog backdrop 同款暗色遮罩 + 模糊，但稍深一点强调「全局阻塞」 */
+    background: rgb(0 0 0 / 45%);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    /* 全屏形态下 spinner + text 颜色提亮，确保在暗色遮罩上可读 */
+    color: var(--hn-color-accent);
+    font-family: var(--hn-font-sans);
+    /* 入场过渡：opacity 淡入，与 dialog backdrop 手法一致 */
+    animation: hn-loading-overlay-fade 140ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .hn-loading-overlay .hn-loading__text {
+    color: var(--hn-color-text);
+    font-size: 14px;
+  }
+
+  /* —— keyframes —— */
+  @keyframes hn-loading-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes hn-loading-overlay-fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* 尊重 prefers-reduced-motion：
+     - spinner：把旋转时长拉长到 2.4s 并改用 steps(12) 让旋转明显放缓，
+       而非完全停止（停止会让用户误以为卡死）；
+     - overlay 入场：直接到终态，与 dialog / drawer 一致。 */
+  @media (prefers-reduced-motion: reduce) {
+    .hn-loading__spinner {
+      animation-duration: 2400ms;
+      animation-timing-function: steps(12);
+    }
+
+    .hn-loading-overlay {
+      animation-duration: 0.01ms;
+    }
+  }
+}

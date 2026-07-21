@@ -1,0 +1,67 @@
+/*
+ * Kbd 设计说明
+ * ───────────────────────────────────────────────────────────────────────────
+ * 键帽组件刻意不定义自己的「键帽专用色」，与 Menu 同样复用全局 token：
+ *   - 文本颜色使用 --hn-color-text（默认）与 --hn-color-text-muted（连接符）
+ *   - 键帽背景使用 --hn-color-surface-hover 级别
+ *   - 边框使用 color-mix 基于 --hn-color-text 派生（约 22% 透明度），避免新增 token
+ *
+ * 这样做的收益：Popover 在 .hn-popover 内覆盖了 --hn-color-text /
+ * --hn-color-text-muted / --hn-color-surface-hover，Kbd 嵌入 Popover（或 Menu 嵌入
+ * Popover 并使用 Kbd 渲染 shortcut）时会自动继承这些被覆盖后的局部变量，从而无需任何
+ * 主题 prop 就能在 dark/light Popover 中正确呈现。独立使用 Kbd 时，这些变量回退到
+ * tokens.css 中的全局值（深色主题）。
+ *
+ * 立体感处理：底部使用极淡的 inset 阴影模拟按键凹陷的边界过渡，克制而不浮夸；
+ * 字体使用 --hn-font-mono，与 Badge / Menu shortcut 保持一致的代码气质。
+ */
+
+@layer hamster-note.components {
+  /* 外层 <kbd class="hn-kbd">：作为语义容器与 inline-flex 布局壳，
+     不带键帽样式（键帽视觉只落在 .hn-kbd__key 上），便于组合键排列 */
+  .hn-kbd {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--hn-font-mono);
+    font-size: 11px;
+    line-height: 1;
+    color: var(--hn-color-text);
+    /* 防止外层 kbd 被某些 reset 样式加上奇怪的字距或间距 */
+    white-space: nowrap;
+    vertical-align: baseline;
+  }
+
+  /* 内层键帽：真正承载键帽视觉的嵌套 <kbd> */
+  .hn-kbd__key {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    padding: 2px 6px;
+    border: 1px solid color-mix(in srgb, var(--hn-color-text) 22%, transparent);
+    border-radius: var(--hn-radius-sm);
+    background: var(--hn-color-surface-hover);
+    /* 极淡的 inset 阴影模拟按键立体感：底部内陷，克制不浮夸 */
+    box-shadow: inset 0 -1px 0 0 rgb(0 0 0 / 12%);
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1;
+    color: var(--hn-color-text);
+    /* 让键帽内的字符垂直微调，视觉上更居中（处理某些字体的基线偏差） */
+    vertical-align: baseline;
+    white-space: nowrap;
+    user-select: none;
+  }
+
+  /* 组合键之间的 + 连接符：不带键帽样式，使用 muted 文本色与小一号字重 */
+  .hn-kbd__plus {
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 1;
+    color: var(--hn-color-text-muted);
+    user-select: none;
+  }
+}

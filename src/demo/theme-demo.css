@@ -1,0 +1,195 @@
+/* 主题 Demo 网格：自适应列，窄屏退化为单列 */
+.theme-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+/* 单个主题展示卡：深色表面，与 popover-example 风格一致 */
+.theme-card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 9%);
+  border-radius: 10px;
+  background: #111114;
+}
+
+.theme-card__header {
+  display: flex;
+  min-height: 60px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px;
+  border-bottom: 1px solid rgb(255 255 255 / 8%);
+}
+
+.theme-card__name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #e4e4ea;
+}
+
+.theme-card__value {
+  font: 400 11px/1.4 var(--hn-font-mono);
+  color: #858590;
+}
+
+/* 自定义颜色的颜色选择器 */
+.theme-card__picker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.theme-card__picker input[type='color'] {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.theme-card__header p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #858590;
+}
+
+/* 卡片正文：组件横向排列 */
+.theme-card__body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 14px;
+}
+
+/* 焦点环演示：输入框纵向排列，便于逐个聚焦观察 */
+.theme-card__body--fields {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* 嵌套演示：按钮横向排列，展示外层与内层并存 */
+.theme-card__body--nested {
+  gap: 16px;
+}
+
+/* 焦点环 / 嵌套两个卡片横跨两列，作为总结性示例 */
+.theme-card--focus,
+.theme-card--nested {
+  grid-column: 1 / -1;
+}
+
+/* 自定义颜色卡也横跨两列，给颜色选择器更多空间 */
+.theme-card--custom {
+  grid-column: 1 / -1;
+}
+
+/* 明暗模式卡横跨两列，给 toggle 与预览区足够空间 */
+.theme-card--mode {
+  grid-column: 1 / -1;
+}
+
+/*
+ * 明暗模式分段切换。
+ *
+ * 用 <fieldset> 承载（jsx-a11y/prefer-tag-over-role 要求用语义元素替代 role=group），
+ * 需重置 fieldset 默认的 border/padding/margin/min-width，再套与卡片头部一致的视觉。
+ * toggle 位于 ThemeProvider 之外，var(--hn-color-accent) 解析为默认 violet。
+ */
+.theme-mode-toggle {
+  display: inline-flex;
+  padding: 2px;
+  margin: 0;
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 8px;
+  background: rgb(255 255 255 / 4%);
+  min-width: 0;
+}
+
+.theme-mode-toggle__btn {
+  padding: 4px 12px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #858590;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background 150ms ease,
+    color 150ms ease;
+}
+
+/* 激活态：accent 背景白字，与预设色卡的视觉强调语言一致 */
+.theme-mode-toggle__btn.is-active {
+  background: var(--hn-color-accent);
+  color: #fff;
+}
+
+.theme-mode-toggle__btn:not(.is-active):hover {
+  color: #e4e4ea;
+}
+
+/*
+ * 明暗模式预览区。
+ *
+ * 刻意消费 surface/text/border token，让 mode 翻转可见：背景、文字、边框全部
+ * 用 var(--hn-color-*)，加过渡让切换平滑。此区域在 ThemeProvider 内部，token
+ * 随 data-mode 翻转；同时 accent=blue 的 Button/Badge 展示两轴正交共存。
+ */
+.theme-mode-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px 14px;
+  border: 1px solid var(--hn-color-border);
+  border-radius: 8px;
+  background: var(--hn-color-surface);
+  color: var(--hn-color-text);
+  transition:
+    background 200ms ease,
+    color 200ms ease,
+    border-color 200ms ease;
+}
+
+.theme-mode-preview__text {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* muted 文字：单独消费 --hn-color-text-muted，验证该 token 随 mode 翻转 */
+.theme-mode-preview__muted {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--hn-color-text-muted);
+}
+
+.theme-mode-preview__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+@media (max-width: 640px) {
+  .theme-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* 窄屏下所有横跨列恢复为单列流式排列 */
+  .theme-card--custom,
+  .theme-card--focus,
+  .theme-card--mode,
+  .theme-card--nested {
+    grid-column: auto;
+  }
+}

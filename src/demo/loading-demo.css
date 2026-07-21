@@ -1,0 +1,39 @@
+/* Loading Demo 特有样式
+ * 内联 spinner 排列行、cover 演示卡片，复用 popover-demo.css 卡片类做外壳。
+ */
+
+.loading-demo-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px;
+  padding: 18px 14px;
+}
+
+/* cover 演示卡片：相对定位容器，cover loading 铺满它 */
+.loading-demo-card {
+  position: relative;
+  min-height: 160px;
+  padding: 18px 14px;
+}
+
+.loading-demo-card__title {
+  margin: 0 0 8px;
+  font-size: 15px;
+  font-weight: 550;
+  line-height: 1.45;
+  color: var(--hn-color-text);
+}
+
+.loading-demo-card__excerpt {
+  margin: 0 0 12px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--hn-color-text-muted);
+}
+
+.loading-demo-card__meta {
+  font-family: var(--hn-font-mono);
+  font-size: 11px;
+  color: #70707b;
+}
