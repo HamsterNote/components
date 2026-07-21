@@ -1,0 +1,171 @@
+/*
+ * Menu 设计说明
+ * ───────────────────────────────────────────────────────────────────────────
+ * 菜单组件刻意不定义自己的「菜单专用色」：
+ *   - 文本颜色一律使用全局 token（--hn-color-text / --hn-color-text-muted）
+ *   - 悬浮背景使用 --hn-color-surface-hover
+ *   - 分隔线在 Popover 内继承 --hn-popover-separator，独立使用时退到 --hn-color-border
+ *
+ * 这样做的收益：Popover 在 .hn-popover 内覆盖了 --hn-color-text / --hn-color-text-muted /
+ * --hn-color-surface-hover，Menu 嵌入 Popover 时会自动继承这些被覆盖后的局部变量，
+ * 从而无需任何主题 prop 就能在 dark/light Popover 中正确呈现。独立使用 Menu 时，
+ * 这些变量回退到 tokens.css 中的全局值（深色主题）。
+ */
+
+@layer hamster-note.components {
+  .hn-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    /* 默认最小宽度，使用方可通过 style 或 className 覆盖以适配不同内容 */
+    min-width: 180px;
+    font-family: var(--hn-font-sans);
+    color: var(--hn-color-text);
+    /* 独立使用时的半透明磨砂背景，嵌入 Popover 时由 Popover 提供背景 */
+    background: rgba(30, 41, 59, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: var(--hn-radius-md);
+    padding: 4px;
+  }
+
+  .hn-menu__item {
+    display: flex;
+    align-items: center;
+    /* shortcut 存在时把快捷键推到最右；无 shortcut 时 label 自然占据左侧 */
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    min-height: 32px;
+    padding: 0 10px;
+    border: 0;
+    border-radius: var(--hn-radius-md);
+    background: transparent;
+    color: var(--hn-color-text);
+    font-size: 13px;
+    line-height: 1;
+    cursor: pointer;
+    text-align: left;
+    transition:
+      background-color var(--hn-transition),
+      color var(--hn-transition);
+  }
+
+  .hn-menu__item:hover:not(:disabled) {
+    background: var(--hn-color-surface-hover);
+  }
+
+  .hn-menu__item:focus-visible {
+    outline: none;
+    box-shadow: var(--hn-focus-ring);
+  }
+
+  /* 与 Button 一致的禁用反馈 */
+  .hn-menu__item:disabled {
+    cursor: not-allowed;
+    opacity: 0.42;
+  }
+
+  /* 破坏性操作（删除/移除）项：文字色变为 danger，hover/active 不改色 */
+  .hn-menu__item--danger {
+    color: var(--hn-color-danger);
+  }
+
+  .hn-menu__item-label {
+    /* 仅作语义包裹，方便未来需要省略号或加图标时扩展 */
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .hn-menu__shortcut {
+    flex-shrink: 0;
+    font: 400 11px/1 var(--hn-font-mono);
+    color: var(--hn-color-text-muted);
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .hn-menu__separator {
+    height: 1px;
+    border: 0;
+    margin: 4px 2px;
+    /* 在 Popover 内继承其 --hn-popover-separator 局部变量；
+       独立使用 Menu 时退到全局 border 色，保持可见分隔 */
+    background: var(--hn-popover-separator, var(--hn-color-border));
+  }
+
+  .hn-menu__label {
+    padding: 4px 10px 2px;
+    font-size: 11px;
+    line-height: 1;
+    color: var(--hn-color-text-muted);
+    user-select: none;
+  }
+
+  /*
+   * 子菜单（MenuSubmenu）样式说明
+   * ───────────────────────────────────────────────────────────────────────────
+   * 与 Menu 主体一致，子菜单不引入任何「菜单专用色」：文本、悬浮、边框全部沿用全局 token，
+   * panel 表面复用 Popover（这里只负责层级与触发器高亮），从而在嵌套 Popover 与独立使用
+   * 两种场景下都能正确继承主题。定位（含视口边缘躲避）由 useAnchorPosition 负责。
+   */
+
+  /* 子菜单外层：display: block 让 trigger 自然占据整行宽度，与兄弟 MenuItem 视觉对齐。
+     不再承担定位锚点职责——panel 经 Portal 渲染到 body 下，用 fixed 坐标定位 */
+  .hn-menu__submenu {
+    display: block;
+  }
+
+  /* 触发器复用 .hn-menu__item 的所有视觉（高度、内边距、悬浮、禁用、聚焦环），
+     仅叠加一个修饰类用于 chevron 布局与「展开时保持高亮」的细节 */
+  .hn-menu__submenu-trigger {
+    /* 复用 shortcut 的右侧布局语义：label 在左、chevron 在右 */
+  }
+
+  /* 展开状态下让触发器保持悬浮背景，避免鼠标移到 panel 上时 trigger 失去高亮
+     而显得「子菜单与触发器脱节」；与 :hover 规则共用同一 token */
+  .hn-menu__submenu--open > .hn-menu__submenu-trigger {
+    background: var(--hn-color-surface-hover);
+  }
+
+  /* chevron 用 muted 文本色（与 shortcut 同档），尺寸与 shortcut 行高对齐；
+     旋转表达开合状态——仅 transform/opacity 动画，不触发布局 */
+  .hn-menu__submenu-chevron {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    font: 400 11px/1 var(--hn-font-sans);
+    color: var(--hn-color-text-muted);
+    transition: transform var(--hn-transition);
+  }
+
+  /* 展开时 chevron 向右旋转 90°，与「向右展开」的方向一致 */
+  .hn-menu__submenu--open > .hn-menu__submenu-trigger .hn-menu__submenu-chevron {
+    transform: rotate(90deg);
+  }
+
+  /*
+   * 面板定位：panel 经 Portal 渲染到 body 下，fixed 坐标由 useAnchorPosition 内联计算
+   * （默认向 trigger 右侧展开，右溢出自动左翻，垂直方向 clamp 在视口安全距离内）。
+   * 这里只保留高层级，确保 panel 覆盖页面内容、sticky 顶栏与兄弟菜单项。
+   */
+  .hn-menu__submenu-panel {
+    z-index: 1000;
+  }
+
+  /* 面板内嵌的 Menu 作为可编程聚焦容器（tabindex=-1），去掉默认 min-width 让 Popover
+     内的 Menu 宽度由内容决定，避免子菜单过窄 */
+  .hn-menu__submenu-panel .hn-menu {
+    min-width: 160px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hn-menu__item {
+      transition-duration: 0.01ms;
+    }
+
+    .hn-menu__submenu-chevron {
+      transition-duration: 0.01ms;
+    }
+  }
+}

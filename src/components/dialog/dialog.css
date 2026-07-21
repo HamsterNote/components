@@ -1,0 +1,144 @@
+/*
+ * Dialog 设计说明
+ * ───────────────────────────────────────────────────────────────────────────
+ * 模态对话框表面：背景遮罩 + 居中面板。与 Popover 一样经 Portal 渲染到
+ * document.body 下，脱离使用方 DOM 树，避免被祖先 overflow / transform 裁剪。
+ *
+ * 颜色与圆角：
+ *   - 面板背景使用 --hn-color-surface，边框使用 --hn-color-border，圆角 --hn-radius-lg（12px）
+ *   - 不引入「对话框专用色」：与 Menu / Kbd 同样的复用哲学，主题切换由使用方
+ *     通过覆盖 --hn-color-* token 实现
+ *   - 背景遮罩用 rgb(0 0 0 / 45%) + 8px 模糊，与编辑器深色基调一致
+ *
+ * 动画：opacity + translateY（小幅），140ms 不透明 / 180ms transform，
+ * 缓动 cubic-bezier(.2,.8,.2,1)，尊重 prefers-reduced-motion（直接到终态）。
+ * 通过 data-state="enter" / "exit" 切换，配合 useModal 的状态机保留 DOM 直到退场动画结束。
+ *
+ * 层叠：z-index 1100，高于 Popover 锚定浮层的 1000，保证对话框压住菜单/浮层；
+ * Drawer 用 1200，让 Drawer 内打开 Dialog 时 Dialog 仍可见，而 Dialog 内打开 Drawer
+ * 时 Drawer 压在 Dialog 之上（更符合「抽屉是更高层级容器」的直觉）。
+ */
+
+@layer hamster-note.components {
+  /* 背景遮罩：固定铺满视口，z-index 1100，承担点击外关闭与视觉聚焦 */
+  .hn-dialog__backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
+    /* 暗色遮罩 + 轻度模糊：让背后内容隐约可辨但不抢注意力 */
+    background: rgb(0 0 0 / 45%);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    /* 动画与面板解耦：opacity 独立过渡，避免 transform 影响背景 */
+    transition: opacity 140ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  /* 入场/退场：opacity 从 0 → 1 / 1 → 0；exit 时同样回到 0 */
+  .hn-dialog__backdrop[data-state='enter'] {
+    opacity: 1;
+  }
+
+  .hn-dialog__backdrop[data-state='exit'] {
+    opacity: 0;
+  }
+
+  /* 面板：居中定位，最大宽度限制避免在大屏上过宽；面板本身也是可聚焦容器 */
+  .hn-dialog__panel {
+    position: fixed;
+    /* 用 translate 居中而非 left/top 50%，避免依赖浏览器对百分比定位的差异化实现 */
+    top: 50%;
+    left: 50%;
+    z-index: 1100;
+    /* 居中变换与动画变换合并到 transform，避免两个 transform 互相覆盖 */
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    max-width: calc(100vw - 32px);
+    max-height: calc(100vh - 64px);
+    min-width: 320px;
+    /* 默认宽度由内容决定，使用方可通过 style/className 覆盖 */
+    width: auto;
+    padding: 20px 24px;
+    border: 1px solid var(--hn-color-border);
+    border-radius: var(--hn-radius-lg);
+    background: var(--hn-color-surface);
+    /* 轻微阴影强化「浮在背景之上」的层级感，与 Popover 同档 */
+    box-shadow: 0 16px 48px rgb(0 0 0 / 32%);
+    color: var(--hn-color-text);
+    font-family: var(--hn-font-sans);
+    /* 动画：opacity + translateY，与背景遮罩解耦独立过渡 */
+    transition:
+      opacity 140ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  /* 入场：从 translateY(8px) + opacity 0 升起；exit 反向回到初始 */
+  .hn-dialog__panel[data-state='enter'] {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+
+  .hn-dialog__panel[data-state='exit'] {
+    opacity: 0;
+    /* 退场时往下沉 8px，与入场形成对称的「升起/落下」语义 */
+    transform: translate(-50%, calc(-50% + 8px));
+  }
+
+  /* 入场起始帧：CSS 无法直接表达「从某状态过渡到终态」，用 enter 类的初始态
+     由 useModal 在挂载瞬间应用，浏览器先 paint 初始态再切到 [data-state='enter']。
+     这里用一个微妙的技巧——退场帧 [data-state='exit'] 同时作为下次入场的起始态
+     （因为 leaving → closed → entering 之间元素会被卸载重建），所以不需要单独的
+     「enter 初始」类。但首次挂载时浏览器会先把 [data-state='enter'] 当作起始，
+     为了让 translateY(8px) → 0 有过渡，需要在挂载首帧把 transform 设到起始值。
+     实践中 useLayoutEffect 已经在 paint 前设置好 data-state，浏览器会看到
+     「无 data-state（默认）→ data-state=enter」的过渡，因此默认态需要等于起始态。 */
+  .hn-dialog__panel {
+    opacity: 0;
+    transform: translate(-50%, calc(-50% + 8px));
+  }
+
+  /* 焦点环：面板被聚焦时显示可见焦点（焦点落在面板自身或其内部元素时都生效） */
+  .hn-dialog__panel:focus-visible {
+    outline: none;
+    box-shadow:
+      var(--hn-focus-ring),
+      0 16px 48px rgb(0 0 0 / 32%);
+  }
+
+  /* 标题：使用 18px / 26px heading 字号，与 Demo 一致 */
+  .hn-dialog__title {
+    margin: 0 0 4px;
+    font-size: 18px;
+    font-weight: 550;
+    line-height: 1.45;
+    letter-spacing: -0.01em;
+    color: var(--hn-color-text);
+  }
+
+  /* 描述：使用 13px body 字号 + muted 文本色，与 hero lede 同档 */
+  .hn-dialog__description {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--hn-color-text-muted);
+  }
+
+  /* 内容区：标题/描述与下方自定义内容之间的间距由 slot 自然决定，这里只给一个
+     默认的顶部间距，避免使用方未传 title 时内容贴顶 */
+  .hn-dialog__content {
+    margin-top: 16px;
+  }
+
+  /* 无标题时让内容区上方间距收窄（使用方只传 children 的极简用法） */
+  .hn-dialog__panel:not(:has(.hn-dialog__title)) .hn-dialog__content {
+    margin-top: 0;
+  }
+
+  /* 尊重 prefers-reduced-motion：所有过渡直接到终态，时长 0.01ms */
+  @media (prefers-reduced-motion: reduce) {
+    .hn-dialog__backdrop,
+    .hn-dialog__panel {
+      transition-duration: 0.01ms;
+    }
+  }
+}

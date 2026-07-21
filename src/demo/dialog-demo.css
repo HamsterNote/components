@@ -1,0 +1,35 @@
+/* Dialog Demo 特有样式
+ * 开关行、无标题对话框文案，复用 popover-demo.css 的卡片类做布局。
+ */
+
+.dialog-demo-toggles {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 14px;
+}
+
+.dialog-demo-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #b4b4bd;
+  cursor: pointer;
+  user-select: none;
+}
+
+.dialog-demo-toggle input {
+  width: 14px;
+  height: 14px;
+  accent-color: var(--hn-color-accent);
+  cursor: pointer;
+}
+
+.dialog-demo-plain-copy {
+  margin: 0 0 16px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--hn-color-text-muted);
+}

@@ -1,0 +1,11 @@
+/* Confirm Demo 特有样式
+ * 按钮行布局，复用 popover-demo.css 卡片类。
+ */
+
+.confirm-demo-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 14px;
+}

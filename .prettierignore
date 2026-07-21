@@ -1,0 +1,5 @@
+dist
+demo-dist
+.omo
+node_modules
+bun.lock

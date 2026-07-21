@@ -1,0 +1,215 @@
+/* Icon Demo 特有样式
+ * 图标网格、尺寸示例、颜色继承示例与行内嵌入布局。
+ * 复用 popover-demo.css 的 .popover-grid / .popover-example* 卡片类做外层布局。
+ */
+
+/* 示例一：完整图标集网格
+ * popover-example__surface 默认 place-items: center，这里覆盖为 stretch 让网格铺满 */
+.icon-demo-grid {
+  place-items: stretch;
+  padding: 8px;
+}
+
+.icon-demo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: 4px;
+}
+
+/* 单个图标 cell：方形按钮，垂直堆叠图标 + 名称 */
+.icon-demo-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 14px 6px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: #b4b4bd;
+  cursor: pointer;
+  transition:
+    background-color var(--hn-transition),
+    border-color var(--hn-transition),
+    color var(--hn-transition);
+}
+
+.icon-demo-cell .hn-icon {
+  font-size: 22px;
+  color: #d4d4d8;
+  transition: color var(--hn-transition);
+}
+
+.icon-demo-cell:hover {
+  background: rgb(255 255 255 / 4%);
+  border-color: rgb(255 255 255 / 8%);
+  color: #f4f4f5;
+}
+
+.icon-demo-cell:hover .hn-icon {
+  color: var(--hn-color-accent);
+}
+
+.icon-demo-cell:focus-visible {
+  outline: none;
+  border-color: var(--hn-color-accent);
+  background: rgb(124 131 255 / 8%);
+}
+
+.icon-demo-cell.is-active {
+  background: rgb(124 131 255 / 12%);
+  border-color: rgb(124 131 255 / 40%);
+  color: #f4f4f5;
+}
+
+.icon-demo-cell.is-active .hn-icon {
+  color: var(--hn-color-accent);
+}
+
+.icon-demo-cell__label {
+  font: 400 10px/1.3 var(--hn-font-mono);
+  color: inherit;
+  text-align: center;
+  word-break: break-all;
+}
+
+/* 示例二：尺寸 -- 横向排列不同 font-size 的图标 */
+.icon-demo-sizes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 28px;
+}
+
+.icon-demo-size {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: #d4d4d8;
+}
+
+.icon-demo-size em {
+  font: 400 10px/1.3 var(--hn-font-mono);
+  font-style: normal;
+  color: #70707b;
+}
+
+/* 示例三：颜色继承 -- 每个 color 容器内放图标 + label */
+.icon-demo-colors {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+}
+
+.icon-demo-color {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 22px;
+}
+
+.icon-demo-color em {
+  font: 400 10px/1.3 var(--hn-font-mono);
+  font-style: normal;
+  color: #70707b;
+}
+
+.icon-demo-color--default {
+  color: var(--hn-color-text);
+}
+
+.icon-demo-color--accent {
+  color: var(--hn-color-accent);
+}
+
+.icon-demo-color--success {
+  color: var(--hn-color-success);
+}
+
+.icon-demo-color--warning {
+  color: var(--hn-color-warning);
+}
+
+.icon-demo-color--danger {
+  color: var(--hn-color-danger);
+}
+
+.icon-demo-color--muted {
+  color: var(--hn-color-text-muted);
+}
+
+/* 示例四：行内嵌入 -- 图标按钮组 + 段落 */
+.icon-demo-inline {
+  display: block;
+  padding: 22px 18px;
+  text-align: left;
+}
+
+.icon-demo-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.icon-demo-iconbutton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 8px;
+  background: rgb(255 255 255 / 3%);
+  color: #d4d4d8;
+  font-size: 18px;
+  cursor: pointer;
+  transition:
+    background-color var(--hn-transition),
+    border-color var(--hn-transition),
+    color var(--hn-transition);
+}
+
+.icon-demo-iconbutton:hover {
+  background: rgb(255 255 255 / 7%);
+  border-color: rgb(255 255 255 / 18%);
+  color: #f4f4f5;
+}
+
+.icon-demo-iconbutton:focus-visible {
+  outline: none;
+  border-color: var(--hn-color-accent);
+  background: rgb(124 131 255 / 12%);
+  color: var(--hn-color-accent);
+}
+
+.icon-demo-inline p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 2;
+  color: #b4b4bd;
+}
+
+.icon-demo-inline p .hn-icon {
+  font-size: 15px;
+  color: #d4d4d8;
+  vertical-align: -0.2em;
+}
+
+/* 窄屏：与 popover-demo / kbd-demo 一致，单列堆叠 */
+@media (max-width: 640px) {
+  .icon-demo-grid {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  }
+
+  .icon-demo-sizes {
+    gap: 18px;
+  }
+}

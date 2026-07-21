@@ -1,0 +1,39 @@
+/* Kbd Demo 特有样式
+ * 行内键帽排列、Popover 内主题继承示例的表面定位与行内文案样式，
+ * 复用 popover-demo.css 的 .popover-grid / .popover-example* 卡片类做布局。
+ */
+
+/* 示例一、二：行内排列多个键帽，与 component-row 风格一致但稍紧凑 */
+.kbd-demo-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* 示例三：Popover 内菜单示例的表面定位容器，与 menu-demo-popover-surface 行为一致 */
+.kbd-demo-popover-surface {
+  position: relative;
+}
+
+/* 示例四：行内文案示例，让段落自然占据宽度，键帽与文字基线对齐 */
+.kbd-demo-inline {
+  display: block;
+  padding: 22px 18px;
+  text-align: left;
+}
+
+.kbd-demo-inline p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 2;
+  color: #b4b4bd;
+}
+
+/* 在窄屏下与 popover-demo / menu-demo 一致，统一堆叠成单列（由 .popover-grid 处理） */
+@media (max-width: 640px) {
+  .kbd-demo-row {
+    gap: 8px;
+  }
+}

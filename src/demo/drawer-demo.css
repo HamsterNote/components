@@ -1,0 +1,23 @@
+/* Drawer Demo 特有样式
+ * 按钮行与抽屉内容区文案，复用 popover-demo.css 卡片类布局。
+ */
+
+.drawer-demo-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 14px;
+}
+
+.drawer-demo-copy {
+  margin: 0 0 16px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--hn-color-text-muted);
+}
+
+.drawer-demo-copy strong {
+  color: var(--hn-color-text);
+  font-weight: 550;
+}

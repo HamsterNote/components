@@ -1,0 +1,22 @@
+@layer hamster-note.tokens {
+  :root {
+    --hn-color-surface: #111114;
+    --hn-color-surface-hover: #17171b;
+    --hn-color-text: #f4f4f5;
+    --hn-color-text-muted: #92929d;
+    --hn-color-border: rgb(255 255 255 / 10%);
+    --hn-color-border-strong: rgb(255 255 255 / 17%);
+    --hn-color-accent: #7c83ff;
+    --hn-color-accent-hover: #9197ff;
+    --hn-color-danger: #fb7185;
+    --hn-color-success: #4ade80;
+    --hn-color-warning: #fbbf24;
+    --hn-font-sans: 'IBM Plex Sans', 'Noto Sans SC', sans-serif;
+    --hn-font-mono: 'IBM Plex Mono', monospace;
+    --hn-radius-sm: 6px;
+    --hn-radius-md: 8px;
+    --hn-radius-lg: 12px;
+    --hn-focus-ring: 0 0 0 3px rgb(145 151 255 / 42%);
+    --hn-transition: 140ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+}

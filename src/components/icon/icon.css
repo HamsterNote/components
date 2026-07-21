@@ -1,0 +1,29 @@
+/*
+ * Icon 设计说明
+ * ───────────────────────────────────────────────────────────────────────────
+ * Icon 是纯描边图标组件，颜色完全跟随外层 color（svg 内部 fill="none" +
+ * stroke="currentColor"），因此本样式只控制：
+ *   - 默认尺寸 1em 见方（width/height 已经在 svg 属性上写死为 "1em"，
+ *     此处不重复设置，避免双重维护）
+ *   - inline-flex 居中，便于和 Button / MenuItem 等父组件 gap 对齐
+ *   - vertical-align 调整为 -0.125em，避免 inline svg 与文字基线偏差
+ *   - flex-shrink: 0，防止被父级 flex 容器压缩
+ *
+ * 不在此处定义颜色 / 颜色 token：保持与 Kbd / Menu 同样的「复用全局 token」
+ * 哲学，由父级控制 color 即可。
+ */
+
+@layer hamster-note.components {
+  .hn-icon {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    /* 修正 inline svg 与文字基线的轻微偏差，让图标与文字垂直居中对齐 */
+    vertical-align: -0.125em;
+    /* 继承外层 color，避免被父级 line-height 撑大 */
+    line-height: 0;
+    /* pointer-events 不拦截，便于父级按钮 / 菜单项接管点击 */
+    pointer-events: none;
+  }
+}

@@ -1,0 +1,49 @@
+@layer hamster-note.components {
+  .hn-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 22px;
+    padding: 2px 8px;
+    border: 1px solid var(--hn-color-border);
+    border-radius: var(--hn-radius-sm);
+    background: rgb(255 255 255 / 4%);
+    font-family: var(--hn-font-mono);
+    font-size: 11px;
+    font-weight: 550;
+    line-height: 1.2;
+    color: var(--hn-color-text-muted);
+  }
+
+  .hn-badge::before {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+    content: '';
+  }
+
+  .hn-badge--accent {
+    border-color: rgb(124 131 255 / 24%);
+    background: rgb(124 131 255 / 10%);
+    color: #aeb2ff;
+  }
+
+  .hn-badge--success {
+    border-color: rgb(74 222 128 / 22%);
+    background: rgb(74 222 128 / 9%);
+    color: var(--hn-color-success);
+  }
+
+  .hn-badge--warning {
+    border-color: rgb(251 191 36 / 22%);
+    background: rgb(251 191 36 / 9%);
+    color: var(--hn-color-warning);
+  }
+
+  .hn-badge--danger {
+    border-color: rgb(251 113 133 / 22%);
+    background: rgb(251 113 133 / 9%);
+    color: var(--hn-color-danger);
+  }
+}

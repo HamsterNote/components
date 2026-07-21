@@ -1,0 +1,68 @@
+@layer hamster-note.components {
+  .hn-popover {
+    --hn-popover-background: rgba(30, 41, 59, 0.8);
+    --hn-popover-border: rgb(255 255 255 / 10%);
+    --hn-popover-separator: rgb(255 255 255 / 18%);
+    --hn-color-surface-hover: rgb(255 255 255 / 10%);
+    --hn-color-text: #f8fafc;
+    --hn-color-text-muted: #cbd5e1;
+    /* 抽离 padding 为变量，便于 border-radius 用 calc 同步引用，保证圆角同心 */
+    --hn-popover-padding: 5px;
+
+    display: inline-flex;
+    max-width: 100%;
+    align-items: center;
+    gap: 3px;
+    padding: var(--hn-popover-padding);
+    border: 1px solid var(--hn-popover-border);
+    /* 同心圆角：外框半径 = Button 圆角(--hn-radius-md) + 外框 padding，
+       使内嵌 Button 的圆角与外框圆角共享同一圆心，衔接自然 */
+    border-radius: calc(var(--hn-radius-md) + var(--hn-popover-padding));
+    background: var(--hn-popover-background);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 8px 24px rgb(15 23 42 / 28%);
+    color: var(--hn-color-text);
+    font-family: var(--hn-font-sans);
+  }
+
+  .hn-popover[data-theme='light'] {
+    --hn-popover-background: rgba(255, 255, 255, 0.8);
+    --hn-popover-border: rgb(15 23 42 / 12%);
+    --hn-popover-separator: rgb(15 23 42 / 16%);
+    --hn-color-surface-hover: #f1f5f9;
+    --hn-color-text: #1e293b;
+    --hn-color-text-muted: #64748b;
+
+    box-shadow: 0 8px 24px rgb(15 23 42 / 16%);
+  }
+
+  /* 锚定模式：经 Portal 渲染到 body 下，坐标由 useAnchorPosition 内联计算，
+     这里只提供高层级，保证浮层覆盖页面普通内容与 sticky 顶栏 */
+  .hn-popover--floating {
+    z-index: 1000;
+  }
+
+  /* 竖排模式：常用于侧边工具条，按钮纵向排列，分隔线变为水平线 */
+  .hn-popover[data-orientation='vertical'] {
+    flex-direction: column;
+  }
+
+  .hn-popover__separator {
+    width: 1px;
+    height: 20px;
+    flex: 0 0 1px;
+    padding: 0;
+    border: 0;
+    margin: 0 4px;
+    background: var(--hn-popover-separator);
+  }
+
+  /* 竖排浮层内的分隔线由竖直变水平，与排列方向垂直分组 */
+  .hn-popover[data-orientation='vertical'] .hn-popover__separator {
+    width: 20px;
+    height: 1px;
+    flex: 0 0 1px;
+    margin: 4px 0;
+  }
+}
