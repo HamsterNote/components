@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.1-beta.1] - 2026-07-22
+
+### Added
+
+- **Icon**: `polygon` (多边形) and `lasso` (套索) icon — 52 outline icons total.
+
 ## [0.2.1-beta] - 2026-07-22
 
 ### Added

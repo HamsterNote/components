@@ -12,9 +12,9 @@
  * 类型之间出现漂移。新增图标只需在数组里追加一个字面量。
  */
 
-/** 50 个图标名称字面量数组（运行时枚举与 demo 遍历用） */
+/** 52 个图标名称字面量数组（运行时枚举与 demo 遍历用） */
 export const ICON_NAMES = [
-  // ── 用户明确要求（24 个） ──────────────────────────────────────────────
+  // ── 用户明确要求（26 个） ──────────────────────────────────────────────
   'file', // 文件
   'save', // 保存
   'study', // 学习
@@ -22,6 +22,8 @@ export const ICON_NAMES = [
   'mouse', // 鼠标
   'line', // 线段
   'curve', // 曲线段
+  'polygon', // 多边形
+  'lasso', // 套索
   'rectangle', // 矩形
   'ellipse', // 椭圆
   'pen', // 手写笔
@@ -74,5 +76,5 @@ export const ICON_NAMES = [
   'sort', // 排序
 ] as const;
 
-/** 50 个图标的名称联合类型（从 ICON_NAMES 派生，单一数据源） */
+/** 52 个图标的名称联合类型（从 ICON_NAMES 派生，单一数据源） */
 export type IconName = (typeof ICON_NAMES)[number];
