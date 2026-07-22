@@ -23,8 +23,8 @@
     color: var(--hn-color-text);
     /* 独立使用时的半透明磨砂背景，嵌入 Popover 时由 Popover 提供背景 */
     background: rgba(30, 41, 59, 0.8);
-    backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
     border-radius: var(--hn-radius-md);
     padding: 4px;
   }

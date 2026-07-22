@@ -94,6 +94,25 @@
   padding: 24px 14px;
 }
 
+/* 相对贴边演示：positioned 容器用虚线框标出边界，
+   浮层以 position: absolute 贴在容器（而非视口）边缘，跟随容器滚动与裁切 */
+.popover-relative-stage {
+  position: relative;
+  height: 180px;
+  border: 1px dashed rgb(255 255 255 / 24%);
+  border-radius: 8px;
+  margin: 14px;
+  overflow: hidden;
+}
+
+/* 触发按钮放在虚线框外的工具行里，避免与贴边浮层争抢容器边缘 */
+.popover-relative-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 0 14px 14px;
+}
+
 @media (max-width: 640px) {
   .popover-grid {
     grid-template-columns: 1fr;

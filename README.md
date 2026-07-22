@@ -78,6 +78,20 @@ Popover 只负责可复用表面和主题，定位、显示状态、外部点击
 </Popover>
 ```
 
+相对贴边：再加 `relative` 后贴边改用 `position: absolute`，浮层贴在**最近的定位祖先**
+对应边缘（留在使用方布局上下文内，跟随容器滚动与裁切），而不是 `fixed` 相对视口。
+使用方需保证外层容器设置了 `position: relative`（或其他非 static 定位）：
+
+```tsx
+<div style={{ position: 'relative', height: 180 }}>
+  <Popover aria-label="容器内贴边" edge="bottom" edgeOffset={12} relative role="toolbar">
+    <Button size="small" variant="ghost">
+      操作
+    </Button>
+  </Popover>
+</div>
+```
+
 锚点定位：传入 `anchor` 后浮层通过 Portal 渲染到 `document.body` 下，不再受祖先
 `overflow` / `transform` / 层叠上下文的裁剪与遮挡影响。浮层以锚点为基准按 `placement`
 （默认 `bottom-start`，另有 `top-start` / `top-end` / `bottom-end` / `left-start` /

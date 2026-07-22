@@ -19,8 +19,10 @@
        使内嵌 Button 的圆角与外框圆角共享同一圆心，衔接自然 */
     border-radius: calc(var(--hn-radius-md) + var(--hn-popover-padding));
     background: var(--hn-popover-background);
-    backdrop-filter: blur(12px);
+    /* 前缀版在前、标准版在后：压缩器去重保留最后一条，浏览器也以最后一条可识别的为准，
+       保证构建产物中标准属性不丢失（否则 Firefox 等不支持 -webkit- 前缀的浏览器报 Invalid property value） */
     -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
     box-shadow: 0 8px 24px rgb(15 23 42 / 28%);
     color: var(--hn-color-text);
     font-family: var(--hn-font-sans);
