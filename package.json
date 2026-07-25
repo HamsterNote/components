@@ -1,6 +1,6 @@
 {
   "name": "@hamster-note/components",
-  "version": "0.2.1-beta.3",
+  "version": "0.2.1-beta.4",
   "description": "Reusable React components for HamsterNote products.",
   "type": "module",
   "license": "MIT",

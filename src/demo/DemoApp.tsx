@@ -225,7 +225,7 @@ export function DemoApp() {
         </DemoSection>
 
         <DemoSection
-          description="52 个 outline 风格 SVG 图标，stroke=currentColor 自动继承主题，尺寸由外层 font-size 控制。"
+          description="55 个 outline 风格 SVG 图标，stroke=currentColor 自动继承主题，尺寸由外层 font-size 控制。"
           eyebrow="09 / Icons"
           id="icons"
           title="Icon"

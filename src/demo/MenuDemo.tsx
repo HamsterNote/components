@@ -118,7 +118,7 @@ export function MenuDemo({ onFeedback }: MenuDemoProps) {
       close();
     };
     const handleKeyDown = (event: globalThis.KeyboardEvent) => {
-      if (event.key === 'Escape') {
+      if (event.key === 'Escape' && !event.defaultPrevented) {
         close();
       }
     };
@@ -157,7 +157,7 @@ export function MenuDemo({ onFeedback }: MenuDemoProps) {
       close();
     };
     const handleKeyDown = (event: globalThis.KeyboardEvent) => {
-      if (event.key === 'Escape') {
+      if (event.key === 'Escape' && !event.defaultPrevented) {
         close();
       }
     };
