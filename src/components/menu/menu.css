@@ -14,6 +14,9 @@
 
 @layer hamster-note.components {
   .hn-menu {
+    /* 抽离背景为变量，便于 .hn-menu--floating[data-theme='light'] 局部覆盖为浅色磨砂 */
+    --hn-menu-background: rgba(30, 41, 59, 0.8);
+
     display: flex;
     flex-direction: column;
     gap: 2px;
@@ -22,11 +25,45 @@
     font-family: var(--hn-font-sans);
     color: var(--hn-color-text);
     /* 独立使用时的半透明磨砂背景，嵌入 Popover 时由 Popover 提供背景 */
-    background: rgba(30, 41, 59, 0.8);
+    background: var(--hn-menu-background);
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
     border-radius: var(--hn-radius-md);
     padding: 4px;
+  }
+
+  /*
+   * 浮动菜单表面（.hn-menu--floating，锚定模式自动叠加）
+   * ───────────────────────────────────────────────────────────────────────────
+   * 锚定模式下菜单经 Portal 渲染到 body 下，脱离父级 Popover / ThemeProvider 的
+   * 级联，无法继承它们的 token 覆盖。因此浮动菜单自带与 Popover dark 一致的
+   * token 覆盖、边框与阴影，让 .hn-menu 直接充当浮层表面，无需再套一层 Popover。
+   * 传 data-theme="light" 可切换为浅色（取值与 Popover light 一致）。
+   * 同心圆角：外框半径 = MenuItem 圆角(--hn-radius-md) + 外框 padding(5px)。
+   */
+  .hn-menu--floating {
+    --hn-menu-border: rgb(255 255 255 / 10%);
+    --hn-popover-separator: rgb(255 255 255 / 18%);
+    --hn-color-surface-hover: rgb(255 255 255 / 10%);
+    --hn-color-text: #f8fafc;
+    --hn-color-text-muted: #cbd5e1;
+
+    z-index: 1000;
+    padding: 5px;
+    border: 1px solid var(--hn-menu-border);
+    border-radius: calc(var(--hn-radius-md) + 5px);
+    box-shadow: 0 8px 24px rgb(15 23 42 / 28%);
+  }
+
+  .hn-menu--floating[data-theme='light'] {
+    --hn-menu-background: rgba(255, 255, 255, 0.8);
+    --hn-menu-border: rgb(15 23 42 / 12%);
+    --hn-popover-separator: rgb(15 23 42 / 16%);
+    --hn-color-surface-hover: #f1f5f9;
+    --hn-color-text: #1e293b;
+    --hn-color-text-muted: #64748b;
+
+    box-shadow: 0 8px 24px rgb(15 23 42 / 16%);
   }
 
   .hn-menu__item {
@@ -105,9 +142,9 @@
   /*
    * 子菜单（MenuSubmenu）样式说明
    * ───────────────────────────────────────────────────────────────────────────
-   * 与 Menu 主体一致，子菜单不引入任何「菜单专用色」：文本、悬浮、边框全部沿用全局 token，
-   * panel 表面复用 Popover（这里只负责层级与触发器高亮），从而在嵌套 Popover 与独立使用
-   * 两种场景下都能正确继承主题。定位（含视口边缘躲避）由 useAnchorPosition 负责。
+   * 与 Menu 主体一致，子菜单不引入任何「菜单专用色」：文本、悬浮、边框全部沿用全局 token。
+   * panel 即一层锚定模式的 Menu（自动带 .hn-menu--floating 浮动表面），
+   * 这里只负责触发器高亮与 panel 的最小宽度。定位（含视口边缘躲避）由 useAnchorPosition 负责。
    */
 
   /* 子菜单外层：display: block 让 trigger 自然占据整行宽度，与兄弟 MenuItem 视觉对齐。
@@ -145,17 +182,12 @@
   }
 
   /*
-   * 面板定位：panel 经 Portal 渲染到 body 下，fixed 坐标由 useAnchorPosition 内联计算
-   * （默认向 trigger 右侧展开，右溢出自动左翻，垂直方向 clamp 在视口安全距离内）。
-   * 这里只保留高层级，确保 panel 覆盖页面内容、sticky 顶栏与兄弟菜单项。
+   * 子菜单面板：panel 就是浮动 Menu 本身（锚定模式自动叠加 .hn-menu--floating，
+   * z-index / 边框 / 阴影由浮动表面承担）。这里只收紧最小宽度，避免子菜单过窄。
+   * fixed 坐标由 useAnchorPosition 内联计算（默认向 trigger 右侧展开，
+   * 右溢出自动左翻，垂直方向 clamp 在视口安全距离内）。
    */
   .hn-menu__submenu-panel {
-    z-index: 1000;
-  }
-
-  /* 面板内嵌的 Menu 作为可编程聚焦容器（tabindex=-1），去掉默认 min-width 让 Popover
-     内的 Menu 宽度由内容决定，避免子菜单过窄 */
-  .hn-menu__submenu-panel .hn-menu {
     min-width: 160px;
   }
 

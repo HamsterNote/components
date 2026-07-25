@@ -106,27 +106,30 @@ const [anchor, setAnchor] = useState<HTMLElement | null>(null);
 
 <Button
   aria-expanded={open}
-  aria-haspopup="menu"
+  aria-haspopup="dialog"
   onClick={(event) => {
     setAnchor(event.currentTarget);
     setOpen((value) => !value);
   }}
 >
-  编辑
+  文字
 </Button>;
 {
   open ? (
-    <Popover anchor={anchor} placement="bottom-start">
-      <Menu>
-        <MenuItem shortcut="⌘X">剪切</MenuItem>
-        <MenuItem shortcut="⌘C">复制</MenuItem>
-      </Menu>
+    <Popover anchor={anchor} aria-label="文字操作" placement="bottom-start" role="toolbar">
+      <Button size="small" variant="ghost">
+        加粗
+      </Button>
+      <PopoverSeparator />
+      <Button size="small" variant="ghost">
+        斜体
+      </Button>
     </Popover>
   ) : null;
 }
 ```
 
-`Menu` 提供语义菜单列表，可独立渲染，也可嵌入 `Popover` 当作下拉菜单使用。`MenuItem`
+`Menu` 提供语义菜单列表，可独立渲染，也可传入 `anchor` 直接作为下拉菜单使用。`MenuItem`
 支持 `shortcut` 显示快捷键、`tone="danger"` 标记破坏性操作；`MenuLabel` 用于分组小标题，
 `MenuSeparator` 用于分组分隔线：
 
@@ -143,10 +146,13 @@ import { Menu, MenuItem, MenuLabel, MenuSeparator } from '@hamster-note/componen
 </Menu>;
 ```
 
-嵌入 `Popover` 当作下拉菜单：`Menu` 复用全局颜色 token，自动继承 `Popover` 的 dark/light
-主题，无需任何主题 prop。触发按钮需要设置 `aria-haspopup="menu"` 并用 `aria-controls` /
-`aria-expanded` 连接浮层（显示状态由使用方控制，与 `Popover` 哲学一致）。下拉菜单推荐
-配合 `anchor` 使用（见上文锚点定位），让菜单渲染到 body 下并自动躲避视口边缘：
+传入 `anchor` 当作下拉菜单：`Menu` 进入锚定模式——经 Portal 渲染到 `document.body`
+下，`.hn-menu` 直接作为浮层表面（自动叠加 `.hn-menu--floating`：边框、阴影与 dark token
+覆盖；传 `data-theme="light"` 切换浅色），无需再外套 `Popover`。`placement` /
+`anchorOffset` / `anchorCrossOffset` / `viewportMargin` 与 `Popover` 锚定模式语义一致，
+同样自动翻转并 clamp 到视口安全距离内。触发按钮需要设置 `aria-haspopup="menu"` 并用
+`aria-controls` / `aria-expanded` 连接菜单（显示状态、外部点击关闭与焦点返回仍由使用方
+控制，与 `Popover` 哲学一致）：
 
 ```tsx
 <Button aria-controls="file-menu" aria-expanded={open} aria-haspopup="menu" onClick={toggle}>
@@ -154,21 +160,19 @@ import { Menu, MenuItem, MenuLabel, MenuSeparator } from '@hamster-note/componen
 </Button>;
 {
   open ? (
-    <Popover anchor={anchorEl} aria-label="编辑操作" id="file-menu">
-      <Menu>
-        <MenuItem shortcut="⌘X">剪切</MenuItem>
-        <MenuItem shortcut="⌘C">复制</MenuItem>
-        <MenuSeparator />
-        <MenuItem tone="danger">清空选中</MenuItem>
-      </Menu>
-    </Popover>
+    <Menu anchor={anchorEl} aria-label="编辑操作" id="file-menu" ref={menuRef}>
+      <MenuItem shortcut="⌘X">剪切</MenuItem>
+      <MenuItem shortcut="⌘C">复制</MenuItem>
+      <MenuSeparator />
+      <MenuItem tone="danger">清空选中</MenuItem>
+    </Menu>
   ) : null;
 }
 ```
 
 `MenuSubmenu` 提供嵌套子菜单能力：trigger 复用 `MenuItem` 的视觉，右侧带 ▸ chevron；panel
-复用 `Popover` 作为表面（自动继承 dark/light 主题，与 `Menu` 同样的复用哲学），内部再嵌一层
-`Menu` 承载子项。panel 经 Portal 渲染到 `document.body` 下，默认向 trigger 右侧展开，
+即一层锚定模式的 `Menu`（`.hn-menu` 直接作为浮层表面，自带边框 / 阴影与 dark token 覆盖，
+不再外套 `Popover`）。panel 经 Portal 渲染到 `document.body` 下，默认向 trigger 右侧展开，
 右侧空间不足时自动向左翻转，垂直方向 clamp 在视口安全距离内。鼠标悬停展开（带 150ms 开 /
 200ms 关延迟，避免移动缝隙误关），点击 trigger 切换（触屏 fallback）；键盘上
 `ArrowRight`/`Enter`/`Space` 进入子菜单并把焦点送到第一个
@@ -402,8 +406,9 @@ import { Button, ThemeProvider } from '@hamster-note/components';
   `PopoverSeparator` 分组内容；`anchor` 模式下经 Portal 渲染到 body 并自动躲避视口边缘。
 - `Menu`：`role="menu"` 语义菜单列表，含 `MenuItem`（支持 `shortcut` 与 `danger` tone）、
   `MenuLabel`、`MenuSeparator` 与 `MenuSubmenu`（嵌套子菜单，panel 渲染到 body 下、
-  右侧不足自动左翻，复用 `Popover` 作为表面自动继承主题），可独立使用或嵌入 `Popover`
-  自动继承主题。
+  右侧不足自动左翻，panel 即浮动 `Menu` 自身）。传入 `anchor` 后 `.hn-menu` 直接作为
+  下拉浮层表面（自带边框 / 阴影与 dark token，可 `data-theme="light"`），无需外套
+  `Popover`；也可嵌入 `Popover` 自动继承主题。
 - `Kbd`：纯展示型快捷键键帽组件。`keys` 渲染组合键序列（键帽间用小号 `+` 连接符拼接），
   `children` 渲染单个键帽；颜色一律引用全局 token，嵌入 `Popover` 自动继承主题。
 - `Dialog`：受控模态对话框。Portal 渲染到 `document.body`，内置焦点循环、滚动锁、Esc /

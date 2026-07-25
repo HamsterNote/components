@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **Menu**: dropdown menus no longer wrap a `Popover` — `Menu` gains an anchored mode (`anchor` / `placement` / `anchorOffset` / `anchorCrossOffset` / `viewportMargin` / `ref`, mirroring Popover's anchored API) and `.hn-menu` itself becomes the floating surface via `.hn-menu--floating` (self-contained border, shadow, and dark token overrides, optional `data-theme="light"`). `MenuSubmenu`'s panel is now an anchored `Menu` directly.
+
 ## [0.2.1-beta.2] - 2026-07-22
 
 ## [0.2.1-beta.1] - 2026-07-22

@@ -3,21 +3,40 @@ import {
   useRef,
   useState,
   type ButtonHTMLAttributes,
+  type CSSProperties,
   type HTMLAttributes,
   type KeyboardEvent,
   type ReactNode,
+  type Ref,
 } from 'react';
 import { createPortal } from 'react-dom';
 
-import { Popover } from '../popover';
-import { useAnchorPosition } from '../popover/use-anchor-position';
+import { useAnchorPosition, type FloatingPlacement } from '../popover/use-anchor-position';
 
 // 菜单项的语义色调：default 为常规文字色，danger 用于删除/移除等破坏性操作
 export type MenuItemTone = 'default' | 'danger';
 
+// 锚定模式下的展开方位（复用 useAnchorPosition 的定义并对外暴露，与 Popover 同范式）
+export type MenuPlacement = FloatingPlacement;
+
 export interface MenuProps extends HTMLAttributes<HTMLDivElement> {
   // 菜单固定为垂直列表（ARIA menu 模式即垂直列表），不做 orientation prop
   readonly children: ReactNode;
+  // 传入 anchor 后进入锚定模式：菜单通过 Portal 渲染到 document.body 下，
+  // .hn-menu 直接作为浮层表面（自动叠加 .hn-menu--floating），不再外套 Popover。
+  // 以锚点为基准做 fixed 定位，溢出视口时自动翻转并 clamp 到安全距离内
+  readonly anchor?: HTMLElement | null;
+  // 期望展开方位，仅锚定模式生效；默认 bottom-start（锚点下方、左对齐）
+  readonly placement?: MenuPlacement;
+  // 菜单与锚点的间距（px），仅锚定模式生效
+  readonly anchorOffset?: number;
+  // 交叉轴微调（px），仅锚定模式生效；用于子菜单首项与触发器同高等精细对齐
+  readonly anchorCrossOffset?: number;
+  // 菜单与视口边缘保留的安全距离（px），仅锚定模式生效
+  readonly viewportMargin?: number;
+  // React 19：ref 作为普通 prop 直接透传到菜单根 div，
+  // 使用方常需要它做外部点击关闭等判断
+  readonly ref?: Ref<HTMLDivElement>;
 }
 
 export interface MenuItemProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -51,14 +70,62 @@ export interface MenuSubmenuProps extends Omit<HTMLAttributes<HTMLDivElement>, '
 
 // 语义菜单容器：垂直列表，role="menu" 表示一组 menuitem。
 // 颜色一律使用全局 token 名，嵌入 Popover 时会自动继承其主题覆盖的局部变量。
-export function Menu({ children, className, ...props }: MenuProps) {
-  const classes = ['hn-menu', className].filter(Boolean).join(' ');
+// 传入 anchor 后进入锚定模式（与 Popover 锚定模式同一套机制）：菜单经 Portal 渲染到
+// body 下并自动叠加 .hn-menu--floating 浮动表面——因 Portal 脱离父级级联，
+// 浮动表面自带边框 / 阴影与 dark token 覆盖（data-theme="light" 可切浅色），
+// 因此 .hn-menu 直接作为浮层外层，无需再套一层 Popover。
+export function Menu({
+  children,
+  className,
+  anchor = null,
+  placement = 'bottom-start',
+  anchorOffset = 6,
+  anchorCrossOffset = 0,
+  viewportMargin = 8,
+  ref,
+  style,
+  ...props
+}: MenuProps) {
+  // 锚定模式：anchor 非空时菜单脱离使用方 DOM 树，经 Portal 渲染到 body 下
+  const anchored = anchor !== null;
+  // 定位 hook 始终调用以遵守 hooks 规则；非锚定模式传 null anchor，不产生任何计算与监听
+  const { floatingRef, style: anchorStyle } = useAnchorPosition({
+    anchor,
+    placement,
+    offset: anchorOffset,
+    crossOffset: anchorCrossOffset,
+    viewportMargin,
+  });
 
-  return (
-    <div {...props} className={classes} role="menu">
+  const classes = ['hn-menu', anchored ? 'hn-menu--floating' : undefined, className]
+    .filter(Boolean)
+    .join(' ');
+  // 锚定模式：默认定位样式在前、使用方 style 在后，使用方可覆盖位置但不被默认值反向覆盖；
+  // 非锚定模式不注入任何定位样式（与 Popover 非 edge/anchor 时行为一致）
+  const mergedStyle: CSSProperties | undefined = anchored ? { ...anchorStyle, ...style } : style;
+
+  // 合并定位 hook 的测量 ref 与使用方传入的 ref，两者都需要拿到菜单根元素
+  const setRefs = (element: HTMLDivElement | null) => {
+    floatingRef.current = element;
+    if (typeof ref === 'function') {
+      ref(element);
+    } else if (ref !== undefined && ref !== null) {
+      ref.current = element;
+    }
+  };
+
+  const menu = (
+    <div {...props} className={classes} ref={setRefs} role="menu" style={mergedStyle}>
       {children}
     </div>
   );
+
+  // 锚定模式渲染到 body 下：避免被祖先的 overflow / transform / z-index 上下文裁剪或压住。
+  // typeof document 守卫保证 SSR 场景直接退化为内联渲染（hydration 后由客户端接管）。
+  if (anchored && typeof document !== 'undefined') {
+    return createPortal(menu, document.body);
+  }
+  return menu;
 }
 
 // 菜单项：button + role="menuitem"。
@@ -109,13 +176,10 @@ export function MenuLabel({ children, className, ...props }: MenuLabelProps) {
 const SUBMENU_OPEN_DELAY = 150;
 const SUBMENU_CLOSE_DELAY = 200;
 
-// 子菜单：trigger 是一个 menuitem 触发器（含右侧 chevron），panel 用 Popover 作为表面、
-// 内部再嵌一层 Menu 承载子项。复用 Popover 是为了与「Menu 嵌入 Popover 自动继承主题」
-// 的现有哲学保持一致——子菜单无论独立使用还是嵌在更外层 Popover 里，都能拿到正确的
-// 背景/边框/阴影与 dark/light 主题覆盖，无需新增任何菜单专用色 token。
-//
-// panel 经 Portal 渲染到 body 下（与 Popover 锚定模式同一套定位机制），
-// 默认向 trigger 右侧展开，右侧溢出视口时自动向左翻转，垂直方向 clamp 在安全距离内。
+// 子菜单：trigger 是一个 menuitem 触发器（含右侧 chevron），panel 就是一层锚定模式的
+// Menu——.hn-menu 直接作为浮层表面（自动叠加 .hn-menu--floating，自带边框 / 阴影与
+// dark token 覆盖），不再外套 Popover。panel 经 Portal 渲染到 body 下，默认向 trigger
+// 右侧展开，右侧溢出视口时自动向左翻转，垂直方向 clamp 在安全距离内。
 // React 事件会穿透 Portal 沿组件树传播，因此 wrapper 的 pointer enter/leave 判定
 // 在 panel 移出 DOM 树后依然成立，鼠标在 trigger 与 panel 之间移动不会误关。
 //
@@ -135,21 +199,11 @@ export function MenuSubmenu({
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   // 触发器按钮引用：键盘「左箭头/Esc 关闭后回焦」需要它，同时作为 panel 的定位锚点。
   const triggerRef = useRef<HTMLButtonElement>(null);
-  // 触发器元素的 state 镜像：定位 hook 的 anchor 需要在渲染期读取，
+  // 触发器元素的 state 镜像：Menu 的 anchor 需要在渲染期读取，
   // ref.current 不允许在渲染期访问（react-hooks/refs），因此用 callback ref 同步进 state。
   const [triggerEl, setTriggerEl] = useState<HTMLButtonElement | null>(null);
   // 面板容器引用：键盘「右箭头/Enter 进入子菜单」后需要把焦点放到第一个 menuitem。
   const panelRef = useRef<HTMLDivElement>(null);
-
-  // panel 定位：向 trigger 右侧展开，offset 2 是与 trigger 之间的缝隙（原 CSS margin-left）。
-  // crossOffset -7 抵消 Popover padding(5px) + Menu gap(2px)，让 panel 内第一个 menuitem
-  // 与 trigger 在视觉上同高对齐（与原 CSS top 计算式一致）。
-  const { floatingRef, style: panelPosition } = useAnchorPosition({
-    anchor: open ? triggerEl : null,
-    placement: 'right-start',
-    offset: 2,
-    crossOffset: -7,
-  });
 
   // 统一清理待执行的计时器：每次 schedule 前、组件卸载时调用，避免重复触发与内存泄漏。
   const clearTimer = () => {
@@ -274,12 +328,6 @@ export function MenuSubmenu({
     .filter(Boolean)
     .join(' ');
 
-  // 合并焦点管理用的 panelRef 与定位 hook 的测量 floatingRef，两者指向同一 panel 元素
-  const setPanelRefs = (element: HTMLDivElement | null) => {
-    panelRef.current = element;
-    floatingRef.current = element;
-  };
-
   // 合并焦点管理用的 triggerRef 与定位锚点用的 state 镜像
   const setTriggerRefs = (element: HTMLButtonElement | null) => {
     triggerRef.current = element;
@@ -316,26 +364,27 @@ export function MenuSubmenu({
           ▸
         </span>
       </button>
-      {open
-        ? createPortal(
-            <div className="hn-menu__submenu-panel" ref={setPanelRefs} style={panelPosition}>
-              <Popover>
-                <Menu
-                  // aria-label 挂在 role="menu" 上而非 Popover：aria-label 对无 role 的通用 div
-                  // 不生效（会被 axe 等工具标记），而 menu 角色支持命名，子菜单由此获得无障碍名。
-                  aria-label={nestedAriaLabel}
-                  // 子菜单面板需要可被聚焦（focusFirstMenuItem 把焦点送进来），
-                  // tabindex=-1 让 div 可编程聚焦但不进入 Tab 序列，符合 ARIA APG 子菜单模式。
-                  onKeyDown={handlePanelKeyDown}
-                  tabIndex={-1}
-                >
-                  {children}
-                </Menu>
-              </Popover>
-            </div>,
-            document.body,
-          )
-        : null}
+      {open ? (
+        // panel 即一层锚定模式的 Menu：向 trigger 右侧展开，anchorOffset 2 是与 trigger
+        // 之间的缝隙；anchorCrossOffset -6 抵消浮动菜单的 border(1px) + padding(5px)，
+        // 让 panel 内第一个 menuitem 与 trigger 在视觉上同高对齐。
+        <Menu
+          anchor={triggerEl}
+          anchorCrossOffset={-6}
+          anchorOffset={2}
+          // aria-label 挂在 role="menu" 上：menu 角色支持命名，子菜单由此获得无障碍名。
+          aria-label={nestedAriaLabel}
+          className="hn-menu__submenu-panel"
+          onKeyDown={handlePanelKeyDown}
+          placement="right-start"
+          ref={panelRef}
+          // 子菜单面板需要可被聚焦（focusFirstMenuItem 把焦点送进来），
+          // tabindex=-1 让 div 可编程聚焦但不进入 Tab 序列，符合 ARIA APG 子菜单模式。
+          tabIndex={-1}
+        >
+          {children}
+        </Menu>
+      ) : null}
     </div>
   );
 }
