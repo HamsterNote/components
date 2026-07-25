@@ -63,7 +63,12 @@ decorative treatments. Every effect communicates interactivity, state, or groupi
   `MenuSeparator`. The menu intentionally defines no menu-specific color tokens: text, muted text,
   hover surface, and danger all reference the global `--hn-color-*` tokens, so when a Menu is
   embedded in a Popover it automatically inherits the Popover's local `dark`/`light` overrides
-  without a theme prop. `MenuSeparator` uses `var(--hn-popover-separator, var(--hn-color-border))`
+  without a theme prop. Passing `anchor` switches the Menu into an anchored mode that mirrors
+  Popover's: it portals to `document.body`, positions itself with flip/clamp, and gains the
+  `.hn-menu--floating` surface — border, shadow, and self-contained `dark` token overrides (with
+  an optional `data-theme="light"` variant) — because a portaled menu can no longer inherit those
+  overrides through the cascade. `.hn-menu` therefore serves as the floating outer layer directly,
+  with no Popover wrapper; `MenuSubmenu`'s panel is one such anchored Menu. `MenuSeparator` uses `var(--hn-popover-separator, var(--hn-color-border))`
   so it inherits the Popover separator variable inside a Popover and falls back to the global
   border color when used standalone. `MenuItem` supports a `shortcut` node rendered with the mono
   font family and a `tone="danger"` variant that switches the label color to `--hn-color-danger`.

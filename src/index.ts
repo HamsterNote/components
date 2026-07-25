@@ -23,6 +23,7 @@ export type {
   MenuItemProps,
   MenuItemTone,
   MenuLabelProps,
+  MenuPlacement,
   MenuProps,
   MenuSeparatorProps,
   MenuSubmenuProps,

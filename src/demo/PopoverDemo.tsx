@@ -48,6 +48,8 @@ export function PopoverDemo({ onFeedback }: PopoverDemoProps) {
   const [cornerAnchor, setCornerAnchor] = useState<HTMLElement | null>(null);
   // 贴边示例：当前生效的屏幕边缘，null 表示全部关闭
   const [activeScreenEdge, setActiveScreenEdge] = useState<PopoverEdge | null>(null);
+  // 相对贴边示例：浮层以 absolute 贴在虚线容器（而非视口）边缘
+  const [activeRelativeEdge, setActiveRelativeEdge] = useState<PopoverEdge | null>(null);
   // 锚定浮层引用：外部点击关闭时判断点击是否落在浮层内
   const cornerPopoverRef = useRef<HTMLDivElement>(null);
 
@@ -95,6 +97,10 @@ export function PopoverDemo({ onFeedback }: PopoverDemoProps) {
 
   const handleScreenEdgeToggle = (edge: PopoverEdge) => {
     setActiveScreenEdge((current) => (current === edge ? null : edge));
+  };
+
+  const handleRelativeEdgeToggle = (edge: PopoverEdge) => {
+    setActiveRelativeEdge((current) => (current === edge ? null : edge));
   };
 
   return (
@@ -372,6 +378,64 @@ export function PopoverDemo({ onFeedback }: PopoverDemoProps) {
               </Button>
             </Popover>
           ) : null}
+        </div>
+      </div>
+      <div className="popover-example popover-example--relative-edge">
+        <div className="popover-example__header">
+          <div>
+            <span className="stage-label">Relative Edge / 相对贴边</span>
+            <p>
+              relative + edge 让浮层以 position: absolute 贴在最近定位祖先（虚线框）边缘，
+              不再相对视口 fixed。
+            </p>
+          </div>
+        </div>
+        <div className="popover-relative-stage">
+          {activeRelativeEdge !== null ? (
+            <Popover
+              aria-label="相对贴边浮层"
+              edge={activeRelativeEdge}
+              edgeOffset={12}
+              id="relative-edge-popover"
+              relative
+              role="toolbar"
+            >
+              <Button
+                onClick={() => {
+                  onFeedback('已通过相对贴边 Popover 执行操作');
+                }}
+                size="small"
+                variant="ghost"
+              >
+                操作
+              </Button>
+              <PopoverSeparator />
+              <Button
+                onClick={() => {
+                  setActiveRelativeEdge(null);
+                }}
+                size="small"
+                variant="ghost"
+              >
+                关闭
+              </Button>
+            </Popover>
+          ) : null}
+        </div>
+        <div className="popover-relative-controls">
+          {screenEdgeOptions.map((option) => (
+            <Button
+              aria-controls="relative-edge-popover"
+              aria-expanded={activeRelativeEdge === option.edge}
+              key={option.edge}
+              onClick={() => {
+                handleRelativeEdgeToggle(option.edge);
+              }}
+              size="small"
+            >
+              {option.label}
+            </Button>
+          ))}
         </div>
       </div>
     </div>

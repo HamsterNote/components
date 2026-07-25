@@ -26,6 +26,10 @@ export interface PopoverProps extends HTMLAttributes<HTMLDivElement> {
   readonly edge?: PopoverEdge;
   // 浮层与屏幕边缘的距离（px），仅 edge 生效时使用
   readonly edgeOffset?: number;
+  // 相对定位：仅 edge 生效时使用。传入后贴边改用 position: absolute，
+  // 浮层贴在「最近的定位祖先」对应边缘并跟随其滚动 / 裁切，而不是 fixed 相对视口。
+  // 使用方需保证外层容器设置了 position: relative（或其他非 static 定位）。
+  readonly relative?: boolean;
   // 传入 anchor 后进入锚定模式：浮层通过 Portal 渲染到 document.body 下，
   // 以锚点为基准做 fixed 定位，溢出视口时自动翻转并 clamp 到安全距离内。
   // anchor 优先于 edge（两者同时使用时不应出现，anchor 语义更具体）
@@ -61,38 +65,45 @@ function resolveSeparatorOrientation(
 
 // 计算独立贴边模式下需要内联应用的定位样式。
 // 仅当传入 edge 时返回非空对象，避免在默认用法下注入任何定位样式而改变现有行为。
-function resolveEdgeStyle(edge: PopoverEdge | undefined, edgeOffset: number): CSSProperties {
+// relative 为 true 时用 absolute 相对最近定位祖先贴边（留在使用方布局上下文内），
+// 否则用 fixed 相对视口贴边（脱离使用方定位体系）。
+function resolveEdgeStyle(
+  edge: PopoverEdge | undefined,
+  edgeOffset: number,
+  relative: boolean,
+): CSSProperties {
   if (edge === undefined) {
     return {};
   }
+  const position = relative ? 'absolute' : 'fixed';
   // top/bottom 贴边时水平居中（left: 50% + translateX(-50%)），
   // left/right 贴边时垂直居中（top: 50% + translateY(-50%)）。
   // 注意：transform 用于居中合并，若使用方通过 style 传入自定义 transform，需自行负责覆盖。
   switch (edge) {
     case 'top':
       return {
-        position: 'fixed',
+        position,
         top: edgeOffset,
         left: '50%',
         transform: 'translateX(-50%)',
       };
     case 'bottom':
       return {
-        position: 'fixed',
+        position,
         bottom: edgeOffset,
         left: '50%',
         transform: 'translateX(-50%)',
       };
     case 'left':
       return {
-        position: 'fixed',
+        position,
         left: edgeOffset,
         top: '50%',
         transform: 'translateY(-50%)',
       };
     case 'right':
       return {
-        position: 'fixed',
+        position,
         right: edgeOffset,
         top: '50%',
         transform: 'translateY(-50%)',
@@ -107,6 +118,7 @@ export function Popover({
   orientation = 'horizontal',
   edge,
   edgeOffset = 16,
+  relative = false,
   anchor = null,
   placement = 'bottom-start',
   anchorOffset = 6,
@@ -131,7 +143,7 @@ export function Popover({
   // 默认定位样式在前、使用方 style 在后，使使用方可以覆盖位置但不能被默认值反向覆盖。
   const mergedStyle: CSSProperties = anchored
     ? { ...anchorStyle, ...style }
-    : { ...resolveEdgeStyle(edge, edgeOffset), ...style };
+    : { ...resolveEdgeStyle(edge, edgeOffset, relative), ...style };
 
   // 合并定位 hook 的测量 ref 与使用方传入的 ref，两者都需要拿到浮层根元素
   const setRefs = (element: HTMLDivElement | null) => {

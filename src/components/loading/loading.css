@@ -79,8 +79,8 @@
     /* 半透明遮罩：用 surface 色低 alpha，让背后的内容隐约可辨但明确被「遮挡」 */
     background: color-mix(in srgb, var(--hn-color-surface) 72%, transparent);
     /* 轻度模糊强化「正在处理」的视觉聚焦，与 dialog backdrop 同款手法但更克制 */
-    backdrop-filter: blur(2px);
     -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
     /* cover 形态下圆角跟随父级（border-radius 不设置，继承父级裁切） */
     border-radius: inherit;
     /* cover 形态下 text 颜色提亮到主文本色，确保在遮罩上可读 */
@@ -105,8 +105,8 @@
     gap: 14px;
     /* 与 dialog backdrop 同款暗色遮罩 + 模糊，但稍深一点强调「全局阻塞」 */
     background: rgb(0 0 0 / 45%);
-    backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
     /* 全屏形态下 spinner + text 颜色提亮，确保在暗色遮罩上可读 */
     color: var(--hn-color-accent);
     font-family: var(--hn-font-sans);

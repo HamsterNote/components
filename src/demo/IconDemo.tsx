@@ -16,6 +16,8 @@ const ICON_LABELS_ZH: Record<IconName, string> = {
   mouse: '鼠标',
   line: '线段',
   curve: '曲线段',
+  polygon: '多边形',
+  lasso: '套索',
   rectangle: '矩形',
   ellipse: '椭圆',
   pen: '手写笔',
@@ -33,6 +35,9 @@ const ICON_LABELS_ZH: Record<IconName, string> = {
   type: '字体',
   handle: '拖拽把手',
   card: '卡片',
+  minimap: '小地图',
+  'font-size': '字号',
+  drag: '拖拽',
   search: '搜索',
   close: '关闭',
   check: '勾选',
@@ -111,12 +116,12 @@ export function IconDemo({ onFeedback }: IconDemoProps) {
 
   return (
     <div className="popover-grid">
-      {/* 示例一：完整图标集网格 -- 50 个 outline 图标全展示 */}
+      {/* 示例一：完整图标集网格 -- 55 个 outline 图标全展示 */}
       <div className="popover-example">
         <div className="popover-example__header">
           <div>
             <span className="stage-label">All / 完整图标集</span>
-            <p>50 个 outline 风格图标，点击任一格在顶部「交互输出」查看中英文名称。</p>
+            <p>55 个 outline 风格图标，点击任一格在顶部「交互输出」查看中英文名称。</p>
           </div>
         </div>
         <div className="popover-example__surface icon-demo-grid">
