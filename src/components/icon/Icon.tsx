@@ -213,6 +213,13 @@ const ICON_PATHS: Record<IconName, ReactElement> = {
       <path d="M3 21h18" />
     </>
   ),
+  comment: (
+    <>
+      <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z" />
+      <path d="M8 9h8" />
+      <path d="M8 13h5" />
+    </>
+  ),
   // ── 键盘：键盘外框 + 三行按键 ──────────────────────────────────────────
   keyboard: (
     <>
@@ -492,6 +499,24 @@ const ICON_PATHS: Record<IconName, ReactElement> = {
       <path d="M8 11h6" />
     </>
   ),
+  // ── 全屏：四角向外展开 ──────────────────────────────────────────────────
+  fullscreen: (
+    <>
+      <path d="M9 4H4v5" />
+      <path d="M15 4h5v5" />
+      <path d="M20 15v5h-5" />
+      <path d="M9 20H4v-5" />
+    </>
+  ),
+  // ── 退出全屏：四角向内收拢 ──────────────────────────────────────────────
+  'fullscreen-exit': (
+    <>
+      <path d="M4 9h5V4" />
+      <path d="M20 9h-5V4" />
+      <path d="M15 20v-5h5" />
+      <path d="M9 20v-5H4" />
+    </>
+  ),
   // ── 菜单：三条横线 ──────────────────────────────────────────────────────
   menu: (
     <>
@@ -552,6 +577,7 @@ export function Icon({ label, name, className, ...props }: IconProps) {
       {...accessibleProps}
       {...props}
     >
+      <title>{label ?? name}</title>
       {ICON_PATHS[name]}
     </svg>
   );

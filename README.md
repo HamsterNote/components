@@ -83,7 +83,7 @@ import '@hamster-note/components/styles.css';
 
 - `Button`：primary、danger、warning、success、info、secondary 六种操作层级、三种尺寸，以及可与
   任意层级组合的布尔型 `ghost` 展示属性。
-- `Icon`：第一期 outline 风格图标集，内置 55 个 24×24 图标（`ICON_NAMES` 导出全部
+- `Icon`：第一期 outline 风格图标集，内置 57 个 24×24 图标（`ICON_NAMES` 导出全部
   名称）；颜色跟随外层 `color`、尺寸跟随 `font-size`，`label` 提供可访问名。
 - `Badge`：neutral、accent、success、warning、danger 五种语义状态。
 - `TextField`：持久标签、辅助信息、错误状态与完整原生 input 属性。
@@ -102,11 +102,14 @@ import '@hamster-note/components/styles.css';
 - `Dialog`：受控模态对话框。Portal 渲染到 `document.body`，并自动桥接外层
   `ThemeProvider` 的 accent 与明暗主题；内置焦点循环、滚动锁、Esc / 背景点击关闭与
   出入场动画（尊重 `prefers-reduced-motion`）。`showCloseButton` 控制右上角关闭按钮，
-  `showFullscreenButton` 控制其左侧的全屏切换按钮，二者默认均为 `false`。
+  `showFullscreenButton` 控制其左侧的全屏切换按钮：自适应状态使用 `fullscreen` 图标并标记为
+  「全屏显示」，全屏状态使用 `fullscreen-exit` 图标并标记为「退出全屏」；二者默认均为 `false`。
 - `Drawer`：边缘贴附模态抽屉。`placement` 支持 `left` / `right` / `top` / `bottom`
   （默认 `right`），`size` 覆盖自适应状态的默认尺寸（左右 360 / 上下 280）；标题区域
   向上拖动至少 56px 进入全屏、向下拖动恢复，`showFullscreenButton` 在标题左侧提供等价的
-  箭头按钮，`showCloseButton` 在右上角显示关闭按钮。Portal 自动继承 `ThemeProvider`，
+  全屏切换按钮：底部 Drawer 使用 `arrow-up` / `arrow-down`，左侧、右侧与顶部 Drawer 使用
+  `fullscreen` / `fullscreen-exit`；按钮名称统一为「全屏显示」/「退出全屏」。
+  `showCloseButton` 在右上角显示关闭按钮。Portal 自动继承 `ThemeProvider`，
   与 `Dialog` 共享模态语义。
 - `Confirm`：确认对话框，基于 `Dialog` 叠加固定 footer。提供三种等价形态：`<Confirm>`
   受控组件、`<ConfirmProvider>` + `useConfirm()` hook（返回 `Promise<boolean>`，并发
@@ -145,7 +148,7 @@ import '@hamster-note/components/styles.css';
 
 ### `Icon`
 
-`Icon` 是第一期 outline 风格图标集，内置 55 个 24×24 图标：`ICON_NAMES` 常量导出全部
+`Icon` 是第一期 outline 风格图标集，内置 57 个 24×24 图标：`ICON_NAMES` 常量导出全部
 名称，`IconName` 类型从该数组派生（单一数据源）。所有图标遵循统一规范：
 `stroke="currentColor"`、stroke-width 1.5、圆角线帽线脚、`fill="none"`，仅用 path /
 rect / circle 等基础图元，不依赖外部资源。颜色跟随外层 `color`，尺寸默认 `1em` 见方、

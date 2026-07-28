@@ -48,7 +48,7 @@ export function DrawerDemo({ onFeedback }: DrawerDemoProps) {
         <div className="popover-example__header">
           <div>
             <span className="stage-label">Placement / 四个方向</span>
-            <p>标题向上拖动进入全屏、向下拖动恢复；箭头按钮提供同等键盘操作。</p>
+            <p>标题向上拖动进入全屏、向下拖动恢复；底部使用箭头，其余方向使用全屏图标。</p>
           </div>
         </div>
         <div className="drawer-demo-row">

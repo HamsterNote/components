@@ -1,17 +1,21 @@
 import {
-  useEffect,
-  useRef,
-  useState,
   type ButtonHTMLAttributes,
   type CSSProperties,
   type HTMLAttributes,
   type KeyboardEvent,
+  type MouseEvent,
   type ReactNode,
   type Ref,
+  useEffect,
+  useRef,
+  useState,
 } from 'react';
 import { createPortal } from 'react-dom';
 
-import { useAnchorPosition, type FloatingPlacement } from '../popover/use-anchor-position';
+import {
+  type FloatingPlacement,
+  useAnchorPosition,
+} from '../popover/use-anchor-position';
 
 // 菜单项的语义色调：default 为常规文字色，danger 用于删除/移除等破坏性操作
 export type MenuItemTone = 'default' | 'danger';
@@ -314,6 +318,22 @@ export function MenuSubmenu({
     }
   };
 
+  const handlePanelClickCapture = (event: MouseEvent<HTMLDivElement>) => {
+    if (!(event.target instanceof Element)) {
+      return;
+    }
+    const selectedItem = event.target.closest<HTMLElement>('[role="menuitem"]');
+    if (
+      selectedItem === null ||
+      selectedItem.getAttribute('aria-haspopup') === 'menu'
+    ) {
+      return;
+    }
+    clearTimer();
+    setOpen(false);
+    triggerRef.current?.focus();
+  };
+
   // 计算 nested Menu 的 aria-label：
   // 1) 使用方显式传入 aria-label 优先级最高，覆盖一切；
   // 2) 否则若 label 是字符串，直接用其作为无障碍名（含「…」等标点也保留，与可见文本一致）；
@@ -375,6 +395,9 @@ export function MenuSubmenu({
           // aria-label 挂在 role="menu" 上：menu 角色支持命名，子菜单由此获得无障碍名。
           aria-label={nestedAriaLabel}
           className="hn-menu__submenu-panel"
+          // capture 阶段先关闭子菜单，再执行子项自身的 onClick。这样即使子项会同步更新
+          // 受控数据并触发父组件重渲染，关闭状态也不会因 Portal 事件冒泡时机而丢失。
+          onClickCapture={handlePanelClickCapture}
           onKeyDown={handlePanelKeyDown}
           placement="right-start"
           ref={panelRef}

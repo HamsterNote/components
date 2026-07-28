@@ -4,6 +4,7 @@ import { describe, expect, it, vi } from 'vitest';
 import {
   Badge,
   Button,
+  ICON_NAMES,
   Icon,
   Kbd,
   Loading,
@@ -11,6 +12,7 @@ import {
   MenuItem,
   MenuLabel,
   MenuSeparator,
+  MenuSubmenu,
 } from '../index';
 
 describe('基础组件契约', () => {
@@ -76,6 +78,27 @@ describe('基础组件契约', () => {
     expect(screen.queryByRole('img')).not.toBeInTheDocument();
   });
 
+  it('Given 评论图标, When 按公共名称渲染, Then API 与气泡轮廓可用', () => {
+    render(<Icon label="评论" name="comment" />);
+
+    expect(ICON_NAMES).toContain('comment');
+    expect(screen.getByRole('img', { name: '评论' })).toHaveClass('hn-icon--comment');
+  });
+
+  it('Given 公共全屏图标, When 按名称渲染, Then API 与四角轮廓均可用', () => {
+    render(
+      <>
+        <Icon label="全屏显示" name="fullscreen" />
+        <Icon label="退出全屏" name="fullscreen-exit" />
+      </>,
+    );
+
+    expect(ICON_NAMES).toContain('fullscreen');
+    expect(ICON_NAMES).toContain('fullscreen-exit');
+    expect(screen.getByRole('img', { name: '全屏显示' })).toHaveClass('hn-icon--fullscreen');
+    expect(screen.getByRole('img', { name: '退出全屏' })).toHaveClass('hn-icon--fullscreen-exit');
+  });
+
   it('Given 大尺寸覆盖式加载, When 渲染, Then 状态语义、文案和尺寸保持稳定', () => {
     const { container } = render(
       <Loading cover size="large" text="正在同步">
@@ -114,5 +137,24 @@ describe('基础组件契约', () => {
     expect(deleteItem).toHaveClass('hn-menu__item--danger');
     expect(within(menu).getByRole('separator')).toHaveClass('hn-menu__separator');
     expect(onDelete).toHaveBeenCalledOnce();
+  });
+
+  it('Given 已展开子菜单, When 选择菜单项, Then 立即关闭子菜单', () => {
+    render(
+      <Menu aria-label="卡片操作">
+        <MenuSubmenu label="子卡布局">
+          <MenuItem>Free</MenuItem>
+        </MenuSubmenu>
+      </Menu>,
+    );
+    fireEvent.click(screen.getByRole('menuitem', { name: '子卡布局' }));
+
+    fireEvent.click(screen.getByRole('menuitem', { name: 'Free' }));
+
+    expect(screen.queryByRole('menuitem', { name: 'Free' })).not.toBeInTheDocument();
+    expect(screen.getByRole('menuitem', { name: '子卡布局' })).toHaveAttribute(
+      'aria-expanded',
+      'false',
+    );
   });
 });
