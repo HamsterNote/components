@@ -45,6 +45,18 @@ jobs:
         run: |
           yarn format:check
 
+      - name: Run unit tests
+        run: |
+          yarn test:coverage
+
+      - name: Install Playwright Chromium
+        run: |
+          yarn playwright install --with-deps chromium
+
+      - name: Run browser tests
+        run: |
+          yarn test:e2e
+
       - name: Build (lib + demo)
         run: |
           yarn build

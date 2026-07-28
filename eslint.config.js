@@ -5,7 +5,9 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-  { ignores: ['dist', 'demo-dist', 'node_modules'] },
+  {
+    ignores: ['dist', 'demo-dist', 'coverage', 'node_modules', 'playwright-report', 'test-results'],
+  },
   eslint.configs.recommended,
   ...tseslint.configs.strictTypeChecked,
   ...tseslint.configs.stylisticTypeChecked,
