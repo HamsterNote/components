@@ -24,7 +24,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          # @testing-library/jest-dom@7 要求 Node >= 22，与本地开发环境对齐
+          node-version: 22
           cache: yarn
 
       - name: Install dependencies
