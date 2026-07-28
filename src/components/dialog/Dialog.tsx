@@ -67,7 +67,11 @@ export function Dialog({
     return null;
   }
 
-  const panelClasses = ['hn-dialog__panel', fullscreen ? 'hn-dialog__panel--fullscreen' : '', className]
+  const panelClasses = [
+    'hn-dialog__panel',
+    fullscreen ? 'hn-dialog__panel--fullscreen' : '',
+    className,
+  ]
     .filter(Boolean)
     .join(' ');
 
@@ -156,7 +160,12 @@ export function Dialog({
     theme === null ? (
       modal
     ) : (
-      <div className="hn-theme" data-accent={theme.accent} data-mode={theme.mode} style={theme.style}>
+      <div
+        className="hn-theme"
+        data-accent={theme.accent}
+        data-mode={theme.mode}
+        style={theme.style}
+      >
         {modal}
       </div>
     );

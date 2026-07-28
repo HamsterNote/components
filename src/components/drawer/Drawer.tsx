@@ -156,7 +156,10 @@ export function Drawer({
         style={mergedStyle}
         tabIndex={-1}
       >
-        {title !== undefined || description !== undefined || showCloseButton || showFullscreenButton ? (
+        {title !== undefined ||
+        description !== undefined ||
+        showCloseButton ||
+        showFullscreenButton ? (
           <header
             className="hn-drawer__header"
             onPointerCancel={handleHeaderPointerEnd}
@@ -211,7 +214,12 @@ export function Drawer({
     theme === null ? (
       modal
     ) : (
-      <div className="hn-theme" data-accent={theme.accent} data-mode={theme.mode} style={theme.style}>
+      <div
+        className="hn-theme"
+        data-accent={theme.accent}
+        data-mode={theme.mode}
+        style={theme.style}
+      >
         {modal}
       </div>
     );

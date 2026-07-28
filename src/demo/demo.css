@@ -66,7 +66,11 @@ a {
   place-items: center;
   border: 1px solid var(--hn-color-border-strong);
   border-radius: 7px;
-  background: linear-gradient(145deg, color-mix(in srgb, var(--hn-color-text) 9%, transparent), transparent);
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--hn-color-text) 9%, transparent),
+    transparent
+  );
   font: 500 9px/1 var(--hn-font-mono);
   color: var(--hn-color-accent);
 }
@@ -249,7 +253,11 @@ nav a:focus-visible {
   border-radius: 12px;
   background:
     linear-gradient(color-mix(in srgb, var(--hn-color-text) 2%, transparent), transparent 35%),
-    repeating-linear-gradient(90deg, transparent 0 39px, color-mix(in srgb, var(--hn-color-text) 2%, transparent) 40px),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 39px,
+      color-mix(in srgb, var(--hn-color-text) 2%, transparent) 40px
+    ),
     color-mix(in srgb, var(--hn-color-surface) 94%, var(--hn-color-text));
 }
 
@@ -302,7 +310,11 @@ footer code {
   min-height: 100vh;
   color: var(--hn-color-text);
   background:
-    radial-gradient(circle at 50% -20%, color-mix(in srgb, var(--hn-color-accent) 10%, transparent), transparent 38%),
+    radial-gradient(
+      circle at 50% -20%,
+      color-mix(in srgb, var(--hn-color-accent) 10%, transparent),
+      transparent 38%
+    ),
     var(--hn-color-surface);
   color-scheme: dark;
   transition:
