@@ -24,7 +24,10 @@ decorative treatments. Every effect communicates interactivity, state, or groupi
 - Strong text: `#f4f4f5`; body text: `#b4b4bd`; muted text: `#777783`.
 - Border: `rgba(255, 255, 255, 0.09)`; strong border: `rgba(255, 255, 255, 0.16)`.
 - Accent: `#7c83ff`; accent hover: `#9197ff`; accent wash: `rgba(124, 131, 255, 0.12)`.
-- Success: `#4ade80`; warning: `#fbbf24`; danger: `#fb7185`.
+- Info: `#aeb2ff`; success: `#4ade80`; warning: `#fbbf24`; danger: `#fb7185`. Filled
+  semantic actions use `#09090b` labels by default; light-mode danger uses `#ffffff` to preserve
+  WCAG AA contrast at the 13px label size. Danger also owns a mode-aware hover token: dark mode
+  brightens to `#fc8a9b`, while light mode deepens to `#be123c` so its white label remains AA.
 - Focus ring: `rgba(145, 151, 255, 0.42)`. Accent is reserved for focus and primary actions.
 
 ## 3. Typography
@@ -44,7 +47,13 @@ decorative treatments. Every effect communicates interactivity, state, or groupi
 ## 5. Component Primitives
 
 - Buttons: 36px default height, 8px radius, semibold 13px label, clear default/hover/active/focus/
-  disabled states. Primary is filled accent; secondary is neutral; ghost removes the surface.
+  disabled states. Primary is filled accent; danger, warning, success, and info are peer-level filled
+  semantic actions matching the four colored Badge states; secondary is neutral. Ghost is an
+  orthogonal boolean presentation modifier rather than a variant: it removes the surface while using
+  the selected variant's action color for its label and hover wash. Semantic ghost labels mix the
+  action color 45% toward the current theme text token, preserving their hue while maintaining
+  readable contrast on both light and dark surfaces; ghost without an explicit variant inherits the
+  neutral secondary treatment.
 - Badge: inline status label with 6px radius, compact 11px type, and semantic color wash.
 - TextField: persistent visible label, optional hint/error, 38px control, 8px radius, strong focus ring.
 - NoteCard: semantic article with title, excerpt, metadata, and selected state; never a decorative card.
@@ -99,6 +108,13 @@ decorative treatments. Every effect communicates interactivity, state, or groupi
   blur, opacity + 8px translateY motion (140ms opacity / 180ms transform,
   `cubic-bezier(.2,.8,.2,1)`, `prefers-reduced-motion` aware), `role="dialog"` + `aria-modal=true`,
   and `aria-labelledby`/`aria-describedby` wired from `useId` to optional `title`/`description`.
+  Because the Portal leaves the ThemeProvider DOM subtree, the provider exposes its resolved
+  accent/mode through React context and the Dialog recreates a theme scope at the portal root; theme
+  switching therefore remains live without copying computed styles. Optional `showCloseButton` and
+  `showFullscreenButton` props add compact labelled icon buttons at the top-right (fullscreen first,
+  close last). Fullscreen is component-owned presentation state, resets on close, and swaps the panel
+  between its constrained centered silhouette and a viewport-filling surface without changing the
+  consumer-owned `open` contract.
   z-index 1100 sits above Popover's 1000 so a dialog correctly overlays menus and anchored
   popovers.
 - Drawer: a controlled edge-attached modal panel that reuses the same `useModal` behavior as Dialog.
@@ -110,16 +126,22 @@ decorative treatments. Every effect communicates interactivity, state, or groupi
   translateX (left/right) or translateY (top/bottom) with the same 180ms / 140ms / easing / reduced
   motion contract as Dialog. z-index 1200 sits above Dialog's 1100: when a Drawer opens a Dialog
   the Dialog stays visible, and when a Dialog opens a Drawer the Drawer overlays the Dialog,
-  matching the intuition that a drawer is a higher-level container.
+  matching the intuition that a drawer is a higher-level container. It uses the same React-context
+  portal theme bridge as Dialog. Optional `showCloseButton` adds a labelled icon action at the
+  top-right. Optional `showFullscreenButton` adds an upward-arrow action immediately before the title
+  at the top-left. The title header is the drag surface: a vertical upward gesture of at least 56px
+  promotes the adaptive detent to fullscreen, while a downward gesture of at least 56px restores the
+  adaptive detent. Pointer capture keeps the gesture continuous outside the header. The two detents
+  are discrete and animate only transform/opacity; side drawers expand their width to the viewport,
+  while top/bottom drawers expand their height. The adaptive `size` remains the restoration target.
 - Confirm: a confirmation dialog built on top of Dialog, exposed in three equivalent forms that
   share one presentational core (`<Confirm>`): a controlled `<Confirm>` component, a
   `<ConfirmProvider>` + `useConfirm()` hook returning `confirm(options): Promise<boolean>`, and a
   pure `confirm(options): Promise<boolean>` function that lazily creates a container and a
   `react-dom/client` `createRoot` for callers outside any Provider tree (SSR guards resolve `false`
-  with a `console.warn`). The footer is a right-aligned ghost cancel + primary confirm reusing
-  `Button`; `tone="danger"` is a `data-tone='danger'` hook on the footer that CSS-overrides the
-  primary button's background to `--hn-color-danger` (hover derived via `color-mix`), intentionally
-  not modifying `Button`. `loading` disables both buttons and rewrites the confirm label to
+  with a `console.warn`). The footer is a right-aligned ghost cancel plus a confirm action reusing
+  `Button`; `tone="danger"` selects Button's danger variant, while the default tone selects primary.
+  `loading` disables both buttons and rewrites the confirm label to
   "处理中…". The Provider uses a latest-wins queue: a new request resolves any pending request with
   `false` before mounting itself, so the UI always shows the latest confirm and no Promise ever
   hangs.
@@ -162,7 +184,10 @@ decorative treatments. Every effect communicates interactivity, state, or groupi
   are on by default and individually toggleable via `closeOnEsc`/`closeOnBackdrop`. Enter/exit
   motion respects `prefers-reduced-motion`. Confirm reuses Dialog's semantics; the confirm button
   is the primary action and the cancel button is the dismissal path, so Esc/backdrop both resolve
-  the hook/function Promise with `false`.
+  the hook/function Promise with `false`. Their icon actions are native `button` elements with visible
+  focus rings, 36px minimum targets, stable Chinese `aria-label` text, and `aria-pressed` on fullscreen
+  toggles. Drawer drag is additive rather than exclusive: keyboard and assistive-technology users can
+  always reach the same fullscreen state through the arrow button when that action is enabled.
 
 ## 8. Accepted Debt and Handoff
 

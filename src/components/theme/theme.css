@@ -56,8 +56,10 @@
   --hn-color-border: rgb(0 0 0 / 10%);
   --hn-color-border-strong: rgb(0 0 0 / 18%);
   --hn-color-danger: #e11d48;
+  --hn-color-danger-hover: #be123c;
   --hn-color-success: #16a34a;
   --hn-color-warning: #d97706;
+  --hn-color-on-danger: #ffffff;
 }
 
 /* 深色模式：与 :root 默认值一致；显式声明使 light 内可嵌套强制回深色 */
@@ -69,6 +71,8 @@
   --hn-color-border: rgb(255 255 255 / 10%);
   --hn-color-border-strong: rgb(255 255 255 / 17%);
   --hn-color-danger: #fb7185;
+  --hn-color-danger-hover: #fc8a9b;
   --hn-color-success: #4ade80;
   --hn-color-warning: #fbbf24;
+  --hn-color-on-danger: #09090b;
 }

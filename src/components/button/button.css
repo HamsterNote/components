@@ -32,15 +32,59 @@
   }
 
   .hn-button--primary {
+    --hn-button-action-color: var(--hn-color-accent);
+
     background: var(--hn-color-accent);
-    color: #09090b;
+    color: var(--hn-color-on-semantic);
   }
 
   .hn-button--primary:hover:not(:disabled) {
     background: var(--hn-color-accent-hover);
   }
 
+  .hn-button--danger,
+  .hn-button--warning,
+  .hn-button--success,
+  .hn-button--info {
+    --hn-button-action-color: var(--hn-button-semantic-color);
+
+    background: var(--hn-button-semantic-color);
+    color: var(--hn-button-semantic-foreground, var(--hn-color-on-semantic));
+  }
+
+  .hn-button--danger {
+    --hn-button-semantic-color: var(--hn-color-danger);
+    --hn-button-semantic-hover: var(--hn-color-danger-hover);
+    --hn-button-semantic-foreground: var(--hn-color-on-danger);
+  }
+
+  .hn-button--warning {
+    --hn-button-semantic-color: var(--hn-color-warning);
+  }
+
+  .hn-button--success {
+    --hn-button-semantic-color: var(--hn-color-success);
+  }
+
+  .hn-button--info {
+    --hn-button-semantic-color: var(--hn-color-info);
+  }
+
+  .hn-button--danger:hover:not(:disabled),
+  .hn-button--warning:hover:not(:disabled),
+  .hn-button--success:hover:not(:disabled),
+  .hn-button--info:hover:not(:disabled) {
+    background: var(
+      --hn-button-semantic-hover,
+      color-mix(in srgb, var(--hn-button-semantic-color) 88%, white)
+    );
+  }
+
   .hn-button--secondary {
+    --hn-button-action-color: var(--hn-color-text-muted);
+    --hn-button-action-hover-color: var(--hn-color-text);
+    --hn-button-ghost-color: var(--hn-color-text-muted);
+
     border-color: var(--hn-color-border);
     background: var(--hn-color-surface);
   }
@@ -50,14 +94,22 @@
     background: var(--hn-color-surface-hover);
   }
 
-  .hn-button--ghost {
+  .hn-button.hn-button--ghost {
+    border-color: transparent;
     background: transparent;
-    color: var(--hn-color-text-muted);
+    color: var(
+      --hn-button-ghost-color,
+      color-mix(in srgb, var(--hn-button-action-color) 45%, var(--hn-color-text))
+    );
   }
 
-  .hn-button--ghost:hover:not(:disabled) {
-    background: var(--hn-color-surface-hover);
-    color: var(--hn-color-text);
+  .hn-button.hn-button--ghost:hover:not(:disabled) {
+    border-color: transparent;
+    background: color-mix(in srgb, var(--hn-button-action-color) 12%, transparent);
+    color: var(
+      --hn-button-action-hover-color,
+      color-mix(in srgb, var(--hn-button-action-color) 45%, var(--hn-color-text))
+    );
   }
 
   .hn-button--small {

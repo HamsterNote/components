@@ -26,7 +26,7 @@
   .hn-badge--accent {
     border-color: rgb(124 131 255 / 24%);
     background: rgb(124 131 255 / 10%);
-    color: #aeb2ff;
+    color: var(--hn-color-info);
   }
 
   .hn-badge--success {

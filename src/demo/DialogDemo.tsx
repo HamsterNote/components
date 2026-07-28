@@ -13,6 +13,8 @@ const basicExampleCode = `const [open, setOpen] = useState(false);
 <Dialog
   open={open}
   onClose={() => setOpen(false)}
+  showCloseButton
+  showFullscreenButton
   title="移动笔记"
   description="确认把这篇笔记移动到选定的笔记本？"
 >
@@ -122,6 +124,8 @@ export function DialogDemo({ onFeedback }: DialogDemoProps) {
           onFeedback('已关闭对话框（基础示例）');
         }}
         open={basicOpen}
+        showCloseButton
+        showFullscreenButton
         title="移动笔记"
       >
         <Button

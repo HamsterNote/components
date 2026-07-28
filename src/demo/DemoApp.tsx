@@ -1,8 +1,16 @@
 import { useState } from 'react';
 
-import { Badge, Button, NoteCard, TextField } from '../index';
+import {
+  Badge,
+  NoteCard,
+  TextField,
+  type ThemeMode,
+  ThemeProvider,
+} from '../index';
+import { ButtonDemo } from './ButtonDemo';
 import { ConfirmDemo } from './ConfirmDemo';
 import { DemoSection } from './DemoSection';
+import { DemoTopbar } from './DemoTopbar';
 import { DialogDemo } from './DialogDemo';
 import { DrawerDemo } from './DrawerDemo';
 import { IconDemo } from './IconDemo';
@@ -12,23 +20,8 @@ import { MenuDemo } from './MenuDemo';
 import { PopoverDemo } from './PopoverDemo';
 import { ThemeDemo } from './ThemeDemo';
 
-const navigationItems = [
-  { href: '#buttons', label: 'Button' },
-  { href: '#badges', label: 'Badge' },
-  { href: '#fields', label: 'TextField' },
-  { href: '#cards', label: 'NoteCard' },
-  { href: '#popovers', label: 'Popover' },
-  { href: '#menus', label: 'Menu' },
-  { href: '#kbds', label: 'Kbd' },
-  { href: '#loadings', label: 'Loading' },
-  { href: '#icons', label: 'Icon' },
-  { href: '#dialogs', label: 'Dialog' },
-  { href: '#drawers', label: 'Drawer' },
-  { href: '#confirms', label: 'Confirm' },
-  { href: '#themes', label: 'Theme' },
-] as const;
-
 export function DemoApp() {
+  const [themeMode, setThemeMode] = useState<ThemeMode>('dark');
   const [feedback, setFeedback] = useState('等待交互');
   const [noteTitle, setNoteTitle] = useState('');
   const [selectedNote, setSelectedNote] = useState<'planning' | 'research'>('planning');
@@ -37,25 +30,17 @@ export function DemoApp() {
   const titleErrorProps = titleError === undefined ? {} : { error: titleError };
 
   return (
-    <div className="demo-shell">
-      <header className="topbar">
-        <a aria-label="HamsterNote Components 首页" className="brand" href="#top">
-          <span aria-hidden="true" className="brand__mark">
-            HN
-          </span>
-          <span>Components</span>
-        </a>
-        <nav aria-label="组件导航">
-          {navigationItems.map((item) => (
-            <a href={item.href} key={item.href}>
-              {item.label}
-            </a>
-          ))}
-        </nav>
-        <Badge tone="success">v0.1.0</Badge>
-      </header>
+    <ThemeProvider accent="violet" mode={themeMode}>
+      <div className="demo-page">
+        <div className="demo-shell">
+          <DemoTopbar
+            mode={themeMode}
+            onModeChange={() => {
+              setThemeMode((current) => (current === 'dark' ? 'light' : 'dark'));
+            }}
+          />
 
-      <main id="top">
+          <main id="top">
         <section aria-labelledby="page-title" className="hero">
           <div className="hero__copy">
             <p className="hero__kicker">@hamster-note/components</p>
@@ -64,7 +49,8 @@ export function DemoApp() {
               <span>精确组件。</span>
             </h1>
             <p className="hero__lede">
-              React 19 与 TypeScript 6 驱动的基础组件。每个状态都可检查、可操作，也可独立导入。
+              React 19 与 TypeScript 6 驱动的基础组件。每个状态都可检查、可操作，也可
+              <span className="hero__nowrap">独立导入。</span>
             </p>
           </div>
           <div className="hero__status" role="status">
@@ -82,43 +68,7 @@ export function DemoApp() {
           id="buttons"
           title="Button"
         >
-          <div className="stage-group">
-            <span className="stage-label">Variants</span>
-            <div className="component-row">
-              <Button
-                onClick={() => {
-                  setFeedback('已创建一条新笔记');
-                }}
-                variant="primary"
-              >
-                新建笔记
-              </Button>
-              <Button
-                onClick={() => {
-                  setFeedback('已打开导入流程');
-                }}
-              >
-                导入内容
-              </Button>
-              <Button
-                onClick={() => {
-                  setFeedback('已取消当前操作');
-                }}
-                variant="ghost"
-              >
-                取消
-              </Button>
-              <Button disabled>不可用</Button>
-            </div>
-          </div>
-          <div className="stage-group">
-            <span className="stage-label">Sizes</span>
-            <div className="component-row component-row--aligned">
-              <Button size="small">小尺寸</Button>
-              <Button>默认尺寸</Button>
-              <Button size="large">大尺寸</Button>
-            </div>
-          </div>
+          <ButtonDemo onFeedback={setFeedback} />
         </DemoSection>
 
         <DemoSection
@@ -266,14 +216,16 @@ export function DemoApp() {
           id="themes"
           title="ThemeProvider"
         >
-          <ThemeDemo onFeedback={setFeedback} />
+          <ThemeDemo mode={themeMode} onFeedback={setFeedback} />
         </DemoSection>
-      </main>
+          </main>
 
-      <footer>
-        <span>HamsterNote UI Foundation</span>
-        <code>React 19 · TypeScript 6 · Vite 8</code>
-      </footer>
-    </div>
+          <footer>
+            <span>HamsterNote UI Foundation</span>
+            <code>React 19 · TypeScript 6 · Vite 8</code>
+          </footer>
+        </div>
+      </div>
+    </ThemeProvider>
   );
 }

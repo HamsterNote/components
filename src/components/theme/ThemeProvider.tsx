@@ -1,6 +1,7 @@
 import type { CSSProperties, ReactNode } from 'react';
 
 import { isThemeAccentPreset, THEME_ACCENTS, type ThemeAccent, type ThemeMode } from './theme';
+import { ThemeContext, type ThemeStyle } from './theme-context';
 
 /**
  * ThemeProvider 的 props。
@@ -43,20 +44,6 @@ export interface ThemeProviderProps {
   /** 追加到根 div 的 style，合并时排在 ThemeProvider 内联 style 之后，可覆盖主题变量。 */
   readonly style?: CSSProperties;
 }
-
-/**
- * 根 div 的内联 style 类型。
- *
- * 既要满足 React 的 CSSProperties，又要允许写入三个主题相关的 CSS 自定义属性。
- * 用 `Partial<Record<...>>` 把三个自定义属性声明为可选的 string：
- *  - 预设色分支会下发全部三个；
- *  - 自定义色分支只下发主色，hover 与 focusRing 由 theme.css 的 color-mix 派生。
- *
- * 用 `Partial` 而非全必填，是为了让自定义分支的类型合法，避免 `as any`。
- * TS 对 CSSProperties 的索引签名不开放自定义属性，必须通过交叉类型扩展。
- */
-type ThemeStyle = CSSProperties &
-  Partial<Record<'--hn-color-accent' | '--hn-color-accent-hover' | '--hn-focus-ring', string>>;
 
 /**
  * 根据入参 accent 推导出根 div 的 data-accent 属性值与内联 style。
@@ -141,8 +128,10 @@ export function ThemeProvider({
   // data-mode 始终渲染（即便用默认 'dark'），让 theme.css 的 [data-mode] 规则
   // 可预测命中，保证嵌套场景下内层 mode 能覆盖外层（light 内嵌套 dark 时强制回深色）
   return (
-    <div className={classes} data-accent={dataAccent} data-mode={mode} style={mergedStyle}>
-      {children}
-    </div>
+    <ThemeContext value={{ accent: dataAccent, mode, style: mergedStyle }}>
+      <div className={classes} data-accent={dataAccent} data-mode={mode} style={mergedStyle}>
+        {children}
+      </div>
+    </ThemeContext>
   );
 }

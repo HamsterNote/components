@@ -1,20 +1,18 @@
-/* DemoCode：示例卡片下方的代码展示块，沿用 popover-example 的深色卡片语言 */
-
 .demo-code {
   margin: 0;
-  border: 1px solid rgb(255 255 255 / 9%);
+  border: 1px solid var(--hn-color-border);
   border-radius: 10px;
-  background: #0a0a0d;
+  background: color-mix(in srgb, var(--hn-color-surface) 94%, var(--hn-color-text));
   overflow: hidden;
 }
 
 .demo-code__label {
   padding: 8px 12px;
-  border-bottom: 1px solid rgb(255 255 255 / 8%);
+  border-bottom: 1px solid var(--hn-color-border);
   font: 500 10px/1 var(--hn-font-mono);
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #70707b;
+  color: var(--hn-color-text-muted);
 }
 
 .demo-code__body {
@@ -22,5 +20,5 @@
   padding: 12px 14px;
   overflow-x: auto;
   font: 400 12px/1.7 var(--hn-font-mono);
-  color: #c9c9d1;
+  color: var(--hn-color-text);
 }

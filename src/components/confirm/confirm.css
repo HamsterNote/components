@@ -4,9 +4,7 @@
  * 确认对话框基于 Dialog 表面，叠加标题 / 描述 / 取消+确认按钮的固定结构。
  * 不引入任何「确认框专用色」：文本、按钮全部复用全局 token 与 Button 组件。
  *
- * danger 色调：通过 data-tone="danger" 挂在 footer 的确认按钮上，CSS 局部覆盖
- * Button primary 的背景色为 --hn-color-danger，hover 用 color-mix 派生稍亮一档。
- * 不修改 Button 本身，保持 Button 的单一职责。
+ * danger 色调直接复用 Button danger variant，确保主题前景色和 hover token 始终一致。
  *
  * Footer 布局：ghost 取消 + primary 确认，右对齐，gap 8px，与 Button 默认尺寸匹配。
  */
@@ -19,18 +17,5 @@
     justify-content: flex-end;
     gap: 8px;
     margin-top: 20px;
-  }
-
-  /* danger 色调确认按钮：局部覆盖 Button primary 的背景色与 hover，
-     不修改 Button 本身。CSS 选择器基于 .hn-confirm__footer[data-tone='danger']
-     下的 .hn-button--primary，特异性 (0,2,1) 高于 Button 的 (0,2,0)，可稳定覆盖 */
-  .hn-confirm__footer[data-tone='danger'] .hn-button--primary {
-    background: var(--hn-color-danger);
-    color: #09090b;
-  }
-
-  .hn-confirm__footer[data-tone='danger'] .hn-button--primary:hover:not(:disabled) {
-    /* hover 用 color-mix 把 danger 与白色混合 12%，得到稍亮一档的同色系 */
-    background: color-mix(in srgb, var(--hn-color-danger) 88%, white);
   }
 }

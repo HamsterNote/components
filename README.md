@@ -32,17 +32,37 @@ export function Example() {
 }
 ```
 
+`Button` 的 `danger`、`warning`、`success`、`info` 与 `primary` 同为填充式操作层级，并支持
+相同的原生 button 属性、尺寸与禁用状态。`ghost` 是独立的布尔展示属性，可与任意
+`variant` 组合；组合后移除表面，并让文字与 hover wash 使用对应操作色：
+
+从旧 API 迁移时，将 `<Button variant="ghost">` 改为 `<Button ghost>`；需要语义色时再同时
+传入 `variant`。
+
+```tsx
+<Button variant="danger">删除</Button>
+<Button variant="warning">覆盖</Button>
+<Button variant="success">完成</Button>
+<Button variant="info">查看详情</Button>
+<Button ghost>取消</Button>
+<Button ghost variant="primary">主要文字操作</Button>
+<Button ghost variant="danger">危险文字操作</Button>
+<Button ghost variant="warning">警告文字操作</Button>
+<Button ghost variant="success">成功文字操作</Button>
+<Button ghost variant="info">信息文字操作</Button>
+```
+
 Popover 只负责可复用表面和主题，定位、显示状态、外部点击关闭与焦点返回由使用方根据
 `toolbar`、`menu` 或帮助面板等具体模式控制。外框圆角与内嵌 `Button` 的圆角同心衔接
 （外框半径 = `--hn-radius-md` + 外框 padding）：
 
 ```tsx
 <Popover aria-label="文字操作" role="toolbar" theme="light">
-  <Button size="small" variant="ghost">
+  <Button ghost size="small">
     加粗
   </Button>
   <PopoverSeparator />
-  <Button size="small" variant="ghost">
+  <Button ghost size="small">
     添加链接
   </Button>
 </Popover>
@@ -53,14 +73,14 @@ Popover 只负责可复用表面和主题，定位、显示状态、外部点击
 
 ```tsx
 <Popover aria-label="侧边工具条" orientation="vertical" role="toolbar">
-  <Button size="small" variant="ghost">
+  <Button ghost size="small">
     加粗
   </Button>
-  <Button size="small" variant="ghost">
+  <Button ghost size="small">
     斜体
   </Button>
   <PopoverSeparator />
-  <Button size="small" variant="ghost">
+  <Button ghost size="small">
     链接
   </Button>
 </Popover>
@@ -72,7 +92,7 @@ Popover 只负责可复用表面和主题，定位、显示状态、外部点击
 
 ```tsx
 <Popover aria-label="贴边操作" edge="top" edgeOffset={24} role="toolbar">
-  <Button size="small" variant="ghost">
+  <Button ghost size="small">
     操作
   </Button>
 </Popover>
@@ -85,7 +105,7 @@ Popover 只负责可复用表面和主题，定位、显示状态、外部点击
 ```tsx
 <div style={{ position: 'relative', height: 180 }}>
   <Popover aria-label="容器内贴边" edge="bottom" edgeOffset={12} relative role="toolbar">
-    <Button size="small" variant="ghost">
+    <Button ghost size="small">
       操作
     </Button>
   </Popover>
@@ -117,11 +137,11 @@ const [anchor, setAnchor] = useState<HTMLElement | null>(null);
 {
   open ? (
     <Popover anchor={anchor} aria-label="文字操作" placement="bottom-start" role="toolbar">
-      <Button size="small" variant="ghost">
+      <Button ghost size="small">
         加粗
       </Button>
       <PopoverSeparator />
-      <Button size="small" variant="ghost">
+      <Button ghost size="small">
         斜体
       </Button>
     </Popover>
@@ -286,7 +306,7 @@ const [open, setOpen] = useState(false);
 </Drawer>;
 ```
 
-`Confirm` 是确认对话框，基于 `Dialog` 表面叠加固定 footer（ghost 取消 + primary 确认），
+`Confirm` 是确认对话框，基于 `Dialog` 表面叠加固定 footer（ghost 取消 + 语义确认），
 提供三种等价形态共用同一展示核心：
 
 - `<Confirm>`：受控组件，使用方持有 `open` 并处理 `onConfirm` / `onCancel`；
@@ -297,8 +317,9 @@ const [open, setOpen] = useState(false);
   惰性创建容器 + `createRoot`，settle 后卸载清理；SSR 环境下直接 `resolve(false)` 并打
   `console.warn`。
 
-`tone="danger"` 通过 `data-tone='danger'` 挂在 footer 上，CSS 局部覆盖确认按钮背景为
-`--hn-color-danger`，不修改 `Button`。`loading` 禁用两个按钮并把确认按钮文案改为「处理中…」：
+`tone="danger"` 直接选择 `Button` 的 `danger` variant，默认 tone 选择 `primary`，因此确认
+按钮与其他操作入口共享同一套语义 token 和交互状态。`loading` 禁用两个按钮并把确认按钮文案
+改为「处理中…」：
 
 ```tsx
 import { Confirm, ConfirmProvider, confirm, useConfirm } from '@hamster-note/components';
@@ -398,7 +419,8 @@ import { Button, ThemeProvider } from '@hamster-note/components';
 
 ## 组件
 
-- `Button`：primary、secondary、ghost 三种层级与三种尺寸。
+- `Button`：primary、danger、warning、success、info、secondary 六种操作层级、三种尺寸，以及可与
+  任意层级组合的布尔型 `ghost` 展示属性。
 - `Badge`：neutral、accent、success、warning、danger 五种语义状态。
 - `TextField`：持久标签、辅助信息、错误状态与完整原生 input 属性。
 - `NoteCard`：静态语义文章或带选择状态的交互卡片。
@@ -411,16 +433,20 @@ import { Button, ThemeProvider } from '@hamster-note/components';
   `Popover`；也可嵌入 `Popover` 自动继承主题。
 - `Kbd`：纯展示型快捷键键帽组件。`keys` 渲染组合键序列（键帽间用小号 `+` 连接符拼接），
   `children` 渲染单个键帽；颜色一律引用全局 token，嵌入 `Popover` 自动继承主题。
-- `Dialog`：受控模态对话框。Portal 渲染到 `document.body`，内置焦点循环、滚动锁、Esc /
-  背景点击关闭与出入场动画（尊重 `prefers-reduced-motion`）；`open` / `onClose` 由使用方
-  控制，`title` / `description` 经 `aria-labelledby` / `aria-describedby` 连接面板。
+- `Dialog`：受控模态对话框。Portal 渲染到 `document.body`，并自动桥接外层
+  `ThemeProvider` 的 accent 与明暗主题；内置焦点循环、滚动锁、Esc / 背景点击关闭与
+  出入场动画（尊重 `prefers-reduced-motion`）。`showCloseButton` 控制右上角关闭按钮，
+  `showFullscreenButton` 控制其左侧的全屏切换按钮，二者默认均为 `false`。
 - `Drawer`：边缘贴附模态抽屉。`placement` 支持 `left` / `right` / `top` / `bottom`
-  （默认 `right`），`size` 覆盖默认尺寸（左右 360 / 上下 280）；与 `Dialog` 共享模态语义，
-  圆角只在远离边缘的两角做处理，z-index 1200 高于 Dialog 以支持嵌套组合。
+  （默认 `right`），`size` 覆盖自适应状态的默认尺寸（左右 360 / 上下 280）；标题区域
+  向上拖动至少 56px 进入全屏、向下拖动恢复，`showFullscreenButton` 在标题左侧提供等价的
+  箭头按钮，`showCloseButton` 在右上角显示关闭按钮。Portal 自动继承 `ThemeProvider`，
+  与 `Dialog` 共享模态语义。
 - `Confirm`：确认对话框，基于 `Dialog` 叠加固定 footer。提供三种等价形态：`<Confirm>`
   受控组件、`<ConfirmProvider>` + `useConfirm()` hook（返回 `Promise<boolean>`，并发
   latest-wins）、纯函数 `confirm(options): Promise<boolean>`（自挂 React root，SSR 直接
-  `resolve(false)`）；`tone="danger"` 通过 `data-tone` 局部覆盖确认按钮色，不修改 Button。
+  `resolve(false)`）；`tone="danger"` 直接选择 Button 的 `danger` variant，默认 tone 选择
+  `primary`。
 - `ThemeProvider`：主题色（accent）与明暗模式（mode）切换包裹层。accent 通过重定义
   `--hn-color-accent` / `--hn-color-accent-hover` / `--hn-focus-ring` 三个 token、mode 通过
   `data-mode` 重定义全套表面/文字/边框 token，经 CSS 级联让子树自动继承，零侵入实现主题

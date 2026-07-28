@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { Button, Popover, PopoverSeparator, type PopoverEdge } from '../index';
+import type { PopoverEdge } from '../index';
+import { Button, Popover, PopoverSeparator, ThemeProvider } from '../index';
 import { DemoCode } from './DemoCode';
 
 interface PopoverDemoProps {
@@ -34,8 +35,8 @@ const anchorExampleCode = `<Button onClick={(event) => setAnchor(event.currentTa
     viewportMargin={12}
     role="toolbar"
   >
-    <Button size="small" variant="ghost">加粗</Button>
-    <Button size="small" variant="ghost">斜体</Button>
+    <Button ghost size="small">加粗</Button>
+    <Button ghost size="small">斜体</Button>
   </Popover>
 ) : null}`;
 
@@ -105,88 +106,92 @@ export function PopoverDemo({ onFeedback }: PopoverDemoProps) {
 
   return (
     <div className="popover-grid">
-      <div className="popover-example">
-        <div className="popover-example__header">
-          <div>
-            <span className="stage-label">Dark / Default</span>
-            <p>延续编辑器的深色浮层。</p>
+      <ThemeProvider mode="dark">
+        <div className="popover-example">
+          <div className="popover-example__header">
+            <div>
+              <span className="stage-label">Dark / Default</span>
+              <p>延续编辑器的深色浮层。</p>
+            </div>
+            <Button
+              aria-controls="dark-popover"
+              aria-expanded={activeTheme === 'dark'}
+              onClick={() => {
+                setActiveTheme((current) => (current === 'dark' ? null : 'dark'));
+              }}
+              size="small"
+            >
+              {activeTheme === 'dark' ? '收起' : '显示'}
+            </Button>
           </div>
-          <Button
-            aria-controls="dark-popover"
-            aria-expanded={activeTheme === 'dark'}
-            onClick={() => {
-              setActiveTheme((current) => (current === 'dark' ? null : 'dark'));
-            }}
-            size="small"
-          >
-            {activeTheme === 'dark' ? '收起' : '显示'}
-          </Button>
+          <div className="popover-example__surface">
+            {activeTheme === 'dark' ? (
+              <Popover aria-label="深色文字操作" id="dark-popover" role="toolbar">
+                <Button ghost size="small">
+                  加粗
+                </Button>
+                <Button ghost size="small">
+                  斜体
+                </Button>
+                <PopoverSeparator />
+                <Button
+                  onClick={() => {
+                    onFeedback('已通过深色 Popover 创建链接');
+                  }}
+                  size="small"
+                  ghost
+                >
+                  链接
+                </Button>
+              </Popover>
+            ) : (
+              <span className="popover-example__empty">Popover 已收起</span>
+            )}
+          </div>
         </div>
-        <div className="popover-example__surface">
-          {activeTheme === 'dark' ? (
-            <Popover aria-label="深色文字操作" id="dark-popover" role="toolbar">
-              <Button size="small" variant="ghost">
-                加粗
-              </Button>
-              <Button size="small" variant="ghost">
-                斜体
-              </Button>
-              <PopoverSeparator />
-              <Button
-                onClick={() => {
-                  onFeedback('已通过深色 Popover 创建链接');
-                }}
-                size="small"
-                variant="ghost"
-              >
-                链接
-              </Button>
-            </Popover>
-          ) : (
-            <span className="popover-example__empty">Popover 已收起</span>
-          )}
-        </div>
-      </div>
+      </ThemeProvider>
 
-      <div className="popover-example popover-example--light">
-        <div className="popover-example__header">
-          <div>
-            <span className="stage-label">Light</span>
-            <p>适配浅色内容区域。</p>
+      <ThemeProvider mode="light">
+        <div className="popover-example popover-example--light">
+          <div className="popover-example__header">
+            <div>
+              <span className="stage-label">Light</span>
+              <p>适配浅色内容区域。</p>
+            </div>
+            <Button
+              aria-controls="light-popover"
+              aria-expanded={activeTheme === 'light'}
+              onClick={() => {
+                setActiveTheme((current) => (current === 'light' ? null : 'light'));
+              }}
+              size="small"
+            >
+              {activeTheme === 'light' ? '收起' : '显示'}
+            </Button>
           </div>
-          <Button
-            aria-controls="light-popover"
-            aria-expanded={activeTheme === 'light'}
-            onClick={() => {
-              setActiveTheme((current) => (current === 'light' ? null : 'light'));
-            }}
-            size="small"
-          >
-            {activeTheme === 'light' ? '收起' : '显示'}
-          </Button>
+          <div className="popover-example__surface">
+            {activeTheme === 'light' ? (
+              <Popover aria-label="浅色文字操作" id="light-popover" role="toolbar" theme="light">
+                <Button ghost size="small">
+                  对齐
+                </Button>
+                <PopoverSeparator />
+                <Button
+                  onClick={() => {
+                    onFeedback('已通过浅色 Popover 添加评论');
+                  }}
+                  size="small"
+                  ghost
+                >
+                  评论
+                </Button>
+              </Popover>
+            ) : (
+              <span className="popover-example__empty">Popover 已收起</span>
+            )}
+          </div>
         </div>
-        <div className="popover-example__surface">
-          {activeTheme === 'light' ? (
-            <Popover aria-label="浅色文字操作" id="light-popover" role="toolbar" theme="light">
-              <Button size="small" variant="ghost">
-                对齐
-              </Button>
-              <PopoverSeparator />
-              <Button
-                onClick={() => {
-                  onFeedback('已通过浅色 Popover 添加评论');
-                }}
-                size="small"
-                variant="ghost"
-              >
-                评论
-              </Button>
-            </Popover>
-          ) : (
-            <span className="popover-example__empty">Popover 已收起</span>
-          )}
-        </div>
-      </div>
+      </ThemeProvider>
 
       {/* 锚点定位示例：四角按钮统一用 bottom-start 期望方位，
           靠近右 / 下边缘时由 Popover 自动翻转并 clamp 到视口安全距离内 */}
@@ -255,10 +260,10 @@ export function PopoverDemo({ onFeedback }: PopoverDemoProps) {
               role="toolbar"
               viewportMargin={12}
             >
-              <Button size="small" variant="ghost">
+              <Button ghost size="small">
                 加粗
               </Button>
-              <Button size="small" variant="ghost">
+              <Button ghost size="small">
                 斜体
               </Button>
               <PopoverSeparator />
@@ -267,7 +272,7 @@ export function PopoverDemo({ onFeedback }: PopoverDemoProps) {
                   onFeedback('已通过锚点 Popover 应用格式');
                 }}
                 size="small"
-                variant="ghost"
+                ghost
               >
                 链接
               </Button>
@@ -302,13 +307,13 @@ export function PopoverDemo({ onFeedback }: PopoverDemoProps) {
               orientation="vertical"
               role="toolbar"
             >
-              <Button size="small" variant="ghost">
+              <Button ghost size="small">
                 加粗
               </Button>
-              <Button size="small" variant="ghost">
+              <Button ghost size="small">
                 斜体
               </Button>
-              <Button size="small" variant="ghost">
+              <Button ghost size="small">
                 下划线
               </Button>
               <PopoverSeparator />
@@ -317,7 +322,7 @@ export function PopoverDemo({ onFeedback }: PopoverDemoProps) {
                   onFeedback('已通过竖排 Popover 添加链接');
                 }}
                 size="small"
-                variant="ghost"
+                ghost
               >
                 链接
               </Button>
@@ -362,7 +367,7 @@ export function PopoverDemo({ onFeedback }: PopoverDemoProps) {
                   onFeedback('已通过贴边 Popover 执行操作');
                 }}
                 size="small"
-                variant="ghost"
+                ghost
               >
                 操作
               </Button>
@@ -372,7 +377,7 @@ export function PopoverDemo({ onFeedback }: PopoverDemoProps) {
                   setActiveScreenEdge(null);
                 }}
                 size="small"
-                variant="ghost"
+                ghost
               >
                 关闭
               </Button>
@@ -405,7 +410,7 @@ export function PopoverDemo({ onFeedback }: PopoverDemoProps) {
                   onFeedback('已通过相对贴边 Popover 执行操作');
                 }}
                 size="small"
-                variant="ghost"
+                ghost
               >
                 操作
               </Button>
@@ -415,7 +420,7 @@ export function PopoverDemo({ onFeedback }: PopoverDemoProps) {
                   setActiveRelativeEdge(null);
                 }}
                 size="small"
-                variant="ghost"
+                ghost
               >
                 关闭
               </Button>

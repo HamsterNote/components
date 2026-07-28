@@ -35,5 +35,5 @@
 .loading-demo-card__meta {
   font-family: var(--hn-font-mono);
   font-size: 11px;
-  color: #70707b;
+  color: var(--hn-color-text-muted);
 }

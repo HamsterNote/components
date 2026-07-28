@@ -6,12 +6,13 @@ import {
   Loading,
   TextField,
   THEME_ACCENTS,
-  ThemeProvider,
   type ThemeAccentPreset,
   type ThemeMode,
+  ThemeProvider,
 } from '../index';
 
 interface ThemeDemoProps {
+  readonly mode: ThemeMode;
   readonly onFeedback: (message: string) => void;
 }
 
@@ -39,16 +40,15 @@ const themeModeLabels: Record<ThemeMode, string> = {
 // 自定义色示例的初始值
 const initialCustomColor = '#ff8a3d';
 
-export function ThemeDemo({ onFeedback }: ThemeDemoProps) {
+export function ThemeDemo({ mode: globalMode, onFeedback }: ThemeDemoProps) {
   const [customColor, setCustomColor] = useState(initialCustomColor);
-  // 明暗模式状态：默认深色，与 tokens.css :root 默认值一致
-  const [mode, setMode] = useState<ThemeMode>('dark');
+  const [previewMode, setPreviewMode] = useState<ThemeMode>('dark');
 
   return (
     <div className="theme-grid">
       {/* 预设主题色：每个 ThemeProvider 包裹一组组件，展示 accent 对各组件的统一影响 */}
       {presetAccents.map((preset) => (
-        <ThemeProvider accent={preset} key={preset}>
+        <ThemeProvider accent={preset} key={preset} mode={globalMode}>
           <div className="theme-card">
             <div className="theme-card__header">
               <span className="theme-card__name">{presetLabels[preset]}</span>
@@ -78,11 +78,11 @@ export function ThemeDemo({ onFeedback }: ThemeDemoProps) {
           <fieldset className="theme-mode-toggle" aria-label="明暗模式切换">
             {themeModes.map((m) => (
               <button
-                aria-pressed={mode === m}
-                className={`theme-mode-toggle__btn${mode === m ? ' is-active' : ''}`}
+                aria-pressed={previewMode === m}
+                className={`theme-mode-toggle__btn${previewMode === m ? ' is-active' : ''}`}
                 key={m}
                 onClick={() => {
-                  setMode(m);
+                  setPreviewMode(m);
                 }}
                 type="button"
               >
@@ -92,7 +92,7 @@ export function ThemeDemo({ onFeedback }: ThemeDemoProps) {
           </fieldset>
         </div>
         {/* 预览区：accent=blue 与 mode 共存于同一 ThemeProvider，验证两轴正交 */}
-        <ThemeProvider accent="blue" mode={mode}>
+        <ThemeProvider accent="blue" mode={previewMode}>
           <div className="theme-mode-preview">
             <p className="theme-mode-preview__text">
               表面 / 文字 / 边框 token 随模式翻转，accent 保持 blue（两轴正交）。
@@ -103,7 +103,7 @@ export function ThemeDemo({ onFeedback }: ThemeDemoProps) {
             <div className="theme-mode-preview__actions">
               <Button
                 onClick={() => {
-                  onFeedback(`Mode 演示：当前 ${themeModeLabels[mode]}`);
+                  onFeedback(`Mode 演示：当前 ${themeModeLabels[previewMode]}`);
                 }}
                 size="small"
                 variant="primary"
@@ -131,7 +131,7 @@ export function ThemeDemo({ onFeedback }: ThemeDemoProps) {
             <code className="theme-card__value">{customColor}</code>
           </label>
         </div>
-        <ThemeProvider accent={customColor}>
+        <ThemeProvider accent={customColor} mode={globalMode}>
           <div className="theme-card__body">
             <Button
               onClick={() => {
@@ -155,10 +155,10 @@ export function ThemeDemo({ onFeedback }: ThemeDemoProps) {
           <p>聚焦输入框，观察边框与焦点环颜色随主题变化。</p>
         </div>
         <div className="theme-card__body theme-card__body--fields">
-          <ThemeProvider accent="blue">
+          <ThemeProvider accent="blue" mode={globalMode}>
             <TextField label="蓝色主题" placeholder="聚焦查看焦点环" />
           </ThemeProvider>
-          <ThemeProvider accent="pink">
+          <ThemeProvider accent="pink" mode={globalMode}>
             <TextField label="粉色主题" placeholder="聚焦查看焦点环" />
           </ThemeProvider>
         </div>
@@ -170,7 +170,7 @@ export function ThemeDemo({ onFeedback }: ThemeDemoProps) {
           <span className="theme-card__name">Nested / 嵌套覆盖</span>
           <p>内层 ThemeProvider 经级联覆盖外层，最内层的 accent 生效。</p>
         </div>
-        <ThemeProvider accent="orange">
+        <ThemeProvider accent="orange" mode={globalMode}>
           <div className="theme-card__body theme-card__body--nested">
             <Button
               onClick={() => {
@@ -181,7 +181,7 @@ export function ThemeDemo({ onFeedback }: ThemeDemoProps) {
             >
               外层 orange
             </Button>
-            <ThemeProvider accent="teal">
+            <ThemeProvider accent="teal" mode={globalMode}>
               <Button
                 onClick={() => {
                   onFeedback('内层 teal 主题按钮');

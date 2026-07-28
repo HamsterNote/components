@@ -8,9 +8,13 @@
     --hn-color-border-strong: rgb(255 255 255 / 17%);
     --hn-color-accent: #7c83ff;
     --hn-color-accent-hover: #9197ff;
+    --hn-color-info: #aeb2ff;
     --hn-color-danger: #fb7185;
+    --hn-color-danger-hover: #fc8a9b;
     --hn-color-success: #4ade80;
     --hn-color-warning: #fbbf24;
+    --hn-color-on-semantic: #09090b;
+    --hn-color-on-danger: #09090b;
     --hn-font-sans: 'IBM Plex Sans', 'Noto Sans SC', sans-serif;
     --hn-font-mono: 'IBM Plex Mono', monospace;
     --hn-radius-sm: 6px;
