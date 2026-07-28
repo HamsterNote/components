@@ -1,4 +1,5 @@
-import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react';
+import type { ReactNode } from 'react';
+import { createContext, useCallback, useContext, useMemo, useState } from 'react';
 
 import { Button } from '../button';
 import { Dialog } from '../dialog';
@@ -84,10 +85,8 @@ export function Confirm({
       open={open}
       title={title}
     >
-      {/* footer：ghost 取消 + primary 确认，右对齐。
-          data-tone 挂在 footer 上，CSS 据此覆盖确认按钮的背景色为 danger */}
-      <div className="hn-confirm__footer" data-tone={tone}>
-        <Button disabled={loading} onClick={handleClose} type="button" variant="ghost">
+      <div className="hn-confirm__footer">
+        <Button disabled={loading} ghost onClick={handleClose} type="button">
           {cancelText}
         </Button>
         <Button
@@ -96,7 +95,7 @@ export function Confirm({
             onConfirm();
           }}
           type="button"
-          variant="primary"
+          variant={tone === 'danger' ? 'danger' : 'primary'}
         >
           {loading ? '处理中…' : confirmText}
         </Button>

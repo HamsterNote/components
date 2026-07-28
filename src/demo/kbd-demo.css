@@ -28,7 +28,7 @@
   margin: 0;
   font-size: 13px;
   line-height: 2;
-  color: #b4b4bd;
+  color: var(--hn-color-text-muted);
 }
 
 /* 在窄屏下与 popover-demo / menu-demo 一致，统一堆叠成单列（由 .popover-grid 处理） */

@@ -12,8 +12,11 @@
     /* 抽离 padding 为变量，便于 border-radius 用 calc 同步引用，保证圆角同心 */
     --hn-popover-padding: 5px;
 
+    box-sizing: border-box;
     display: inline-flex;
     max-width: 100%;
+    max-height: calc(100dvh - 16px);
+    overflow: auto;
     align-items: center;
     gap: 3px;
     padding: var(--hn-popover-padding);

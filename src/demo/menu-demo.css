@@ -6,9 +6,9 @@
 .menu-demo-card {
   width: 220px;
   padding: 6px;
-  border: 1px solid rgb(255 255 255 / 9%);
+  border: 1px solid var(--hn-color-border);
   border-radius: 10px;
-  background: #111114;
+  background: var(--hn-color-surface);
 }
 
 /* 下拉菜单示例的表面：相对定位容器，Popover 在表面内居中展示（演示聚焦主题继承，

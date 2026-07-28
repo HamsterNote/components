@@ -27,7 +27,7 @@
   border: 1px solid transparent;
   border-radius: 8px;
   background: transparent;
-  color: #b4b4bd;
+  color: var(--hn-color-text-muted);
   cursor: pointer;
   transition:
     background-color var(--hn-transition),
@@ -37,14 +37,14 @@
 
 .icon-demo-cell .hn-icon {
   font-size: 22px;
-  color: #d4d4d8;
+  color: var(--hn-color-text);
   transition: color var(--hn-transition);
 }
 
 .icon-demo-cell:hover {
-  background: rgb(255 255 255 / 4%);
-  border-color: rgb(255 255 255 / 8%);
-  color: #f4f4f5;
+  background: color-mix(in srgb, var(--hn-color-text) 4%, transparent);
+  border-color: var(--hn-color-border);
+  color: var(--hn-color-text);
 }
 
 .icon-demo-cell:hover .hn-icon {
@@ -54,13 +54,13 @@
 .icon-demo-cell:focus-visible {
   outline: none;
   border-color: var(--hn-color-accent);
-  background: rgb(124 131 255 / 8%);
+  background: color-mix(in srgb, var(--hn-color-accent) 8%, transparent);
 }
 
 .icon-demo-cell.is-active {
-  background: rgb(124 131 255 / 12%);
-  border-color: rgb(124 131 255 / 40%);
-  color: #f4f4f5;
+  background: color-mix(in srgb, var(--hn-color-accent) 12%, transparent);
+  border-color: color-mix(in srgb, var(--hn-color-accent) 40%, transparent);
+  color: var(--hn-color-text);
 }
 
 .icon-demo-cell.is-active .hn-icon {
@@ -88,13 +88,13 @@
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  color: #d4d4d8;
+  color: var(--hn-color-text);
 }
 
 .icon-demo-size em {
   font: 400 10px/1.3 var(--hn-font-mono);
   font-style: normal;
-  color: #70707b;
+  color: var(--hn-color-text-muted);
 }
 
 /* 示例三：颜色继承 -- 每个 color 容器内放图标 + label */
@@ -117,7 +117,7 @@
 .icon-demo-color em {
   font: 400 10px/1.3 var(--hn-font-mono);
   font-style: normal;
-  color: #70707b;
+  color: var(--hn-color-text-muted);
 }
 
 .icon-demo-color--default {
@@ -165,10 +165,10 @@
   width: 36px;
   height: 36px;
   padding: 0;
-  border: 1px solid rgb(255 255 255 / 10%);
+  border: 1px solid var(--hn-color-border);
   border-radius: 8px;
-  background: rgb(255 255 255 / 3%);
-  color: #d4d4d8;
+  background: color-mix(in srgb, var(--hn-color-text) 3%, transparent);
+  color: var(--hn-color-text);
   font-size: 18px;
   cursor: pointer;
   transition:
@@ -178,15 +178,15 @@
 }
 
 .icon-demo-iconbutton:hover {
-  background: rgb(255 255 255 / 7%);
-  border-color: rgb(255 255 255 / 18%);
-  color: #f4f4f5;
+  background: color-mix(in srgb, var(--hn-color-text) 7%, transparent);
+  border-color: var(--hn-color-border-strong);
+  color: var(--hn-color-text);
 }
 
 .icon-demo-iconbutton:focus-visible {
   outline: none;
   border-color: var(--hn-color-accent);
-  background: rgb(124 131 255 / 12%);
+  background: color-mix(in srgb, var(--hn-color-accent) 12%, transparent);
   color: var(--hn-color-accent);
 }
 
@@ -194,12 +194,12 @@
   margin: 0;
   font-size: 13px;
   line-height: 2;
-  color: #b4b4bd;
+  color: var(--hn-color-text-muted);
 }
 
 .icon-demo-inline p .hn-icon {
   font-size: 15px;
-  color: #d4d4d8;
+  color: var(--hn-color-text);
   vertical-align: -0.2em;
 }
 

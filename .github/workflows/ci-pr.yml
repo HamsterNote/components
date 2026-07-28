@@ -24,7 +24,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          # @testing-library/jest-dom@7 要求 Node >= 22，与本地开发环境对齐
+          node-version: 22
           cache: yarn
 
       - name: Install dependencies
@@ -44,6 +45,24 @@ jobs:
       - name: Run format check
         run: |
           yarn format:check
+
+      - name: Run unit tests
+        run: |
+          yarn test:coverage
+
+      - name: Install CJK fonts
+        # runner 默认无中文字体，视觉快照基线在本机（Noto Sans CJK）生成，需对齐字体环境
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fonts-noto-cjk
+
+      - name: Install Playwright Chromium
+        run: |
+          yarn playwright install --with-deps chromium
+
+      - name: Run browser tests
+        run: |
+          yarn test:e2e
 
       - name: Build (lib + demo)
         run: |

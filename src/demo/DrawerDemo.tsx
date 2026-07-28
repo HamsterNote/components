@@ -15,6 +15,8 @@ const [placement, setPlacement] = useState<DrawerPlacement>('right');
   open={open}
   onClose={() => setOpen(false)}
   placement={placement}
+  showCloseButton
+  showFullscreenButton
   title="笔记详情"
   description="右侧滑入的详情面板"
 >
@@ -46,7 +48,7 @@ export function DrawerDemo({ onFeedback }: DrawerDemoProps) {
         <div className="popover-example__header">
           <div>
             <span className="stage-label">Placement / 四个方向</span>
-            <p>left / right 默认宽 360px，top / bottom 默认高 280px；Esc / 背景点击关闭。</p>
+            <p>标题向上拖动进入全屏、向下拖动恢复；箭头按钮提供同等键盘操作。</p>
           </div>
         </div>
         <div className="drawer-demo-row">
@@ -103,17 +105,20 @@ export function DrawerDemo({ onFeedback }: DrawerDemoProps) {
         }}
         open={open}
         placement={placement}
+        showCloseButton
+        showFullscreenButton
         size={customSize ?? undefined}
         title="抽屉标题"
       >
         <p className="drawer-demo-copy">
-          这是抽屉的内容区，可滚动承载长表单或详情。当前方向：
-          <strong>{placement}</strong>
+          这是抽屉的内容区，可滚动承载长表单或详情。
+          <span className="drawer-demo-copy__nowrap">
+            当前方向：<strong>{placement}</strong>
+          </span>
           {customSize === null ? null : (
-            <>
-              {'，自定义尺寸 '}
-              <strong>{customSize}px</strong>
-            </>
+            <span className="drawer-demo-copy__nowrap">
+              ，自定义尺寸 <strong>{customSize}px</strong>
+            </span>
           )}
           。
         </p>

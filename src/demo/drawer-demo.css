@@ -21,3 +21,7 @@
   color: var(--hn-color-text);
   font-weight: 550;
 }
+
+.drawer-demo-copy__nowrap {
+  white-space: nowrap;
+}

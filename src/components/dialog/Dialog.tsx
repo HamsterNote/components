@@ -1,6 +1,8 @@
-import type { HTMLAttributes, Ref } from 'react';
+import { type HTMLAttributes, type Ref, useState } from 'react';
 import { createPortal } from 'react-dom';
 
+import { Icon } from '../icon/Icon';
+import { useThemeScope } from '../theme/theme-context';
 import { useModal } from './use-modal';
 
 export interface DialogProps extends HTMLAttributes<HTMLDivElement> {
@@ -16,6 +18,10 @@ export interface DialogProps extends HTMLAttributes<HTMLDivElement> {
   readonly closeOnEsc?: boolean | undefined;
   // 是否允许点击背景遮罩关闭（默认 true）
   readonly closeOnBackdrop?: boolean | undefined;
+  // 是否展示右上角关闭按钮（默认 false）
+  readonly showCloseButton?: boolean | undefined;
+  // 是否展示关闭按钮左侧的全屏切换按钮（默认 false）
+  readonly showFullscreenButton?: boolean | undefined;
   // React 19：ref 作为普通 prop 直接透传到面板根 div
   readonly ref?: Ref<HTMLDivElement>;
 }
@@ -31,10 +37,18 @@ export function Dialog({
   onClose,
   closeOnEsc = true,
   closeOnBackdrop = true,
+  showCloseButton = false,
+  showFullscreenButton = false,
   ref,
   style,
   ...props
 }: DialogProps) {
+  const [viewState, setViewState] = useState({ fullscreen: false, open });
+  if (viewState.open !== open) {
+    setViewState({ fullscreen: false, open });
+  }
+  const fullscreen = viewState.fullscreen;
+  const theme = useThemeScope();
   // 解构 hook 返回值到局部变量：让 react-hooks 规则能识别每个值的类型，
   // 避免「访问 modal.xxx」被统一误判为「在渲染期访问 ref」。
   const {
@@ -53,7 +67,13 @@ export function Dialog({
     return null;
   }
 
-  const panelClasses = ['hn-dialog__panel', className].filter(Boolean).join(' ');
+  const panelClasses = [
+    'hn-dialog__panel',
+    fullscreen ? 'hn-dialog__panel--fullscreen' : '',
+    className,
+  ]
+    .filter(Boolean)
+    .join(' ');
 
   // aria-labelledby / aria-describedby：仅在传入 title/description 时挂上，
   // 否则让使用方通过 aria-label 自行命名（与 Popover 哲学一致）
@@ -71,7 +91,7 @@ export function Dialog({
     }
   };
 
-  const surface = (
+  const modal = (
     <>
       {/* 背景遮罩：承担点击外关闭与视觉聚焦，pointerdown 仅在 backdrop 自身才触发关闭 */}
       <div
@@ -94,6 +114,33 @@ export function Dialog({
         style={style}
         tabIndex={-1}
       >
+        {showCloseButton || showFullscreenButton ? (
+          <div className="hn-dialog__actions">
+            {showFullscreenButton ? (
+              <button
+                aria-label={fullscreen ? '退出全屏' : '全屏显示'}
+                aria-pressed={fullscreen}
+                className="hn-dialog__icon-button"
+                onClick={() => {
+                  setViewState((current) => ({ ...current, fullscreen: !current.fullscreen }));
+                }}
+                type="button"
+              >
+                <Icon aria-hidden="true" name={fullscreen ? 'zoom-out' : 'zoom-in'} />
+              </button>
+            ) : null}
+            {showCloseButton ? (
+              <button
+                aria-label="关闭对话框"
+                className="hn-dialog__icon-button"
+                onClick={onClose}
+                type="button"
+              >
+                <Icon aria-hidden="true" name="close" />
+              </button>
+            ) : null}
+          </div>
+        ) : null}
         {title !== undefined ? (
           <h2 className="hn-dialog__title" id={titleId}>
             {title}
@@ -108,6 +155,20 @@ export function Dialog({
       </div>
     </>
   );
+
+  const surface =
+    theme === null ? (
+      modal
+    ) : (
+      <div
+        className="hn-theme"
+        data-accent={theme.accent}
+        data-mode={theme.mode}
+        style={theme.style}
+      >
+        {modal}
+      </div>
+    );
 
   return createPortal(surface, document.body);
 }
