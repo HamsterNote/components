@@ -85,6 +85,13 @@ describe('基础组件契约', () => {
     expect(screen.getByRole('img', { name: '评论' })).toHaveClass('hn-icon--comment');
   });
 
+  it('Given 裁切图标, When 按公共名称渲染, Then API 与裁切角线轮廓可用', () => {
+    render(<Icon label="裁切" name="crop" />);
+
+    expect(ICON_NAMES).toContain('crop');
+    expect(screen.getByRole('img', { name: '裁切' })).toHaveClass('hn-icon--crop');
+  });
+
   it('Given 公共全屏图标, When 按名称渲染, Then API 与四角轮廓均可用', () => {
     render(
       <>
@@ -140,17 +147,23 @@ describe('基础组件契约', () => {
   });
 
   it('Given 已展开子菜单, When 选择菜单项, Then 立即关闭子菜单', () => {
+    const onSelect = vi.fn();
     render(
       <Menu aria-label="卡片操作">
-        <MenuSubmenu label="子卡布局">
-          <MenuItem>Free</MenuItem>
+        <MenuSubmenu aria-label="子卡布局" label={<Icon name="sort" />} panelTheme="light">
+          <MenuItem onClick={onSelect}>Free</MenuItem>
         </MenuSubmenu>
       </Menu>,
     );
-    fireEvent.click(screen.getByRole('menuitem', { name: '子卡布局' }));
+    const submenuTrigger = screen.getByRole('menuitem', { name: '子卡布局' });
+    expect(submenuTrigger).toHaveAttribute('aria-label', '子卡布局');
+    fireEvent.click(submenuTrigger);
 
-    fireEvent.click(screen.getByRole('menuitem', { name: 'Free' }));
+    const submenuItem = screen.getByRole('menuitem', { name: 'Free' });
+    expect(submenuItem.closest('[role="menu"]')).toHaveAttribute('data-theme', 'light');
+    fireEvent.click(submenuItem);
 
+    expect(onSelect).toHaveBeenCalledOnce();
     expect(screen.queryByRole('menuitem', { name: 'Free' })).not.toBeInTheDocument();
     expect(screen.getByRole('menuitem', { name: '子卡布局' })).toHaveAttribute(
       'aria-expanded',

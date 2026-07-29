@@ -15,3 +15,9 @@
 ## 评论权限
 
 - **评论动作能力（comment action capability）**：宿主针对当前评论上下文或某条评论明确授予的新增、回复、编辑或删除能力；组件不根据作者身份自行推断权限。
+
+## Menu 弹出方向
+
+- **一级菜单弹出方向（root menu placement）**：锚定模式下，一级 Menu 面板相对外部触发锚点的期望展开方位。
+- **子菜单默认弹出方向（default submenu placement）**：由上层 Menu 为菜单树声明、供未单独指定方向的子菜单继承的期望展开方位。
+- **子菜单局部弹出方向（submenu placement override）**：某个 MenuSubmenu 为自身面板单独声明的期望展开方位；其优先级高于继承的子菜单默认弹出方向。

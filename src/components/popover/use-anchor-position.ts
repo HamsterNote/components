@@ -1,13 +1,24 @@
-import { useLayoutEffect, useRef, useState, type CSSProperties, type RefObject } from 'react';
+import { type CSSProperties, type RefObject, useLayoutEffect, useRef, useState } from 'react';
 
-// 浮层相对锚点的展开方位：主轴方向（top/bottom/left/right）+ 交叉轴对齐（start/end）。
-// start/end 指与锚点的起始边 / 结束边对齐：bottom-start 即浮层在锚点下方、左边缘对齐。
+// 浮层相对锚点的展开方位：主轴方向（top/bottom/left/right）+ 可选的交叉轴对齐。
+// 无后缀表示居中；start/end 是物理方向，不随书写方向改变。
 export type FloatingPlacement =
-  'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' | 'left-start' | 'right-start';
+  | 'top-start'
+  | 'top'
+  | 'top-end'
+  | 'bottom-start'
+  | 'bottom'
+  | 'bottom-end'
+  | 'left-start'
+  | 'left'
+  | 'left-end'
+  | 'right-start'
+  | 'right'
+  | 'right-end';
 
 // 主轴方向与交叉轴对齐方式
 type FloatingSide = 'top' | 'bottom' | 'left' | 'right';
-type FloatingAlign = 'start' | 'end';
+type FloatingAlign = 'start' | 'center' | 'end';
 
 export interface UseAnchorPositionOptions {
   // 锚点元素：浮层以其 getBoundingClientRect() 为定位基准；为 null 时不计算（保持隐藏）
@@ -46,28 +57,50 @@ const OPPOSITE_SIDE: Record<FloatingSide, FloatingSide> = {
   right: 'left',
 };
 
-function parsePlacement(placement: FloatingPlacement): {
-  align: FloatingAlign;
-  side: FloatingSide;
-} {
-  const [side, align] = placement.split('-') as [FloatingSide, FloatingAlign];
-  return { side, align };
+const PLACEMENT_PARTS: Record<
+  FloatingPlacement,
+  { readonly align: FloatingAlign; readonly side: FloatingSide }
+> = {
+  'top-start': { side: 'top', align: 'start' },
+  top: { side: 'top', align: 'center' },
+  'top-end': { side: 'top', align: 'end' },
+  'bottom-start': { side: 'bottom', align: 'start' },
+  bottom: { side: 'bottom', align: 'center' },
+  'bottom-end': { side: 'bottom', align: 'end' },
+  'left-start': { side: 'left', align: 'start' },
+  left: { side: 'left', align: 'center' },
+  'left-end': { side: 'left', align: 'end' },
+  'right-start': { side: 'right', align: 'start' },
+  right: { side: 'right', align: 'center' },
+  'right-end': { side: 'right', align: 'end' },
+};
+
+export interface ComputeFloatingPositionOptions {
+  readonly anchorRect: DOMRect;
+  readonly crossOffset: number;
+  readonly floatingHeight: number;
+  readonly floatingWidth: number;
+  readonly offset: number;
+  readonly placement: FloatingPlacement;
+  readonly viewportHeight: number;
+  readonly viewportMargin: number;
+  readonly viewportWidth: number;
 }
 
 // 计算浮层左上角坐标（fixed 定位，坐标系为视口）。
 // 步骤：按期望 side 落位 → 主轴溢出则尝试翻转 → 两轴 clamp 到视口安全距离内。
-function computeFloatingPosition(
-  anchorRect: DOMRect,
-  floatingWidth: number,
-  floatingHeight: number,
-  placement: FloatingPlacement,
-  offset: number,
-  crossOffset: number,
-  viewportMargin: number,
-): { left: number; top: number } {
-  const viewportWidth = window.innerWidth;
-  const viewportHeight = window.innerHeight;
-  const { side, align } = parsePlacement(placement);
+export function computeFloatingPosition({
+  anchorRect,
+  crossOffset,
+  floatingHeight,
+  floatingWidth,
+  offset,
+  placement,
+  viewportHeight,
+  viewportMargin,
+  viewportWidth,
+}: ComputeFloatingPositionOptions): { readonly left: number; readonly top: number } {
+  const { side, align } = PLACEMENT_PARTS[placement];
 
   // 判断按某个 side 落位是否会在主轴方向溢出视口安全区
   const overflowsOn = (candidate: FloatingSide): boolean => {
@@ -113,10 +146,30 @@ function computeFloatingPosition(
 
   // 交叉轴对齐：上下展开时水平对齐，左右展开时垂直对齐
   if (resolvedSide === 'top' || resolvedSide === 'bottom') {
-    left = align === 'start' ? anchorRect.left : anchorRect.right - floatingWidth;
+    switch (align) {
+      case 'start':
+        left = anchorRect.left;
+        break;
+      case 'center':
+        left = anchorRect.left + (anchorRect.width - floatingWidth) / 2;
+        break;
+      case 'end':
+        left = anchorRect.right - floatingWidth;
+        break;
+    }
     left += crossOffset;
   } else {
-    top = align === 'start' ? anchorRect.top : anchorRect.bottom - floatingHeight;
+    switch (align) {
+      case 'start':
+        top = anchorRect.top;
+        break;
+      case 'center':
+        top = anchorRect.top + (anchorRect.height - floatingHeight) / 2;
+        break;
+      case 'end':
+        top = anchorRect.bottom - floatingHeight;
+        break;
+    }
     top += crossOffset;
   }
 
@@ -159,15 +212,17 @@ export function useAnchorPosition({
       const anchorRect = anchor.getBoundingClientRect();
       // 用 offsetWidth/Height 而非 floating.getBoundingClientRect()：
       // 首次渲染时元素带 visibility: hidden，尺寸依然可量，且不受未来 transform 影响
-      const { left, top } = computeFloatingPosition(
+      const { left, top } = computeFloatingPosition({
         anchorRect,
-        floating.offsetWidth,
-        floating.offsetHeight,
-        placement,
-        offset,
         crossOffset,
+        floatingHeight: floating.offsetHeight,
+        floatingWidth: floating.offsetWidth,
+        offset,
+        placement,
+        viewportHeight: window.innerHeight,
         viewportMargin,
-      );
+        viewportWidth: window.innerWidth,
+      });
       setStyle({ position: 'fixed', left, top });
     };
 

@@ -81,9 +81,13 @@ decorative treatments. Every effect communicates interactivity, state, or groupi
   so it inherits the Popover separator variable inside a Popover and falls back to the global
   border color when used standalone. `MenuItem` supports a `shortcut` node rendered with the mono
   font family and a `tone="danger"` variant that switches the label color to `--hn-color-danger`.
-  Keyboard navigation (roving tabindex, arrow keys), nested submenus, and checkbox/radio items are
-  intentionally out of scope; the library philosophy is that presentation and semantics belong to
-  the component while behavior stays consumer-owned.
+  Menu and Popover share twelve physical placements: each of `top`, `bottom`, `left`, and `right`
+  supports start, center (the suffix-less value), and end alignment. Main-axis overflow flips the
+  side while preserving alignment, then clamps to the configured viewport margin. `MenuSubmenu`
+  inherits its expected placement, offset, and viewport margin from the root Menu unless the current
+  submenu overrides them; that override never becomes a descendant default. Its chevron communicates
+  the expected side rather than the collision-resolved side. Checkbox/radio items and complete
+  roving-tabindex navigation remain out of scope.
 - Kbd: a presentational key-cap component for shortcut hints. The outer `<kbd class="hn-kbd">` is a
   semantic inline-flex container; each key cap is a nested `<kbd class="hn-kbd__key">` (HTML spec
   recommends nested `<kbd>` to express combined keys). `keys` renders a combo sequence with small
@@ -179,8 +183,10 @@ decorative treatments. Every effect communicates interactivity, state, or groupi
   of `<hr>` and must not be used as the only visual grouping signal inside a long menu.
   `MenuLabel` is a presentational group label and is not exposed as a `group`/`aria-label`; when a
   menu needs formal group semantics the consumer wraps `MenuItem`s in a `role="group"` with an
-  accessible name. The library intentionally does not implement keyboard navigation (arrow keys,
-  roving tabindex), so consumers are responsible for focus movement, dismissal, and focus return.
+  accessible name. Submenus always use `ArrowRight`, Enter, or Space to enter and `ArrowLeft` or
+  Escape to return one level, independent of expected or collision-resolved placement. Entering skips
+  disabled items and falls back to the submenu panel when no enabled item exists. Complete vertical
+  arrow navigation and roving tabindex remain consumer-owned.
 - Dialog and Drawer expose `role="dialog"` + `aria-modal="true"` on the panel and connect optional
   `title`/`description` via `aria-labelledby`/`aria-describedby` generated from `useId`. When
   `title` is omitted the consumer must supply `aria-label`. Focus is trapped inside the panel
