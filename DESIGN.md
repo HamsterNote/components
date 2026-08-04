@@ -145,6 +145,17 @@ decorative treatments. Every effect communicates interactivity, state, or groupi
   "处理中…". The Provider uses a latest-wins queue: a new request resolves any pending request with
   `false` before mounting itself, so the UI always shows the latest confirm and no Promise ever
   hangs.
+- Comment Drawer (Pro): a collaboration panel composed directly from the foundation Drawer. It
+  accepts a typed `data` collection and presents a compact chronological comment list, author
+  metadata, a single-level flat reply thread, an empty state, and labelled composers. Comments and
+  replies expose semantic reply actions that share one inline composer; replying to a reply records
+  and displays its target while appending the result to the root comment's same reply list. Replies
+  use an indented border and the foundation surface tokens rather than deeper nested cards.
+  Submissions containing only whitespace stay
+  disabled; successful comment and reply submissions append to their respective visible lists,
+  clear the active composer, return focus to the reply trigger, and announce the update through a
+  polite `aria-live` region. Reply callbacks expose the complete typed reply for persistence, and a
+  matching stable ID in updated `data` reconciles the local optimistic item without duplication.
 - Demo panels: 12px radius, 1px border, subtle directional highlight, no floating drop-shadow stack.
 
 ## 6. Motion and Interaction
@@ -161,6 +172,12 @@ decorative treatments. Every effect communicates interactivity, state, or groupi
 - Semantic landmarks, real labels, button elements, `aria-live` feedback, and sufficient contrast are
   required. Color is never the only carrier of state. The interface supports 200% text zoom without
   clipped content and honors `prefers-reduced-motion`.
+- Comment Drawer keeps the composer label visible, associates it with the textarea, disables submit
+  for trimmed-empty content, and exposes newly added comments and replies through a polite live
+  region. Comment and reply triggers identify the target author, reflect expanded state, meet the 36px compact
+  target minimum (44px on mobile), and regain focus after submit or cancel; reply composers keep a
+  visible target label. Comment and reply timestamps use semantic `<time>` elements and the Drawer
+  remains the sole modal container.
 - Popover consumers must choose the ARIA role that matches their content and connect trigger and
   surface with `aria-controls`/`aria-expanded`. `PopoverSeparator` always exposes `role="separator"`
   and an `aria-orientation` that follows the surrounding Popover's `orientation`: `vertical`

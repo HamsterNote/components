@@ -66,13 +66,13 @@ test('Given 背景关闭策略, When 点击遮罩, Then 启用时关闭而禁用
   const policyOpener = section.getByRole('button', { name: '打开（用上述开关）' });
   await policyOpener.click();
   let dialog = page.getByRole('dialog', { name: '移动笔记' });
-  await page.locator('.hn-dialog__backdrop').click({ position: { x: 1, y: 1 } });
+  await page.locator('.hn-dialog__backdrop').dispatchEvent('pointerdown');
   await expect(dialog).toHaveCount(0);
 
   await section.getByLabel('closeOnBackdrop').uncheck();
   await policyOpener.click();
   dialog = page.getByRole('dialog', { name: '移动笔记' });
-  await page.locator('.hn-dialog__backdrop').click({ position: { x: 1, y: 1 } });
+  await page.locator('.hn-dialog__backdrop').dispatchEvent('pointerdown');
 
   await expect(dialog).toBeVisible();
   await dialog.getByRole('button', { name: '关闭对话框' }).click();

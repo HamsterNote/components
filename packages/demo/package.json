@@ -1,0 +1,20 @@
+{
+  "name": "@hamster-note/demo",
+  "version": "0.2.1-beta.4",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "yarn typecheck && vite build",
+    "preview": "vite preview --host 0.0.0.0 --port 9810 --strictPort",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@hamster-note/components": "0.2.1-beta.4",
+    "@hamster-note/components-pro": "0.2.1-beta.4",
+    "@hamster-note/notes": "2.0.0",
+    "@system-ui-js/multi-drag": "0.4.0",
+    "react": "19.2.7",
+    "react-dom": "19.2.7"
+  }
+}

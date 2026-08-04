@@ -1,0 +1,46 @@
+{
+  "name": "@hamster-note/components-pro",
+  "version": "0.2.1-beta.4",
+  "description": "Advanced collaboration components for HamsterNote products.",
+  "type": "module",
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./comment-drawer": {
+      "types": "./dist/comment-drawer.d.ts",
+      "import": "./dist/comment-drawer.js"
+    },
+    "./styles.css": "./dist/hamster-note-components-pro.css"
+  },
+  "scripts": {
+    "build": "yarn typecheck && vite build --config vite.lib.config.ts",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@hamster-note/components": "0.2.1-beta.4"
+  },
+  "peerDependencies": {
+    "@hamster-note/notes": "^2.0.0",
+    "@system-ui-js/multi-drag": "^0.4.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@hamster-note/notes": "2.0.0",
+    "@system-ui-js/multi-drag": "0.4.0"
+  }
+}

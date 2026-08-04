@@ -11,8 +11,14 @@ permissions:
 
 jobs:
   publish:
-    name: Build and Publish
+    name: Build and Publish ${{ matrix.package }}
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        package:
+          - components
+          - components-pro
     env:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
@@ -30,7 +36,7 @@ jobs:
           VERSION="${TAG#v}"
           echo "VERSION=$VERSION" >> "$GITHUB_ENV"
 
-          PKG_VERSION=$(node -e "console.log(JSON.parse(require('fs').readFileSync('package.json','utf8')).version)")
+          PKG_VERSION=$(node -e "console.log(JSON.parse(require('fs').readFileSync('packages/${{ matrix.package }}/package.json','utf8')).version)")
 
           if [[ "$PKG_VERSION" != "$VERSION" ]]; then
             echo "::error::Tag version $VERSION does not match package.json version $PKG_VERSION"
@@ -70,8 +76,8 @@ jobs:
         id: version
         shell: bash
         run: |
-          PKG_NAME=$(node -e "console.log(JSON.parse(require('fs').readFileSync('package.json','utf8')).name)")
-          VERSION=$(node -e "console.log(JSON.parse(require('fs').readFileSync('package.json','utf8')).version)")
+          PKG_NAME=$(node -e "console.log(JSON.parse(require('fs').readFileSync('packages/${{ matrix.package }}/package.json','utf8')).name)")
+          VERSION=$(node -e "console.log(JSON.parse(require('fs').readFileSync('packages/${{ matrix.package }}/package.json','utf8')).version)")
           echo "Package: $PKG_NAME"
           echo "Version: $VERSION"
           if npm view "$PKG_NAME@$VERSION" version > /dev/null 2>&1; then
@@ -106,15 +112,15 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ env.NPM_TOKEN }}
         run: |
-          npm publish --tag "$PUBLISH_TAG" --access public
+          npm publish "packages/${{ matrix.package }}" --tag "$PUBLISH_TAG" --access public
 
       - name: Ensure pre-release dist-tag
         if: (env.PUBLISH_TAG == 'dev' || env.PUBLISH_TAG == 'beta') && steps.version.outputs.should_publish == 'true'
         env:
           NODE_AUTH_TOKEN: ${{ env.NPM_TOKEN }}
         run: |
-          PKG_NAME=$(node -e "console.log(JSON.parse(require('fs').readFileSync('package.json','utf8')).name)")
-          VERSION=$(node -e "console.log(JSON.parse(require('fs').readFileSync('package.json','utf8')).version)")
+          PKG_NAME=$(node -e "console.log(JSON.parse(require('fs').readFileSync('packages/${{ matrix.package }}/package.json','utf8')).name)")
+          VERSION=$(node -e "console.log(JSON.parse(require('fs').readFileSync('packages/${{ matrix.package }}/package.json','utf8')).version)")
           echo "Ensure dist-tag: ${PUBLISH_TAG} -> $VERSION"
           npm dist-tag add "$PKG_NAME@$VERSION" "$PUBLISH_TAG" || true
           npm dist-tag ls "$PKG_NAME"
