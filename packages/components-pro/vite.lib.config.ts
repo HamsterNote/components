@@ -26,7 +26,9 @@ export default defineConfig({
     rolldownOptions: {
       external: [
         '@hamster-note/components/button',
+        '@hamster-note/components/confirm',
         '@hamster-note/components/drawer',
+        '@hamster-note/components/icon',
         '@hamster-note/notes',
         'react',
         'react/jsx-runtime',

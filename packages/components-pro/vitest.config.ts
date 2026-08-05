@@ -9,8 +9,14 @@ export default defineConfig({
       '@hamster-note/components/button': fileURLToPath(
         new URL('../components/src/components/button/index.ts', import.meta.url),
       ),
+      '@hamster-note/components/confirm': fileURLToPath(
+        new URL('../components/src/components/confirm/index.ts', import.meta.url),
+      ),
       '@hamster-note/components/drawer': fileURLToPath(
         new URL('../components/src/components/drawer/index.ts', import.meta.url),
+      ),
+      '@hamster-note/components/icon': fileURLToPath(
+        new URL('../components/src/components/icon/index.ts', import.meta.url),
       ),
     },
   },
