@@ -134,6 +134,8 @@ decorative treatments. Every effect communicates interactivity, state, or groupi
   adaptive detent. Pointer capture keeps the gesture continuous outside the header. The two detents
   are discrete and animate only transform/opacity; side drawers expand their width to the viewport,
   while top/bottom drawers expand their height. The adaptive `size` remains the restoration target.
+  Viewport attachment uses dynamic viewport units, safe-area insets on every edge, and contained
+  overscroll so mobile browser chrome and notches never cover the header, content, or composer.
 - Confirm: a confirmation dialog built on top of Dialog, exposed in three equivalent forms that
   share one presentational core (`<Confirm>`): a controlled `<Confirm>` component, a
   `<ConfirmProvider>` + `useConfirm()` hook returning `confirm(options): Promise<boolean>`, and a
@@ -153,9 +155,18 @@ decorative treatments. Every effect communicates interactivity, state, or groupi
   use an indented border and the foundation surface tokens rather than deeper nested cards.
   Submissions containing only whitespace stay
   disabled; successful comment and reply submissions append to their respective visible lists,
-  clear the active composer, return focus to the reply trigger, and announce the update through a
-  polite `aria-live` region. Reply callbacks expose the complete typed reply for persistence, and a
+  clear the active composer, return focus to the reply trigger, and announce concise outcomes through
+  a dedicated polite status region portalled outside the modal tree rather than making the entire
+  feed live. Each outcome replaces the status message node so repeated actions remain observable to
+  assistive technology. Reply callbacks expose
+  the complete typed reply for persistence, and a
   matching stable ID in updated `data` reconciles the local optimistic item without duplication.
+  Optional typed edit/delete callbacks expose the root comment ID and, for replies, the reply ID.
+  Editing replaces the item content optimistically in place through a labelled inline editor; blank
+  content cannot be saved, and cancel preserves the previous value. Edit and delete controls are only
+  rendered when their matching callback is provided. Destructive actions always open a danger-tone
+  Confirm that names whether a comment or reply will be removed; cancellation leaves the thread
+  unchanged, while confirmation removes the target immediately without removing sibling entries.
 - Demo panels: 12px radius, 1px border, subtle directional highlight, no floating drop-shadow stack.
 
 ## 6. Motion and Interaction
@@ -177,7 +188,9 @@ decorative treatments. Every effect communicates interactivity, state, or groupi
   region. Comment and reply triggers identify the target author, reflect expanded state, meet the 36px compact
   target minimum (44px on mobile), and regain focus after submit or cancel; reply composers keep a
   visible target label. Comment and reply timestamps use semantic `<time>` elements and the Drawer
-  remains the sole modal container.
+  hosts the destructive Confirm as its only nested modal. Edit/delete icon actions carry author- and
+  entry-specific accessible names, retain visible focus treatment, and meet the same 36px/44px target
+  minimums as reply actions.
 - Popover consumers must choose the ARIA role that matches their content and connect trigger and
   surface with `aria-controls`/`aria-expanded`. `PopoverSeparator` always exposes `role="separator"`
   and an `aria-orientation` that follows the surrounding Popover's `orientation`: `vertical`
@@ -197,11 +210,18 @@ decorative treatments. Every effect communicates interactivity, state, or groupi
   `title`/`description` via `aria-labelledby`/`aria-describedby` generated from `useId`. When
   `title` is omitted the consumer must supply `aria-label`. Focus is trapped inside the panel
   (Tab/Shift+Tab cycle), moved to the first focusable element on open, and returned to the
-  previously focused element on close; body scroll is locked while open. Esc and backdrop dismissal
+  previously focused element on close; when an action removes that element, `finalFocusRef` names a
+  stable fallback that receives focus after the parent modal becomes interactive again. Body scroll
+  is locked while open. Esc and backdrop dismissal
   are on by default and individually toggleable via `closeOnEsc`/`closeOnBackdrop`. Enter/exit
   motion respects `prefers-reduced-motion`. Confirm reuses Dialog's semantics; the confirm button
   is the primary action and the cancel button is the dismissal path, so Esc/backdrop both resolve
-  the hook/function Promise with `false`. Their icon actions are native `button` elements with visible
+  the hook/function Promise with `false`. Dialog and Confirm use the default overlay layer unless a
+  second modal is opened from an existing Drawer or modal surface; that child explicitly selects the
+  semantic `elevated` layer so both its backdrop and panel sit above the parent without exposing a
+  consumer-controlled numeric z-index. Only the topmost modal remains `aria-modal` and interactive;
+  each covered parent is `aria-hidden` and inert until the child finishes leaving. Their icon actions
+  are native `button` elements with visible
   focus rings, 36px minimum targets, stable Chinese `aria-label` text, and `aria-pressed` on fullscreen
   toggles. Drawer drag is additive rather than exclusive: keyboard and assistive-technology users can
   always reach the same fullscreen state through the arrow button when that action is enabled.

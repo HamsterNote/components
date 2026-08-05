@@ -31,6 +31,7 @@ const initialComments: readonly CommentData[] = [
 
 export function CommentsDemo({ onFeedback }: CommentsDemoProps) {
   const [open, setOpen] = useState(false);
+  const [comments, setComments] = useState(initialComments);
 
   return (
     <div className="component-row">
@@ -46,7 +47,7 @@ export function CommentsDemo({ onFeedback }: CommentsDemoProps) {
       <span className="demo-inline-note">2 条讨论 · 使用基础 Drawer 容器</span>
       <CommentDrawer
         currentAuthor="周言"
-        data={initialComments}
+        data={comments}
         onClose={() => {
           setOpen(false);
           onFeedback('已关闭 Pro 评论面板');
@@ -54,8 +55,48 @@ export function CommentsDemo({ onFeedback }: CommentsDemoProps) {
         onCommentAdd={(content) => {
           onFeedback(`已发布评论：${content}`);
         }}
+        onCommentDelete={(commentId) => {
+          setComments((current) => current.filter((comment) => comment.id !== commentId));
+          onFeedback('已删除评论');
+        }}
+        onCommentEdit={(commentId, content) => {
+          setComments((current) =>
+            current.map((comment) =>
+              comment.id === commentId ? { ...comment, content } : comment,
+            ),
+          );
+          onFeedback('已保存评论修改');
+        }}
         onReplyAdd={(_commentId, content) => {
           onFeedback(`已发布回复：${content}`);
+        }}
+        onReplyDelete={(commentId, replyId) => {
+          setComments((current) =>
+            current.map((comment) =>
+              comment.id === commentId
+                ? {
+                    ...comment,
+                    replies: (comment.replies ?? []).filter((reply) => reply.id !== replyId),
+                  }
+                : comment,
+            ),
+          );
+          onFeedback('已删除回复');
+        }}
+        onReplyEdit={(commentId, replyId, content) => {
+          setComments((current) =>
+            current.map((comment) =>
+              comment.id === commentId
+                ? {
+                    ...comment,
+                    replies: (comment.replies ?? []).map((reply) =>
+                      reply.id === replyId ? { ...reply, content } : reply,
+                    ),
+                  }
+                : comment,
+            ),
+          );
+          onFeedback('已保存回复修改');
         }}
         open={open}
         title="研究摘要评论"

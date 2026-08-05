@@ -14,9 +14,9 @@
  * 缓动 cubic-bezier(.2,.8,.2,1)，尊重 prefers-reduced-motion（直接到终态）。
  * 通过 data-state="enter" / "exit" 切换，配合 useModal 的状态机保留 DOM 直到退场动画结束。
  *
- * 层叠：z-index 1100，高于 Popover 锚定浮层的 1000，保证对话框压住菜单/浮层；
- * Drawer 用 1200，让 Drawer 内打开 Dialog 时 Dialog 仍可见，而 Dialog 内打开 Drawer
- * 时 Drawer 压在 Dialog 之上（更符合「抽屉是更高层级容器」的直觉）。
+ * 层叠：默认 z-index 1100，高于 Popover 锚定浮层的 1000；Drawer 使用 1200。
+ * 从 Drawer 等父模态打开二级 Dialog 时显式使用 elevated 层级 1300，确保其遮罩和面板
+ * 都覆盖父模态，同时保留默认 Dialog 与 Drawer 的既有层级关系。
  */
 
 @layer hamster-note.components {
@@ -40,6 +40,10 @@
 
   .hn-dialog__backdrop[data-state='exit'] {
     opacity: 0;
+  }
+
+  .hn-dialog__backdrop.hn-dialog__backdrop--elevated {
+    z-index: 1300;
   }
 
   /* 面板：居中定位，最大宽度限制避免在大屏上过宽；面板本身也是可聚焦容器 */
@@ -79,6 +83,10 @@
     max-width: none;
     max-height: none;
     border-radius: 0;
+  }
+
+  .hn-dialog__panel.hn-dialog__panel--elevated {
+    z-index: 1300;
   }
 
   .hn-dialog__actions {
@@ -154,6 +162,7 @@
     margin: 0;
     font-size: 13px;
     line-height: 1.65;
+    text-wrap: pretty;
     color: var(--hn-color-text-muted);
   }
 

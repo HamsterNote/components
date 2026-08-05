@@ -1,9 +1,11 @@
-import { type HTMLAttributes, type Ref, useState } from 'react';
+import { type HTMLAttributes, type Ref, type RefObject, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import { Icon } from '../icon/Icon';
 import { useThemeScope } from '../theme/theme-context';
 import { useModal } from './use-modal';
+
+export type DialogLayer = 'default' | 'elevated';
 
 export interface DialogProps extends HTMLAttributes<HTMLDivElement> {
   // 受控开合状态：完全由使用方维护，组件不内部维护 open
@@ -22,6 +24,10 @@ export interface DialogProps extends HTMLAttributes<HTMLDivElement> {
   readonly showCloseButton?: boolean | undefined;
   // 是否展示关闭按钮左侧的全屏切换按钮（默认 false）
   readonly showFullscreenButton?: boolean | undefined;
+  // 语义层级：elevated 用于从 Drawer 等父模态中打开、需要覆盖父遮罩的二级对话框
+  readonly layer?: DialogLayer | undefined;
+  // 触发器随确认动作被移除时，关闭后聚焦此稳定目标
+  readonly finalFocusRef?: RefObject<HTMLElement | null> | undefined;
   // React 19：ref 作为普通 prop 直接透传到面板根 div
   readonly ref?: Ref<HTMLDivElement>;
 }
@@ -39,6 +45,8 @@ export function Dialog({
   closeOnBackdrop = true,
   showCloseButton = false,
   showFullscreenButton = false,
+  layer = 'default',
+  finalFocusRef,
   ref,
   style,
   ...props
@@ -60,7 +68,14 @@ export function Dialog({
     descriptionId,
     handlePanelKeyDown,
     handleBackdropPointerDown,
-  } = useModal({ open, onClose, closeOnEsc, closeOnBackdrop });
+    topmost,
+  } = useModal({
+    open,
+    onClose,
+    closeOnEsc,
+    closeOnBackdrop,
+    ...(finalFocusRef === undefined ? {} : { finalFocusRef }),
+  });
 
   // SSR 守卫：typeof document 检查避免服务端渲染时访问 document
   if (!mounted || typeof document === 'undefined') {
@@ -70,6 +85,7 @@ export function Dialog({
   const panelClasses = [
     'hn-dialog__panel',
     fullscreen ? 'hn-dialog__panel--fullscreen' : '',
+    layer === 'elevated' ? 'hn-dialog__panel--elevated' : '',
     className,
   ]
     .filter(Boolean)
@@ -95,7 +111,7 @@ export function Dialog({
     <>
       {/* 背景遮罩：承担点击外关闭与视觉聚焦，pointerdown 仅在 backdrop 自身才触发关闭 */}
       <div
-        className="hn-dialog__backdrop"
+        className={`hn-dialog__backdrop${layer === 'elevated' ? ' hn-dialog__backdrop--elevated' : ''}`}
         data-state={dataState}
         onPointerDown={handleBackdropPointerDown}
         ref={backdropRef}
@@ -104,10 +120,12 @@ export function Dialog({
       <div
         {...props}
         aria-describedby={describedBy}
+        aria-hidden={topmost ? undefined : 'true'}
         aria-labelledby={labelledBy}
-        aria-modal="true"
+        aria-modal={topmost ? 'true' : undefined}
         className={panelClasses}
         data-state={dataState}
+        inert={topmost ? undefined : true}
         onKeyDown={handlePanelKeyDown}
         ref={setPanelRef}
         role="dialog"

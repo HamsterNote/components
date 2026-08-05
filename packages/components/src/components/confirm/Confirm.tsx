@@ -1,8 +1,9 @@
-import type { ReactNode } from 'react';
+import type { ReactNode, RefObject } from 'react';
 import { createContext, useCallback, useContext, useMemo, useState } from 'react';
 
 import { Button } from '../button';
 import { Dialog } from '../dialog';
+import type { DialogLayer } from '../dialog';
 
 // 确认按钮的语义色调：default 用 accent 主色，danger 用 --hn-color-danger 标记破坏性操作
 export type ConfirmTone = 'default' | 'danger';
@@ -31,6 +32,10 @@ export interface ConfirmProps {
   readonly closeOnEsc?: boolean | undefined;
   // 是否允许点击背景遮罩关闭（默认 true）；透传给底层 Dialog
   readonly closeOnBackdrop?: boolean | undefined;
+  // 语义层级：从 Drawer 等父模态发起确认时使用 elevated，确保确认框位于父遮罩之上
+  readonly layer?: DialogLayer | undefined;
+  // 删除等操作会移除原触发器时，关闭后聚焦此稳定目标
+  readonly finalFocusRef?: RefObject<HTMLElement | null> | undefined;
 }
 
 // useConfirm() 返回的命令式 options：与 ConfirmProps 相比省略 open 与 onConfirm/onCancel，
@@ -70,6 +75,8 @@ export function Confirm({
   onCancel,
   closeOnEsc = true,
   closeOnBackdrop = true,
+  layer = 'default',
+  finalFocusRef,
 }: ConfirmProps) {
   // 关闭逻辑统一走 onCancel：Esc / 背景点击 / 取消按钮都触发它
   const handleClose = () => {
@@ -78,9 +85,12 @@ export function Confirm({
 
   return (
     <Dialog
+      className="hn-confirm"
       closeOnBackdrop={closeOnBackdrop}
       closeOnEsc={closeOnEsc}
       description={description}
+      finalFocusRef={finalFocusRef}
+      layer={layer}
       onClose={handleClose}
       open={open}
       title={title}
@@ -160,7 +170,9 @@ export function ConfirmProvider({ children }: { readonly children: ReactNode }) 
           confirmText={pending.options.confirmText}
           cancelText={pending.options.cancelText}
           description={pending.options.description}
+          finalFocusRef={pending.options.finalFocusRef}
           loading={pending.options.loading}
+          layer={pending.options.layer}
           onConfirm={handleConfirm}
           onCancel={handleCancel}
           open={true}

@@ -75,6 +75,7 @@ export function Drawer({
     descriptionId,
     handlePanelKeyDown,
     handleBackdropPointerDown,
+    topmost,
   } = useModal({ open, onClose, closeOnEsc, closeOnBackdrop });
 
   if (!mounted || typeof document === 'undefined') {
@@ -146,10 +147,12 @@ export function Drawer({
       <div
         {...props}
         aria-describedby={describedBy}
+        aria-hidden={topmost ? undefined : 'true'}
         aria-labelledby={labelledBy}
-        aria-modal="true"
+        aria-modal={topmost ? 'true' : undefined}
         className={panelClasses}
         data-state={dataState}
+        inert={topmost ? undefined : true}
         onKeyDown={handlePanelKeyDown}
         ref={setPanelRef}
         role="dialog"

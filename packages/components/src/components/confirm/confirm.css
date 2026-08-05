@@ -18,4 +18,14 @@
     gap: 8px;
     margin-top: 20px;
   }
+
+  @media (width <= 480px) {
+    .hn-confirm {
+      padding-inline: 20px;
+    }
+
+    .hn-confirm__footer .hn-button {
+      min-height: 44px;
+    }
+  }
 }

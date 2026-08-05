@@ -40,7 +40,9 @@ export function CommentNoteEditor({
   }, [paragraphId, value]);
 
   useEffect(() => {
-    const titleEditor = editorRef.current?.querySelector<HTMLElement>('.hn-note-hero [contenteditable]');
+    const titleEditor = editorRef.current?.querySelector<HTMLElement>(
+      '.hn-note-hero [contenteditable]',
+    );
     titleEditor?.setAttribute('aria-hidden', 'true');
     titleEditor?.setAttribute('contenteditable', 'false');
     titleEditor?.setAttribute('tabindex', '-1');
@@ -66,10 +68,9 @@ export function CommentNoteEditor({
     const editableBlocks = editorRef.current?.querySelectorAll<HTMLElement>(
       '.hn-note-body [role="textbox"]',
     );
-    const nextValue = Array.from(
-      editableBlocks ?? [],
-      (editable) => editable.textContent ?? '',
-    ).join('\n');
+    const nextValue = Array.from(editableBlocks ?? [], (editable) => editable.textContent).join(
+      '\n',
+    );
     if (nextValue === emittedValueRef.current) {
       return;
     }
@@ -84,9 +85,7 @@ export function CommentNoteEditor({
     const editableBlocks = editorRef.current?.querySelectorAll<HTMLElement>(
       '.hn-note-body [role="textbox"]',
     );
-    return Array.from(editableBlocks ?? [], (editable) => editable.textContent ?? '').join(
-      '\n',
-    );
+    return Array.from(editableBlocks ?? [], (editable) => editable.textContent).join('\n');
   }
 
   function emitEditorValue(nextValue: string) {
@@ -102,23 +101,12 @@ export function CommentNoteEditor({
   }
 
   const editor = useMemo(
-    () => (
-      <NoteContent
-        blocks={blocks}
-        editable
-        onBlocksChange={setBlocks}
-        title=""
-      />
-    ),
+    () => <NoteContent blocks={blocks} editable onBlocksChange={setBlocks} title="" />,
     [blocks],
   );
 
   return (
-    <div
-      className="hn-comment-note-editor"
-      onInputCapture={handleInput}
-      ref={editorRef}
-    >
+    <div className="hn-comment-note-editor" onInputCapture={handleInput} ref={editorRef}>
       {editor}
     </div>
   );

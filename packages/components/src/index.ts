@@ -9,7 +9,7 @@ export type {
   ConfirmTone,
 } from './components/confirm';
 export { Confirm, ConfirmProvider, confirm, confirmDialog, useConfirm } from './components/confirm';
-export type { DialogProps } from './components/dialog';
+export type { DialogLayer, DialogProps } from './components/dialog';
 export { Dialog } from './components/dialog';
 export type { DrawerPlacement, DrawerProps } from './components/drawer';
 export { Drawer } from './components/drawer';
