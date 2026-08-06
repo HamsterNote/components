@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2026-08-06
+
+### Added
+
+- **Menu**: 12-direction placement with configurable submenu inheritance and interactive demo.
+- **Dialog/Drawer**: unified fullscreen icons (`fullscreen`, `fullscreen-exit`) and comment icon.
+- **Drawer**: fullscreen drag interaction (drag title area to enter/exit fullscreen).
+- **Button**: semantic variants (`primary`, `secondary`, `danger`, `warning`, `success`, `info`) with `ghost` boolean prop.
+- **Theme**: `ThemeContext` for programmatic theme access.
+- **Icon**: `comment`, `fullscreen`, `fullscreen-exit` icons added.
+- **Testing**: Vitest unit tests and Playwright e2e tests with visual regression baselines.
+- **CI**: GitHub Pages deployment workflow for demo, Node.js 22 support, CJK font installation for visual tests.
+- **Documentation**: comprehensive README with badges, install, testing, and demo sections; comment permission vocabulary and ADR.
+
+### Changed
+
+- **Menu**: dropdown menus no longer wrap a `Popover` — `Menu` gains an anchored mode (as in v0.2.1-beta.3), now with 12-direction placement and configurable submenu inheritance.
+- **Build**: demo build uses `/components/` base path.
+
+### Fixed
+
+- **Menu**: submenu Escape handling improved, icon count updated.
+
 ## [0.2.1-beta.4] - 2026-07-25
 
 ### Fixed
