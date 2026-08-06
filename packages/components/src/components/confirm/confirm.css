@@ -1,0 +1,31 @@
+/*
+ * Confirm 设计说明
+ * ───────────────────────────────────────────────────────────────────────────
+ * 确认对话框基于 Dialog 表面，叠加标题 / 描述 / 取消+确认按钮的固定结构。
+ * 不引入任何「确认框专用色」：文本、按钮全部复用全局 token 与 Button 组件。
+ *
+ * danger 色调直接复用 Button danger variant，确保主题前景色和 hover token 始终一致。
+ *
+ * Footer 布局：ghost 取消 + primary 确认，右对齐，gap 8px，与 Button 默认尺寸匹配。
+ */
+
+@layer hamster-note.components {
+  /* 确认对话框复用 Dialog 面板，只追加 footer 样式。
+     面板 padding 由 Dialog 的 20px 24px 提供，footer 上方留 20px 间距 */
+  .hn-confirm__footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 20px;
+  }
+
+  @media (width <= 480px) {
+    .hn-confirm {
+      padding-inline: 20px;
+    }
+
+    .hn-confirm__footer .hn-button {
+      min-height: 44px;
+    }
+  }
+}

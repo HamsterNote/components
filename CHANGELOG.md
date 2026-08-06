@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **Components Pro**: 新增可独立发布的 `@hamster-note/components-pro`，第一期提供基于基础
+  `Drawer` 与 `Button` 组合的 `CommentDrawer` 评论面板。
+- **Shared Demo**: 同一 Demo 同时展示基础组件库和 Pro 组件库，并覆盖打开评论面板、提交评论与
+  关闭抽屉的完整浏览器流程。
+
+### Changed
+
+- **Repository**: 改为 Yarn Workspaces monorepo，基础组件、Pro 组件与 Demo 分别位于
+  `packages/components`、`packages/components-pro` 与 `packages/demo`。
+- **Publishing**: tag 发布流程会分别构建并发布基础组件库和 Pro 组件库。
+
 ## [0.2.1-beta.4] - 2026-07-25
 
 ### Fixed

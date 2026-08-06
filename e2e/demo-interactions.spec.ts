@@ -6,11 +6,47 @@ test.beforeEach(async ({ page }) => {
 
 test('Given 组件工作台, When 首次打开, Then 展示全部公共组件章节', async ({ page }) => {
   await expect(page.getByRole('heading', { level: 1 })).toContainText('为笔记体验打造');
-  await expect(page.locator('main > section')).toHaveCount(14);
+  await expect(page.locator('main > section')).toHaveCount(15);
   await expect(page.getByRole('navigation', { name: '组件导航' }).getByRole('link')).toHaveCount(
-    13,
+    14,
   );
   await expect(page.getByRole('status').first()).toContainText('等待交互');
+});
+
+test('Given Pro 评论区, When 发布评论并关闭, Then Drawer 展示新评论且反馈同步', async ({
+  page,
+}) => {
+  await page.locator('#comments').getByRole('button', { name: '查看评论' }).click();
+  const drawer = page.getByRole('dialog', { name: '研究摘要评论' });
+  await expect(drawer).toBeVisible();
+  await expect(drawer).toHaveCSS('position', 'fixed');
+  await expect(drawer).toHaveCSS('width', '400px');
+
+  await drawer.getByRole('textbox', { name: '添加评论' }).fill('我来补充验证数据。');
+  await drawer.getByRole('button', { name: '发布评论' }).click();
+
+  await expect(drawer.getByText('我来补充验证数据。')).toBeVisible();
+  await expect(page.getByRole('status').first()).toContainText('已发布评论：我来补充验证数据。');
+
+  await drawer.getByRole('button', { name: '关闭抽屉' }).click();
+  await expect(drawer).not.toBeVisible();
+  await expect(page.getByRole('status').first()).toContainText('已关闭 Pro 评论面板');
+});
+
+test('Given Pro 评论区已有评论, When 回复评论, Then 回复显示在原评论下且反馈同步', async ({
+  page,
+}) => {
+  await page.locator('#comments').getByRole('button', { name: '查看评论' }).click();
+  const drawer = page.getByRole('dialog', { name: '研究摘要评论' });
+
+  const replyTrigger = drawer.getByRole('button', { name: '回复林晓的评论' });
+  await replyTrigger.click();
+  await drawer.getByRole('textbox', { name: '回复林晓' }).fill('摘要区已同步更新。');
+  await drawer.getByRole('button', { name: '发布回复' }).click();
+
+  await expect(drawer.getByText('摘要区已同步更新。')).toBeVisible();
+  await expect(replyTrigger).toBeFocused();
+  await expect(page.getByRole('status').first()).toContainText('已发布回复：摘要区已同步更新。');
 });
 
 test('Given 初始深色主题, When 切换主题, Then 根主题属性和按钮名称同步更新', async ({ page }) => {

@@ -1,6 +1,6 @@
-# @hamster-note/components
+# HamsterNote Components
 
-HamsterNote 的 React 19 基础组件库，使用 TypeScript 6 与 Vite 8 构建。
+HamsterNote 的 React 19 组件库 monorepo，使用 TypeScript 6、Vite 8 与 Yarn Workspaces 构建。
 
 [![npm version](https://img.shields.io/npm/v/@hamster-note/components/beta)](https://www.npmjs.com/package/@hamster-note/components)
 [![license](https://img.shields.io/npm/l/@hamster-note/components)](https://github.com/HamsterNote/components/blob/main/LICENSE)
@@ -12,6 +12,17 @@ HamsterNote 的 React 19 基础组件库，使用 TypeScript 6 与 Vite 8 构建
 图标、表单、浮层、菜单、模态与主题等常见界面要素。组件只引用全局 CSS token，配合
 `ThemeProvider` 即可零侵入切换主题色与明暗模式；所有组件暗色为默认视觉，亮色一键
 切换。仓库地址：<https://github.com/HamsterNote/components>。
+
+`@hamster-note/components-pro` 在相同设计系统上提供面向产品协作场景的复合组件。
+第一期包含基于基础 `Drawer` 组合的 `CommentDrawer` 评论面板。两个组件库共享同一个
+在线 Demo，确保基础组件与 Pro 组件在真实组合场景中一起验证。
+
+## Monorepo 结构
+
+- `packages/components`：基础组件库 `@hamster-note/components`。
+- `packages/components-pro`：复合组件库 `@hamster-note/components-pro`。
+- `packages/demo`：同时展示并消费两个库的共享 Demo。
+- `e2e`：针对共享 Demo 的浏览器端用户流程测试。
 
 ## 特性
 
@@ -45,11 +56,27 @@ npm install @hamster-note/components@beta
 yarn add @hamster-note/components@beta
 ```
 
+使用 Pro 组件时同时安装两个包：
+
+```bash
+npm install @hamster-note/components@beta @hamster-note/components-pro@beta
+# 或
+yarn add @hamster-note/components@beta @hamster-note/components-pro@beta
+```
+
 peer dependencies 为 `react ^19` 与 `react-dom ^19`，需项目自行提供。组件样式独立
 分发，使用时需显式引入一次：
 
 ```tsx
 import '@hamster-note/components/styles.css';
+```
+
+Pro 组件继续复用基础 token，并额外引入自身样式：
+
+```tsx
+import { CommentDrawer } from '@hamster-note/components-pro/comment-drawer';
+import '@hamster-note/components/styles.css';
+import '@hamster-note/components-pro/styles.css';
 ```
 
 ## 快速开始

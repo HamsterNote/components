@@ -1,0 +1,264 @@
+/*
+ * Drawer 设计说明
+ * ───────────────────────────────────────────────────────────────────────────
+ * 边缘贴附的模态抽屉面板：背景遮罩 + 贴边面板。与 Dialog 一样经 Portal 渲染到
+ * document.body 下，焦点管理 / 滚动锁 / Esc / 背景点击 / 出入场动画共享自 useModal。
+ *
+ * placement：
+ *   - left / right：贴左右边缘，占满高度，沿水平方向滑入（translateX）
+ *   - top / bottom：贴上下边缘，占满宽度，沿垂直方向滑入（translateY）
+ *
+ * 尺寸：
+ *   - left / right 默认宽度 360px，可通过 size prop 覆盖
+ *   - top / bottom 默认高度 280px，可通过 size prop 覆盖
+ *   - 另一轴始终占满动态视口（100dvh / 100vw）
+ *
+ * 圆角：贴边时只在「远离边缘的那两条相邻边」做圆角，制造「从边缘滑出」的视觉。
+ *   - right：top-left / bottom-left 圆角
+ *   - left：top-right / bottom-right 圆角
+ *   - top：bottom-left / bottom-right 圆角
+ *   - bottom：top-left / top-right 圆角
+ *
+ * 层叠：z-index 1200，高于 Dialog 的 1100，让 Drawer 内打开 Dialog 时 Dialog 仍可见，
+ * 而 Dialog 内打开 Drawer 时 Drawer 压在 Dialog 之上（更符合「抽屉是更高层级容器」的直觉）。
+ */
+
+@layer hamster-note.components {
+  /* 背景遮罩：与 Dialog 同款，仅 z-index 提升到 1200 */
+  .hn-drawer__backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1200;
+    background: rgb(0 0 0 / 45%);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    transition: opacity 140ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .hn-drawer__backdrop[data-state='enter'] {
+    opacity: 1;
+  }
+
+  .hn-drawer__backdrop[data-state='exit'] {
+    opacity: 0;
+  }
+
+  /* 面板基础：贴边 fixed 定位，背景/边框/字体与 Dialog 一致复用全局 token。
+     padding 与 Dialog 同款（20px 24px），让标题/描述/内容与面板边缘保持留白；
+     内容区超出时仅在 .hn-drawer__content 内部滚动，padding 不被滚走。 */
+  .hn-drawer__panel {
+    position: fixed;
+    z-index: 1200;
+    display: flex;
+    flex-direction: column;
+    max-width: calc(100vw - 0px);
+    max-height: 100dvh;
+    padding: calc(20px + env(safe-area-inset-top)) calc(24px + env(safe-area-inset-right))
+      calc(20px + env(safe-area-inset-bottom)) calc(24px + env(safe-area-inset-left));
+    border: 1px solid var(--hn-color-border);
+    background: var(--hn-color-surface);
+    box-shadow: 0 16px 48px rgb(0 0 0 / 32%);
+    color: var(--hn-color-text);
+    font-family: var(--hn-font-sans);
+    transition:
+      opacity 140ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  /* 默认透明 + 偏移起始态：由各 placement 覆盖具体 transform 偏移量 */
+  .hn-drawer__panel {
+    opacity: 0;
+  }
+
+  /* 焦点环：与 Dialog 一致 */
+  .hn-drawer__panel:focus-visible {
+    outline: none;
+    box-shadow:
+      var(--hn-focus-ring),
+      0 16px 48px rgb(0 0 0 / 32%);
+  }
+
+  /* —— left / right：水平贴边，占满高度，宽度由 --hn-drawer-size 控制 —— */
+  .hn-drawer__panel--left,
+  .hn-drawer__panel--right {
+    top: 0;
+    bottom: 0;
+    width: var(--hn-drawer-size, 360px);
+    max-width: 100vw;
+    height: 100dvh;
+  }
+
+  .hn-drawer__panel--left.hn-drawer__panel--fullscreen,
+  .hn-drawer__panel--right.hn-drawer__panel--fullscreen {
+    width: 100vw;
+    border-radius: 0;
+  }
+
+  .hn-drawer__panel--left {
+    left: 0;
+    /* 圆角只在远离边缘的右边两角 */
+    border-radius: 0 var(--hn-radius-lg) var(--hn-radius-lg) 0;
+    /* 入场：从 translateX(-100%) 滑入到 0；退场回到 -100% */
+    transform: translateX(-100%);
+  }
+
+  .hn-drawer__panel--right {
+    right: 0;
+    /* 圆角只在远离边缘的左边两角 */
+    border-radius: var(--hn-radius-lg) 0 0 var(--hn-radius-lg);
+    transform: translateX(100%);
+  }
+
+  .hn-drawer__panel--left[data-state='enter'],
+  .hn-drawer__panel--right[data-state='enter'] {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .hn-drawer__panel--left[data-state='exit'] {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+
+  .hn-drawer__panel--right[data-state='exit'] {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+
+  /* —— top / bottom：垂直贴边，占满宽度，高度由 --hn-drawer-size 控制 —— */
+  .hn-drawer__panel--top,
+  .hn-drawer__panel--bottom {
+    left: 0;
+    right: 0;
+    width: 100vw;
+    height: var(--hn-drawer-size, 280px);
+    max-height: 100dvh;
+  }
+
+  .hn-drawer__panel--top.hn-drawer__panel--fullscreen,
+  .hn-drawer__panel--bottom.hn-drawer__panel--fullscreen {
+    height: 100dvh;
+    border-radius: 0;
+  }
+
+  .hn-drawer__panel--top {
+    top: 0;
+    /* 圆角只在远离边缘的下边两角 */
+    border-radius: 0 0 var(--hn-radius-lg) var(--hn-radius-lg);
+    transform: translateY(-100%);
+  }
+
+  .hn-drawer__panel--bottom {
+    bottom: 0;
+    /* 圆角只在远离边缘的上边两角 */
+    border-radius: var(--hn-radius-lg) var(--hn-radius-lg) 0 0;
+    transform: translateY(100%);
+  }
+
+  .hn-drawer__panel--top[data-state='enter'],
+  .hn-drawer__panel--bottom[data-state='enter'] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .hn-drawer__panel--top[data-state='exit'] {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+
+  .hn-drawer__panel--bottom[data-state='exit'] {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+
+  .hn-drawer__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 36px;
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+  }
+
+  .hn-drawer__header:active {
+    cursor: grabbing;
+  }
+
+  .hn-drawer__heading {
+    display: flex;
+    min-width: 0;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .hn-drawer__icon-button {
+    display: inline-grid;
+    flex: 0 0 auto;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    place-items: center;
+    border: 0;
+    border-radius: var(--hn-radius-md);
+    background: transparent;
+    color: var(--hn-color-text-muted);
+    cursor: pointer;
+    transition:
+      background-color var(--hn-transition),
+      color var(--hn-transition);
+  }
+
+  .hn-drawer__icon-button:hover {
+    background: var(--hn-color-surface-hover);
+    color: var(--hn-color-text);
+  }
+
+  .hn-drawer__icon-button:focus-visible {
+    outline: none;
+    box-shadow: var(--hn-focus-ring);
+  }
+
+  .hn-drawer__icon-button .hn-icon {
+    font-size: 17px;
+  }
+
+  /* 标题 / 描述 / 内容：复用 Dialog 同款字号与间距，保持视觉一致 */
+  .hn-drawer__title {
+    margin: 0 0 4px;
+    font-size: 18px;
+    font-weight: 550;
+    line-height: 1.45;
+    letter-spacing: -0.01em;
+    color: var(--hn-color-text);
+  }
+
+  .hn-drawer__description {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--hn-color-text-muted);
+  }
+
+  .hn-drawer__content {
+    margin-top: 16px;
+    /* 内容区可滚动：抽屉常承载长列表/表单，超出时在面板内部滚动 */
+    overflow: auto;
+    overscroll-behavior: contain;
+    /* 留出上下内边距，避免内容贴边；左右由面板 padding 控制 */
+    flex: 1 1 auto;
+  }
+
+  .hn-drawer__panel:not(:has(.hn-drawer__header)) .hn-drawer__content {
+    margin-top: 0;
+  }
+
+  /* 尊重 prefers-reduced-motion：所有过渡直接到终态 */
+  @media (prefers-reduced-motion: reduce) {
+    .hn-drawer__backdrop,
+    .hn-drawer__panel {
+      transition-duration: 0.01ms;
+    }
+  }
+}

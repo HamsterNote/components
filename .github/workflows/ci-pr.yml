@@ -10,19 +10,20 @@ permissions:
   contents: read
 
 concurrency:
-  group: pr-${{ github.event.pull_request.head.sha }}
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 
 jobs:
   pr-checks:
     name: Test and Build
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           # @testing-library/jest-dom@7 要求 Node >= 22，与本地开发环境对齐
           node-version: 22
@@ -56,11 +57,17 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y fonts-noto-cjk
 
+      - name: Cache Playwright browsers
+        uses: actions/cache@v5
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+
       - name: Install Playwright Chromium
         run: |
           yarn playwright install --with-deps chromium
 
-      - name: Run browser tests
+      - name: Run browser tests and verify production build
         run: |
           yarn test:e2e
 

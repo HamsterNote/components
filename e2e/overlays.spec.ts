@@ -68,13 +68,13 @@ test('Given 背景关闭策略, When 点击遮罩, Then 启用时关闭而禁用
   const policyOpener = section.getByRole('button', { name: '打开（用上述开关）' });
   await policyOpener.click();
   let dialog = page.getByRole('dialog', { name: '移动笔记' });
-  await page.locator('.hn-dialog__backdrop').click({ position: { x: 1, y: 1 } });
+  await page.locator('.hn-dialog__backdrop').dispatchEvent('pointerdown');
   await expect(dialog).toHaveCount(0);
 
   await section.getByLabel('closeOnBackdrop').uncheck();
   await policyOpener.click();
   dialog = page.getByRole('dialog', { name: '移动笔记' });
-  await page.locator('.hn-dialog__backdrop').click({ position: { x: 1, y: 1 } });
+  await page.locator('.hn-dialog__backdrop').dispatchEvent('pointerdown');
 
   await expect(dialog).toBeVisible();
   await dialog.getByRole('button', { name: '关闭对话框' }).click();
@@ -107,6 +107,29 @@ test('Given danger 确认示例, When 确认删除, Then 对话框关闭且反�
 
   await expect(dialog).toHaveCount(0);
   await expect(page.getByRole('status').first()).toContainText('组件模式：已删除');
+});
+
+test('Given 抽屉内的删除确认, When 确认删除回复, Then 确认框可交互且只移除目标回复', async ({
+  page,
+}) => {
+  await page.locator('#comments').getByRole('button', { name: '查看评论' }).click();
+  const parentDrawerPanel = page.locator('.hn-comment-drawer');
+  await expect(parentDrawerPanel.locator('.hn-note-bottom-toolbar')).toBeHidden();
+  await parentDrawerPanel.getByRole('button', { name: '删除陈默的回复' }).click();
+  const confirm = page.getByRole('dialog', { name: '删除这条回复？' });
+
+  await expect(parentDrawerPanel).toHaveAttribute('aria-hidden', 'true');
+  await expect(parentDrawerPanel).toHaveAttribute('inert', '');
+  await expect(confirm).toHaveAttribute('aria-modal', 'true');
+
+  await confirm.getByRole('button', { name: '删除回复' }).click();
+
+  await expect(confirm).toHaveCount(0);
+  await expect(parentDrawerPanel.getByText('收到，我会在下午的版本里调整。')).toHaveCount(0);
+  await expect(parentDrawerPanel.getByText('建议把访谈中的共同结论提前到摘要区。')).toBeVisible();
+  await expect(parentDrawerPanel).not.toHaveAttribute('aria-hidden');
+  await expect(parentDrawerPanel).not.toHaveAttribute('inert');
+  await expect(parentDrawerPanel).toBeFocused();
 });
 
 test('Given hook 确认示例, When 用户取消, Then Promise 结果反馈为已取消', async ({ page }) => {

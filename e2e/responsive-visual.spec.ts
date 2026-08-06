@@ -69,3 +69,24 @@ test.describe('移动端视觉回归', () => {
     await expect(page).toHaveScreenshot('mobile-dialog-default.png');
   });
 });
+
+test.describe('平板导航回归', () => {
+  test.use({ viewport: { width: 1024, height: 900 } });
+
+  test('Given 1024px 工作台, When 导航项超出可用宽度, Then 页面不产生水平溢出且导航可滚动', async ({
+    page,
+  }) => {
+    await prepareVisualPage(page);
+
+    const metrics = await page.locator('.topbar nav').evaluate((navigation) => ({
+      clientWidth: navigation.clientWidth,
+      documentWidth: document.documentElement.scrollWidth,
+      scrollWidth: navigation.scrollWidth,
+      viewportWidth: window.innerWidth,
+    }));
+
+    expect(metrics.documentWidth).toBe(metrics.viewportWidth);
+    expect(metrics.scrollWidth).toBeGreaterThan(metrics.clientWidth);
+    await expect(page.locator('.topbar')).toHaveScreenshot('tablet-navigation.png');
+  });
+});

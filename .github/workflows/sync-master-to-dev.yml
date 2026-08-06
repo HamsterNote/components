@@ -5,15 +5,9 @@ on:
     branches:
       - master
       - main
-  pull_request:
-    branches:
-      - master
-      - main
-    types: [opened, synchronize, reopened]
 
 permissions:
   contents: write
-  pull-requests: write
 
 concurrency:
   group: sync-master-to-dev
@@ -23,9 +17,10 @@ jobs:
   sync:
     name: Merge master/main into dev
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
