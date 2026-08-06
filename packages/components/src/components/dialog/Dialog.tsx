@@ -53,7 +53,7 @@ export function Dialog({
 }: DialogProps) {
   const [viewState, setViewState] = useState({ fullscreen: false, open });
   if (viewState.open !== open) {
-    setViewState({ fullscreen: false, open });
+    setViewState({ fullscreen: open ? false : viewState.fullscreen, open });
   }
   const fullscreen = viewState.fullscreen;
   const theme = useThemeScope();
@@ -144,7 +144,7 @@ export function Dialog({
                 }}
                 type="button"
               >
-                <Icon aria-hidden="true" name={fullscreen ? 'zoom-out' : 'zoom-in'} />
+                <Icon aria-hidden="true" name={fullscreen ? 'fullscreen-exit' : 'fullscreen'} />
               </button>
             ) : null}
             {showCloseButton ? (

@@ -10,6 +10,7 @@ import {
 import { useEffect, useRef, useState } from 'react';
 
 import { DemoCode } from './DemoCode';
+import { MenuPlacementDemo } from './MenuPlacementDemo';
 
 interface MenuDemoProps {
   readonly onFeedback: (message: string) => void;
@@ -419,6 +420,8 @@ export function MenuDemo({ onFeedback }: MenuDemoProps) {
         </div>
         <DemoCode code={submenuExampleCode} label="TSX + 说明" />
       </div>
+
+      <MenuPlacementDemo />
     </div>
   );
 }

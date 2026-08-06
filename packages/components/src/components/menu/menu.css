@@ -165,20 +165,12 @@
     background: var(--hn-color-surface-hover);
   }
 
-  /* chevron 用 muted 文本色（与 shortcut 同档），尺寸与 shortcut 行高对齐；
-     旋转表达开合状态——仅 transform/opacity 动画，不触发布局 */
   .hn-menu__submenu-chevron {
     flex-shrink: 0;
     display: inline-flex;
     align-items: center;
     font: 400 11px/1 var(--hn-font-sans);
     color: var(--hn-color-text-muted);
-    transition: transform var(--hn-transition);
-  }
-
-  /* 展开时 chevron 向右旋转 90°，与「向右展开」的方向一致 */
-  .hn-menu__submenu--open > .hn-menu__submenu-trigger .hn-menu__submenu-chevron {
-    transform: rotate(90deg);
   }
 
   /*
@@ -193,10 +185,6 @@
 
   @media (prefers-reduced-motion: reduce) {
     .hn-menu__item {
-      transition-duration: 0.01ms;
-    }
-
-    .hn-menu__submenu-chevron {
       transition-duration: 0.01ms;
     }
   }

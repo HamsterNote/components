@@ -110,7 +110,7 @@ import '@hamster-note/components/styles.css';
 
 - `Button`：primary、danger、warning、success、info、secondary 六种操作层级、三种尺寸，以及可与
   任意层级组合的布尔型 `ghost` 展示属性。
-- `Icon`：第一期 outline 风格图标集，内置 55 个 24×24 图标（`ICON_NAMES` 导出全部
+- `Icon`：第一期 outline 风格图标集，内置 59 个 24×24 图标（`ICON_NAMES` 导出全部
   名称）；颜色跟随外层 `color`、尺寸跟随 `font-size`，`label` 提供可访问名。
 - `Badge`：neutral、accent、success、warning、danger 五种语义状态。
 - `TextField`：持久标签、辅助信息、错误状态与完整原生 input 属性。
@@ -129,11 +129,14 @@ import '@hamster-note/components/styles.css';
 - `Dialog`：受控模态对话框。Portal 渲染到 `document.body`，并自动桥接外层
   `ThemeProvider` 的 accent 与明暗主题；内置焦点循环、滚动锁、Esc / 背景点击关闭与
   出入场动画（尊重 `prefers-reduced-motion`）。`showCloseButton` 控制右上角关闭按钮，
-  `showFullscreenButton` 控制其左侧的全屏切换按钮，二者默认均为 `false`。
+  `showFullscreenButton` 控制其左侧的全屏切换按钮：自适应状态使用 `fullscreen` 图标并标记为
+  「全屏显示」，全屏状态使用 `fullscreen-exit` 图标并标记为「退出全屏」；二者默认均为 `false`。
 - `Drawer`：边缘贴附模态抽屉。`placement` 支持 `left` / `right` / `top` / `bottom`
   （默认 `right`），`size` 覆盖自适应状态的默认尺寸（左右 360 / 上下 280）；标题区域
   向上拖动至少 56px 进入全屏、向下拖动恢复，`showFullscreenButton` 在标题左侧提供等价的
-  箭头按钮，`showCloseButton` 在右上角显示关闭按钮。Portal 自动继承 `ThemeProvider`，
+  全屏切换按钮：底部 Drawer 使用 `arrow-up` / `arrow-down`，左侧、右侧与顶部 Drawer 使用
+  `fullscreen` / `fullscreen-exit`；按钮名称统一为「全屏显示」/「退出全屏」。
+  `showCloseButton` 在右上角显示关闭按钮。Portal 自动继承 `ThemeProvider`，
   与 `Dialog` 共享模态语义。
 - `Confirm`：确认对话框，基于 `Dialog` 叠加固定 footer。提供三种等价形态：`<Confirm>`
   受控组件、`<ConfirmProvider>` + `useConfirm()` hook（返回 `Promise<boolean>`，并发
@@ -172,7 +175,7 @@ import '@hamster-note/components/styles.css';
 
 ### `Icon`
 
-`Icon` 是第一期 outline 风格图标集，内置 55 个 24×24 图标：`ICON_NAMES` 常量导出全部
+`Icon` 是第一期 outline 风格图标集，内置 59 个 24×24 图标：`ICON_NAMES` 常量导出全部
 名称，`IconName` 类型从该数组派生（单一数据源）。所有图标遵循统一规范：
 `stroke="currentColor"`、stroke-width 1.5、圆角线帽线脚、`fill="none"`，仅用 path /
 rect / circle 等基础图元，不依赖外部资源。颜色跟随外层 `color`，尺寸默认 `1em` 见方、
@@ -262,12 +265,18 @@ Popover 只负责可复用表面和主题，定位、显示状态、外部点击
 ```
 
 锚点定位：传入 `anchor` 后浮层通过 Portal 渲染到 `document.body` 下，不再受祖先
-`overflow` / `transform` / 层叠上下文的裁剪与遮挡影响。浮层以锚点为基准按 `placement`
-（默认 `bottom-start`，另有 `top-start` / `top-end` / `bottom-end` / `left-start` /
-`right-start`）展开；期望方向溢出视口时自动沿主轴翻转，翻转后仍放不下则 clamp 到
-`viewportMargin`（默认 8px）的安全距离内，并跟随滚动 / 缩放 / 尺寸变化重新定位。
-`anchorOffset`（默认 6）控制与锚点的间距。显示状态、外部点击关闭与焦点返回仍由使用方
-控制（浮层在 body 下，外部点击需在 document 上监听）：
+`overflow` / `transform` / 层叠上下文的裁剪与遮挡影响。`placement` 支持完整 12 方位：
+`top-start` / `top` / `top-end`、`bottom-start` / `bottom` / `bottom-end`、
+`left-start` / `left` / `left-end`、`right-start` / `right` / `right-end`；无后缀表示
+交叉轴居中，默认值为 `bottom-start`。`start` / `end` 始终是物理方向，不随 RTL 改变：
+上下展开时分别表示左 / 右，左右展开时分别表示上 / 下。
+
+期望主方向溢出视口时自动翻转并保留原对齐；翻转后仍放不下则 clamp 到
+`viewportMargin`（默认 8px）内，并跟随滚动 / 缩放 / 尺寸变化重新定位。
+`anchorOffset`（默认 6）控制主轴间距，`anchorCrossOffset`（默认 0）控制交叉轴微调。
+数值属性允许负值且不会被组件修正；因此负 `viewportMargin` 可主动允许浮层越出视口，
+不再代表强制安全保证。显示状态、外部点击关闭与焦点返回仍由使用方控制（浮层在 body 下，
+外部点击需在 document 上监听）：
 
 ```tsx
 const [open, setOpen] = useState(false);
@@ -321,7 +330,8 @@ import { Menu, MenuItem, MenuLabel, MenuSeparator } from '@hamster-note/componen
 下，`.hn-menu` 直接作为浮层表面（自动叠加 `.hn-menu--floating`：边框、阴影与 dark token
 覆盖；传 `data-theme="light"` 切换浅色），无需再外套 `Popover`。`placement` /
 `anchorOffset` / `anchorCrossOffset` / `viewportMargin` 与 `Popover` 锚定模式语义一致，
-同样自动翻转并 clamp 到视口安全距离内。触发按钮需要设置 `aria-haspopup="menu"` 并用
+支持同一组 12 方位、主轴翻转与最终 clamp，默认分别为 `bottom-start` / 6 / 0 / 8。
+触发按钮需要设置 `aria-haspopup="menu"` 并用
 `aria-controls` / `aria-expanded` 连接菜单（显示状态、外部点击关闭与焦点返回仍由使用方
 控制，与 `Popover` 哲学一致）：
 
@@ -343,11 +353,20 @@ import { Menu, MenuItem, MenuLabel, MenuSeparator } from '@hamster-note/componen
 
 ### `MenuSubmenu`
 
-`MenuSubmenu` 提供嵌套子菜单能力：trigger 复用 `MenuItem` 的视觉，右侧带 ▸ chevron；panel
-即一层锚定模式的 `Menu`（`.hn-menu` 直接作为浮层表面，自带边框 / 阴影与 dark token 覆盖，
-不再外套 `Popover`）。panel 经 Portal 渲染到 `document.body` 下，默认向 trigger 右侧展开，
-右侧空间不足时自动向左翻转，垂直方向 clamp 在视口安全距离内。鼠标悬停展开（带 150ms 开 /
-200ms 关延迟，避免移动缝隙误关），点击 trigger 切换（触屏 fallback）；键盘上
+`MenuSubmenu` 提供嵌套子菜单能力：trigger 复用 `MenuItem` 的视觉；chevron 按期望主方向显示
+`▸` / `◂` / `▴` / `▾`，碰撞避让后的实际翻转不会改变箭头。panel 即一层锚定模式的
+Menu，经 Portal 渲染到 `document.body` 下；默认期望方向为 `right-start`，主轴间距为 2px，
+视口边距为 8px，空间不足时沿主轴翻转并最终 clamp。
+
+根 `Menu` 可用 `submenuPlacement` / `submenuOffset` / `submenuViewportMargin` 为整棵菜单树
+声明子菜单默认值；单个 `MenuSubmenu` 可用 `placement` / `offset` / `viewportMargin` 仅覆盖
+当前面板。局部覆盖不会成为后代默认值，更深层子菜单仍继承根 `Menu`；每个显式写出的
+`<Menu>` 都开启一棵新树，不会隐式继承外层 Menu。上述 offset 与 viewport margin 均允许负值。
+子菜单的 `start` / `center` / `end` 按面板内容项而非外框对齐，组件会自动补偿自身边框和
+内边距；一级 Menu 与 Popover 仍按浮层外框对齐。
+
+鼠标悬停展开（带 150ms 开 / 200ms 关延迟，避免移动缝隙误关），点击 trigger 切换（触屏
+fallback）；键盘行为不随期望方向或实际翻转改变，始终使用
 `ArrowRight`/`Enter`/`Space` 进入子菜单并把焦点送到第一个
 `menuitem`，`ArrowLeft`/`Escape` 关闭并回焦到 trigger。`label` 为字符串时自动作为子菜单的
 `aria-label`，非字符串时可通过 `aria-label` prop 覆盖。`disabled` 时阻止一切展开：
@@ -355,7 +374,12 @@ import { Menu, MenuItem, MenuLabel, MenuSeparator } from '@hamster-note/componen
 ```tsx
 import { Menu, MenuItem, MenuSeparator, MenuSubmenu } from '@hamster-note/components';
 
-<Menu aria-label="笔记整理">
+<Menu
+  aria-label="笔记整理"
+  submenuOffset={2}
+  submenuPlacement="right-start"
+  submenuViewportMargin={8}
+>
   <MenuItem>置顶</MenuItem>
   <MenuSubmenu label="移动到…">
     <MenuItem>收件箱</MenuItem>
@@ -363,6 +387,9 @@ import { Menu, MenuItem, MenuSeparator, MenuSubmenu } from '@hamster-note/compon
     <MenuItem>产品 / 规划</MenuItem>
     <MenuSeparator />
     <MenuItem>归档</MenuItem>
+  </MenuSubmenu>
+  <MenuSubmenu label="从下方展开" placement="bottom-end">
+    <MenuItem>仅当前面板覆盖方向</MenuItem>
   </MenuSubmenu>
   <MenuSubmenu disabled label="添加标签">
     <MenuItem>待处理</MenuItem>
