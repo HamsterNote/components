@@ -1,3 +1,24 @@
+@media (max-width: 1200px) {
+  .topbar {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    column-gap: 16px;
+  }
+
+  .topbar nav {
+    min-width: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .topbar nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .topbar nav a {
+    flex: none;
+  }
+}
+
 @media (max-width: 900px) {
   .demo-shell {
     padding: 0 24px;
@@ -33,7 +54,7 @@
     grid-template-columns: 1fr auto;
   }
 
-  nav {
+  .topbar nav {
     display: none;
   }
 

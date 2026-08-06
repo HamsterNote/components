@@ -38,6 +38,15 @@
   color: var(--hn-color-text-muted);
 }
 
+.popover-example__header > .hn-button {
+  flex: none;
+  white-space: nowrap;
+}
+
+.popover-example__nowrap {
+  white-space: nowrap;
+}
+
 .popover-example__surface {
   display: grid;
   min-height: 104px;

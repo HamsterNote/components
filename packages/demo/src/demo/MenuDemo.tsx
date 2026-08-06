@@ -1,5 +1,3 @@
-import { useEffect, useRef, useState } from 'react';
-
 import {
   Button,
   Kbd,
@@ -9,6 +7,8 @@ import {
   MenuSeparator,
   MenuSubmenu,
 } from '@hamster-note/components';
+import { useEffect, useRef, useState } from 'react';
+
 import { DemoCode } from './DemoCode';
 
 interface MenuDemoProps {
@@ -331,7 +331,8 @@ export function MenuDemo({ onFeedback }: MenuDemoProps) {
             <span className="stage-label">Submenu / 嵌套子菜单</span>
             <p>
               下拉菜单内嵌 MenuSubmenu：悬停向右展开，panel 渲染到 body
-              下、右侧不足时自动左翻；右箭头进入、左箭头返回。
+              下、右侧不足时自动左翻；右箭头进入、
+              <span className="popover-example__nowrap">左箭头返回。</span>
             </p>
           </div>
           <Button

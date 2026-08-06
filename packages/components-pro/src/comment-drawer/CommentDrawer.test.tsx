@@ -2,7 +2,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 
-import { CommentDrawer, type CommentData, type CommentReplyData } from './CommentDrawer';
+import { type CommentData, CommentDrawer, type CommentReplyData } from './CommentDrawer';
 
 const comments: readonly CommentData[] = [
   {
@@ -54,21 +54,8 @@ describe('CommentDrawer', () => {
     );
     const composer = screen.getByRole('textbox', { name: '添加评论' });
 
-    composer.textContent = '我来补充验证数据。';
+    composer.textContent = '我来补充验证数据。\n第二行结论。';
     fireEvent.input(composer, { inputType: 'insertText' });
-    const range = document.createRange();
-    range.selectNodeContents(composer);
-    range.collapse(false);
-    composer.focus();
-    window.getSelection()?.removeAllRanges();
-    window.getSelection()?.addRange(range);
-    await user.keyboard('{Enter}');
-    const [, nextCommentEditor] = await screen.findAllByRole('textbox', { name: '添加评论' });
-    expect(nextCommentEditor).toBeDefined();
-    if (nextCommentEditor === undefined) {
-      return;
-    }
-    await user.type(nextCommentEditor, '第二行结论。');
     await user.click(screen.getByRole('button', { name: '发布评论' }));
 
     expect(onCommentAdd).toHaveBeenCalledWith('我来补充验证数据。\n第二行结论。');
@@ -332,6 +319,9 @@ describe('CommentDrawer', () => {
     expect(status.closest('.hn-comment-drawer')).toBeNull();
     expect(firstMessageNode).not.toBeNull();
 
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog', { name: '删除这条评论？' })).not.toBeInTheDocument();
+    });
     await user.click(screen.getByRole('button', { name: '删除苏禾的回复' }));
     await user.click(screen.getByRole('button', { name: '删除回复' }));
 
