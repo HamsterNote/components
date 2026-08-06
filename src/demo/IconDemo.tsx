@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Icon, ICON_NAMES, type IconName } from '../index';
+import { ICON_NAMES, Icon, type IconName } from '../index';
 
 interface IconDemoProps {
   // 与其他 demo 一致：交互后回写顶部 hero 的「交互输出」状态
@@ -31,6 +31,7 @@ const ICON_LABELS_ZH: Record<IconName, string> = {
   info: '信息',
   touch: '触摸',
   edit: '编辑',
+  comment: '评论',
   keyboard: '键盘',
   type: '字体',
   handle: '拖拽把手',
@@ -38,6 +39,7 @@ const ICON_LABELS_ZH: Record<IconName, string> = {
   minimap: '小地图',
   'font-size': '字号',
   drag: '拖拽',
+  crop: '裁切',
   search: '搜索',
   close: '关闭',
   check: '勾选',
@@ -66,6 +68,8 @@ const ICON_LABELS_ZH: Record<IconName, string> = {
   redo: '重做',
   'zoom-in': '放大',
   'zoom-out': '缩小',
+  fullscreen: '全屏',
+  'fullscreen-exit': '退出全屏',
   menu: '菜单',
   more: '更多',
   filter: '筛选',
@@ -116,12 +120,12 @@ export function IconDemo({ onFeedback }: IconDemoProps) {
 
   return (
     <div className="popover-grid">
-      {/* 示例一：完整图标集网格 -- 55 个 outline 图标全展示 */}
+      {/* 示例一：完整图标集网格 -- 59 个 outline 图标全展示 */}
       <div className="popover-example">
         <div className="popover-example__header">
           <div>
             <span className="stage-label">All / 完整图标集</span>
-            <p>55 个 outline 风格图标，点击任一格在顶部「交互输出」查看中英文名称。</p>
+            <p>59 个 outline 风格图标，点击任一格在顶部「交互输出」查看中英文名称。</p>
           </div>
         </div>
         <div className="popover-example__surface icon-demo-grid">

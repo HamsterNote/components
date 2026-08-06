@@ -81,9 +81,13 @@ decorative treatments. Every effect communicates interactivity, state, or groupi
   so it inherits the Popover separator variable inside a Popover and falls back to the global
   border color when used standalone. `MenuItem` supports a `shortcut` node rendered with the mono
   font family and a `tone="danger"` variant that switches the label color to `--hn-color-danger`.
-  Keyboard navigation (roving tabindex, arrow keys), nested submenus, and checkbox/radio items are
-  intentionally out of scope; the library philosophy is that presentation and semantics belong to
-  the component while behavior stays consumer-owned.
+  Menu and Popover share twelve physical placements: each of `top`, `bottom`, `left`, and `right`
+  supports start, center (the suffix-less value), and end alignment. Main-axis overflow flips the
+  side while preserving alignment, then clamps to the configured viewport margin. `MenuSubmenu`
+  inherits its expected placement, offset, and viewport margin from the root Menu unless the current
+  submenu overrides them; that override never becomes a descendant default. Its chevron communicates
+  the expected side rather than the collision-resolved side. Checkbox/radio items and complete
+  roving-tabindex navigation remain out of scope.
 - Kbd: a presentational key-cap component for shortcut hints. The outer `<kbd class="hn-kbd">` is a
   semantic inline-flex container; each key cap is a nested `<kbd class="hn-kbd__key">` (HTML spec
   recommends nested `<kbd>` to express combined keys). `keys` renders a combo sequence with small
@@ -112,7 +116,9 @@ decorative treatments. Every effect communicates interactivity, state, or groupi
   accent/mode through React context and the Dialog recreates a theme scope at the portal root; theme
   switching therefore remains live without copying computed styles. Optional `showCloseButton` and
   `showFullscreenButton` props add compact labelled icon buttons at the top-right (fullscreen first,
-  close last). Fullscreen is component-owned presentation state, resets on close, and swaps the panel
+  close last). The fullscreen toggle uses the shared `fullscreen` icon with `全屏显示` in the adaptive
+  state, then `fullscreen-exit` with `退出全屏` in the fullscreen state. Fullscreen is component-owned
+  presentation state, resets on close, and swaps the panel
   between its constrained centered silhouette and a viewport-filling surface without changing the
   consumer-owned `open` contract.
   z-index 1100 sits above Popover's 1000 so a dialog correctly overlays menus and anchored
@@ -128,8 +134,11 @@ decorative treatments. Every effect communicates interactivity, state, or groupi
   the Dialog stays visible, and when a Dialog opens a Drawer the Drawer overlays the Dialog,
   matching the intuition that a drawer is a higher-level container. It uses the same React-context
   portal theme bridge as Dialog. Optional `showCloseButton` adds a labelled icon action at the
-  top-right. Optional `showFullscreenButton` adds an upward-arrow action immediately before the title
-  at the top-left. The title header is the drag surface: a vertical upward gesture of at least 56px
+  top-right. Optional `showFullscreenButton` adds a fullscreen toggle immediately before the title
+  at the top-left. Bottom drawers preserve the directional `arrow-up` / `arrow-down` icons; left,
+  right, and top drawers use the shared `fullscreen` / `fullscreen-exit` icons. Every placement uses
+  `全屏显示` in the adaptive state and `退出全屏` in the fullscreen state. The title header is the drag
+  surface: a vertical upward gesture of at least 56px
   promotes the adaptive detent to fullscreen, while a downward gesture of at least 56px restores the
   adaptive detent. Pointer capture keeps the gesture continuous outside the header. The two detents
   are discrete and animate only transform/opacity; side drawers expand their width to the viewport,
@@ -174,8 +183,10 @@ decorative treatments. Every effect communicates interactivity, state, or groupi
   of `<hr>` and must not be used as the only visual grouping signal inside a long menu.
   `MenuLabel` is a presentational group label and is not exposed as a `group`/`aria-label`; when a
   menu needs formal group semantics the consumer wraps `MenuItem`s in a `role="group"` with an
-  accessible name. The library intentionally does not implement keyboard navigation (arrow keys,
-  roving tabindex), so consumers are responsible for focus movement, dismissal, and focus return.
+  accessible name. Submenus always use `ArrowRight`, Enter, or Space to enter and `ArrowLeft` or
+  Escape to return one level, independent of expected or collision-resolved placement. Entering skips
+  disabled items and falls back to the submenu panel when no enabled item exists. Complete vertical
+  arrow navigation and roving tabindex remain consumer-owned.
 - Dialog and Drawer expose `role="dialog"` + `aria-modal="true"` on the panel and connect optional
   `title`/`description` via `aria-labelledby`/`aria-describedby` generated from `useId`. When
   `title` is omitted the consumer must supply `aria-label`. Focus is trapped inside the panel
@@ -185,9 +196,10 @@ decorative treatments. Every effect communicates interactivity, state, or groupi
   motion respects `prefers-reduced-motion`. Confirm reuses Dialog's semantics; the confirm button
   is the primary action and the cancel button is the dismissal path, so Esc/backdrop both resolve
   the hook/function Promise with `false`. Their icon actions are native `button` elements with visible
-  focus rings, 36px minimum targets, stable Chinese `aria-label` text, and `aria-pressed` on fullscreen
-  toggles. Drawer drag is additive rather than exclusive: keyboard and assistive-technology users can
-  always reach the same fullscreen state through the arrow button when that action is enabled.
+  focus rings, 36px minimum targets, stable Chinese `aria-label` text (`全屏显示` / `退出全屏`), and
+  `aria-pressed` on fullscreen toggles. Drawer drag is additive rather than exclusive: keyboard and
+  assistive-technology users can always reach the same fullscreen state through the fullscreen toggle
+  when that action is enabled.
 
 ## 8. Accepted Debt and Handoff
 

@@ -1,6 +1,7 @@
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'warning' | 'success' | 'info';
+export type ButtonVariant =
+  'primary' | 'secondary' | 'ghost' | 'danger' | 'warning' | 'success' | 'info';
 export type ButtonSize = 'small' | 'medium' | 'large';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -19,10 +20,12 @@ export function Button({
   variant = 'secondary',
   ...props
 }: ButtonProps) {
+  const resolvedVariant = variant === 'ghost' ? 'secondary' : variant;
+  const resolvedGhost = ghost || variant === 'ghost';
   const classes = [
     'hn-button',
-    `hn-button--${variant}`,
-    ghost && 'hn-button--ghost',
+    `hn-button--${resolvedVariant}`,
+    resolvedGhost && 'hn-button--ghost',
     `hn-button--${size}`,
     className,
   ]

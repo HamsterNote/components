@@ -20,6 +20,8 @@ test('Given 基础对话框, When 打开、全屏并关闭, Then 模态状态完
   await expect(dialog).toHaveClass(/hn-dialog__panel--fullscreen/);
   await page.getByRole('button', { name: '关闭对话框' }).click();
 
+  await expect(dialog).toHaveAttribute('data-state', 'exit');
+  await expect(dialog).toHaveClass(/hn-dialog__panel--fullscreen/);
   await expect(dialog).toHaveCount(0);
   await expect(page.getByRole('status').first()).toContainText('已关闭对话框（基础示例）');
 });
@@ -84,9 +86,14 @@ test('Given 自定义尺寸抽屉, When 打开并全屏, Then 尺寸变量与全
   await expect(drawer).toHaveClass(/hn-drawer__panel--right/);
   await expect(drawer).toHaveCSS('--hn-drawer-size', '520px');
 
-  await page.getByRole('button', { name: '全屏显示抽屉' }).click();
+  await drawer.getByRole('button', { name: '全屏显示' }).click();
   await expect(drawer).toHaveClass(/hn-drawer__panel--fullscreen/);
+  await drawer.getByRole('button', { name: '退出全屏' }).click();
+  await expect(drawer).not.toHaveClass(/hn-drawer__panel--fullscreen/);
+  await drawer.getByRole('button', { name: '全屏显示' }).click();
   await drawer.getByLabel('关闭抽屉', { exact: true }).click();
+  await expect(drawer).toHaveAttribute('data-state', 'exit');
+  await expect(drawer).toHaveClass(/hn-drawer__panel--fullscreen/);
   await expect(drawer).toHaveCount(0);
 });
 

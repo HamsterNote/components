@@ -1,7 +1,11 @@
-import { fireEvent, render, screen } from '@testing-library/react';
-import { describe, expect, it, vi } from 'vitest';
+import { act, fireEvent, render, screen } from '@testing-library/react';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { Confirm, Dialog, Drawer, ThemeProvider } from '../index';
+
+afterEach(() => {
+  vi.useRealTimers();
+});
 
 describe('模态组件契约', () => {
   it('Given 打开的对话框, When 渲染, Then Portal、命名关系和滚动锁完整生效', () => {
@@ -29,16 +33,51 @@ describe('模态组件契约', () => {
 
     const dialog = screen.getByRole('dialog', { name: '移动笔记' });
     const fullscreen = screen.getByRole('button', { name: '全屏显示' });
+    expect(fullscreen.querySelector('svg')).toHaveClass('hn-icon--fullscreen');
     fireEvent.click(fullscreen);
 
     expect(dialog).toHaveClass('hn-dialog__panel--fullscreen');
-    expect(screen.getByRole('button', { name: '退出全屏' })).toHaveAttribute(
-      'aria-pressed',
-      'true',
-    );
+    const exitFullscreen = screen.getByRole('button', { name: '退出全屏' });
+    expect(exitFullscreen).toHaveAttribute('aria-pressed', 'true');
+    expect(exitFullscreen.querySelector('svg')).toHaveClass('hn-icon--fullscreen-exit');
 
     fireEvent.click(screen.getByRole('button', { name: '关闭对话框' }));
     expect(onClose).toHaveBeenCalledOnce();
+  });
+
+  it('Given 全屏对话框, When 关闭退场并再次打开, Then 退场保持全屏且重开恢复自适应', async () => {
+    vi.useFakeTimers();
+    const { rerender } = render(
+      <Dialog onClose={vi.fn()} open showFullscreenButton title="移动笔记">
+        内容
+      </Dialog>,
+    );
+    fireEvent.click(screen.getByRole('button', { name: '全屏显示' }));
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(180);
+    });
+
+    act(() => {
+      rerender(
+        <Dialog onClose={vi.fn()} open={false} showFullscreenButton title="移动笔记">
+          内容
+        </Dialog>,
+      );
+    });
+
+    const leavingDialog = screen.getByRole('dialog', { name: '移动笔记' });
+    expect(leavingDialog).toHaveAttribute('data-state', 'exit');
+    expect(leavingDialog).toHaveClass('hn-dialog__panel--fullscreen');
+    act(() => {
+      rerender(
+        <Dialog onClose={vi.fn()} open showFullscreenButton title="移动笔记">
+          内容
+        </Dialog>,
+      );
+    });
+    expect(screen.getByRole('dialog', { name: '移动笔记' })).not.toHaveClass(
+      'hn-dialog__panel--fullscreen',
+    );
   });
 
   it('Given 打开的对话框, When 按 Escape, Then 调用关闭回调', () => {
@@ -65,30 +104,101 @@ describe('模态组件契约', () => {
     expect(onClose).not.toHaveBeenCalled();
   });
 
-  it('Given 自定义左侧抽屉, When 渲染并切换全屏, Then 方向、尺寸和状态保持稳定', () => {
-    render(
-      <Drawer
-        onClose={vi.fn()}
-        open
-        placement="left"
-        showFullscreenButton
-        size={520}
-        title="笔记详情"
-      >
+  it.each([
+    ['left', 'fullscreen', 'fullscreen-exit'],
+    ['right', 'fullscreen', 'fullscreen-exit'],
+    ['top', 'fullscreen', 'fullscreen-exit'],
+    ['bottom', 'arrow-up', 'arrow-down'],
+  ] as const)(
+    'Given %s 抽屉, When 渲染并切换全屏, Then 方向、名称和图标映射保持稳定',
+    (placement, adaptiveIcon, fullscreenIcon) => {
+      render(
+        <Drawer
+          onClose={vi.fn()}
+          open
+          placement={placement}
+          showFullscreenButton
+          size={520}
+          title={`${placement} 笔记详情`}
+        >
+          内容
+        </Drawer>,
+      );
+
+      const drawer = screen.getByRole('dialog', { name: `${placement} 笔记详情` });
+      expect(drawer).toHaveClass(`hn-drawer__panel--${placement}`);
+      expect(drawer.style.getPropertyValue('--hn-drawer-size')).toBe('520px');
+
+      const fullscreen = screen.getByRole('button', { name: '全屏显示' });
+      expect(fullscreen.querySelector('svg')).toHaveClass(`hn-icon--${adaptiveIcon}`);
+      fireEvent.click(fullscreen);
+
+      expect(drawer).toHaveClass('hn-drawer__panel--fullscreen');
+      const exitFullscreen = screen.getByRole('button', { name: '退出全屏' });
+      expect(exitFullscreen).toHaveAttribute('aria-pressed', 'true');
+      expect(exitFullscreen.querySelector('svg')).toHaveClass(`hn-icon--${fullscreenIcon}`);
+    },
+  );
+
+  it('Given 全屏抽屉, When 关闭退场并再次打开, Then 退场保持全屏且重开恢复自适应', async () => {
+    vi.useFakeTimers();
+    const { rerender } = render(
+      <Drawer onClose={vi.fn()} open showFullscreenButton title="笔记详情">
         内容
       </Drawer>,
     );
+    fireEvent.click(screen.getByRole('button', { name: '全屏显示' }));
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(180);
+    });
 
-    const drawer = screen.getByRole('dialog', { name: '笔记详情' });
-    expect(drawer).toHaveClass('hn-drawer__panel--left');
-    expect(drawer.style.getPropertyValue('--hn-drawer-size')).toBe('520px');
+    act(() => {
+      rerender(
+        <Drawer onClose={vi.fn()} open={false} showFullscreenButton title="笔记详情">
+          内容
+        </Drawer>,
+      );
+    });
 
-    fireEvent.click(screen.getByRole('button', { name: '全屏显示抽屉' }));
-    expect(drawer).toHaveClass('hn-drawer__panel--fullscreen');
-    expect(screen.getByRole('button', { name: '恢复自适应大小' })).toHaveAttribute(
-      'aria-pressed',
-      'true',
+    const leavingDrawer = screen.getByRole('dialog', { name: '笔记详情' });
+    expect(leavingDrawer).toHaveAttribute('data-state', 'exit');
+    expect(leavingDrawer).toHaveClass('hn-drawer__panel--fullscreen');
+    act(() => {
+      rerender(
+        <Drawer onClose={vi.fn()} open showFullscreenButton title="笔记详情">
+          内容
+        </Drawer>,
+      );
+    });
+    expect(screen.getByRole('dialog', { name: '笔记详情' })).not.toHaveClass(
+      'hn-drawer__panel--fullscreen',
     );
+  });
+
+  it('Given 自适应抽屉, When 标题上拖和下拖超过阈值, Then 进入并退出全屏', () => {
+    render(
+      <Drawer onClose={vi.fn()} open showFullscreenButton title="笔记详情">
+        内容
+      </Drawer>,
+    );
+    const drawer = screen.getByRole('dialog', { name: '笔记详情' });
+    const header = drawer.querySelector('.hn-drawer__header');
+    expect(header).toBeInstanceOf(HTMLElement);
+    if (!(header instanceof HTMLElement)) {
+      return;
+    }
+    Object.defineProperties(header, {
+      hasPointerCapture: { value: () => false },
+      setPointerCapture: { value: vi.fn() },
+    });
+
+    fireEvent.pointerDown(header, { clientY: 100, pointerId: 1 });
+    fireEvent.pointerUp(header, { clientY: 44, pointerId: 1 });
+    expect(drawer).toHaveClass('hn-drawer__panel--fullscreen');
+
+    fireEvent.pointerDown(header, { clientY: 44, pointerId: 2 });
+    fireEvent.pointerUp(header, { clientY: 100, pointerId: 2 });
+    expect(drawer).not.toHaveClass('hn-drawer__panel--fullscreen');
   });
 
   it('Given 主题内的对话框, When Portal 渲染, Then 主题桥接层保留 accent 与 mode', () => {

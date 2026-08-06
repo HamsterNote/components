@@ -34,7 +34,7 @@ export interface DrawerProps extends HTMLAttributes<HTMLDivElement> {
   readonly closeOnBackdrop?: boolean | undefined;
   // 是否展示右上角关闭按钮（默认 false）
   readonly showCloseButton?: boolean | undefined;
-  // 是否展示标题左侧的全屏箭头按钮（默认 false）；标题拖动始终可切换双段状态
+  // 是否展示标题左侧的全屏切换按钮（默认 false）；标题拖动始终可切换双段状态
   readonly showFullscreenButton?: boolean | undefined;
   // React 19：ref 作为普通 prop 直接透传到面板根 div
   readonly ref?: Ref<HTMLDivElement>;
@@ -61,9 +61,17 @@ export function Drawer({
 }: DrawerProps) {
   const [viewState, setViewState] = useState({ fullscreen: false, open });
   if (viewState.open !== open) {
-    setViewState({ fullscreen: false, open });
+    setViewState({ fullscreen: open ? false : viewState.fullscreen, open });
   }
   const fullscreen = viewState.fullscreen;
+  const fullscreenIcon =
+    placement === 'bottom'
+      ? fullscreen
+        ? 'arrow-down'
+        : 'arrow-up'
+      : fullscreen
+        ? 'fullscreen-exit'
+        : 'fullscreen';
   const dragStartYRef = useRef<number | null>(null);
   const theme = useThemeScope();
   const {
@@ -169,7 +177,7 @@ export function Drawer({
             <div className="hn-drawer__heading">
               {showFullscreenButton ? (
                 <button
-                  aria-label={fullscreen ? '恢复自适应大小' : '全屏显示抽屉'}
+                  aria-label={fullscreen ? '退出全屏' : '全屏显示'}
                   aria-pressed={fullscreen}
                   className="hn-drawer__icon-button"
                   onClick={() => {
@@ -177,7 +185,7 @@ export function Drawer({
                   }}
                   type="button"
                 >
-                  <Icon aria-hidden="true" name={fullscreen ? 'arrow-down' : 'arrow-up'} />
+                  <Icon aria-hidden="true" name={fullscreenIcon} />
                 </button>
               ) : null}
               <div>

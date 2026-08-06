@@ -20,13 +20,13 @@ const componentSections = [
 
 test.beforeEach(async ({ page }) => {
   await prepareVisualPage(page);
-  await disableStickyDemoChrome(page);
 });
 
 for (const [sectionId, componentName] of componentSections) {
   test(`Given ${componentName} 展示区, When 截取完整章节, Then 默认样式矩阵不漂移`, async ({
     page,
   }) => {
+    await disableStickyDemoChrome(page);
     const screenshotOptions = sectionId === 'icons' ? { maxDiffPixels: 20 } : undefined;
     await expect(page.locator(`#${sectionId}`)).toHaveScreenshot(
       `${sectionId}-section.png`,
@@ -36,6 +36,7 @@ for (const [sectionId, componentName] of componentSections) {
 }
 
 test('Given TextField 错误状态, When 截取完整章节, Then 校验样式和布局不漂移', async ({ page }) => {
+  await disableStickyDemoChrome(page);
   await page.getByRole('textbox', { name: '笔记标题' }).fill('季');
 
   await expect(page.locator('#fields')).toHaveScreenshot('fields-error-section.png');
@@ -54,6 +55,15 @@ test('Given 普通 Dialog 已打开, When 截取视口, Then 遮罩、面板与�
   await expect(page.getByRole('dialog', { name: '移动笔记' })).toBeVisible();
 
   await expect(page).toHaveScreenshot('dialog-default.png');
+});
+
+test('Given 默认 Drawer 已打开, When 截取视口, Then 遮罩、面板与标题栏样式不漂移', async ({
+  page,
+}) => {
+  await page.locator('#drawers').getByRole('button', { name: '右侧', exact: true }).click();
+  await expect(page.getByRole('dialog', { name: '抽屉标题' })).toBeVisible();
+
+  await expect(page).toHaveScreenshot('drawer-default.png');
 });
 
 test('Given Menu 与子菜单已展开, When 分别截取两个菜单, Then 控件本身样式不受页面滚动影响', async ({

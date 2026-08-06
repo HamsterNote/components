@@ -213,6 +213,13 @@ const ICON_PATHS: Record<IconName, ReactElement> = {
       <path d="M3 21h18" />
     </>
   ),
+  comment: (
+    <>
+      <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z" />
+      <path d="M8 9h8" />
+      <path d="M8 13h5" />
+    </>
+  ),
   // ── 键盘：键盘外框 + 三行按键 ──────────────────────────────────────────
   keyboard: (
     <>
@@ -277,6 +284,13 @@ const ICON_PATHS: Record<IconName, ReactElement> = {
       <path d="M14 10V4a2 2 0 0 0-4 0v6" />
       <path d="M10 10.5V6a2 2 0 0 0-4 0v8" />
       <path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15" />
+    </>
+  ),
+  // ── 裁切：两段相交的裁切角线，象征 crop 裁切框 ─────────────────────────
+  crop: (
+    <>
+      <path d="M6 2v14a2 2 0 0 0 2 2h14" />
+      <path d="M18 22V8a2 2 0 0 0-2-2H2" />
     </>
   ),
   // ── 搜索：圆 + 斜柄 ────────────────────────────────────────────────────
@@ -492,6 +506,24 @@ const ICON_PATHS: Record<IconName, ReactElement> = {
       <path d="M8 11h6" />
     </>
   ),
+  // ── 全屏：四角向外展开 ──────────────────────────────────────────────────
+  fullscreen: (
+    <>
+      <path d="M9 4H4v5" />
+      <path d="M15 4h5v5" />
+      <path d="M20 15v5h-5" />
+      <path d="M9 20H4v-5" />
+    </>
+  ),
+  // ── 退出全屏：四角向内收拢 ──────────────────────────────────────────────
+  'fullscreen-exit': (
+    <>
+      <path d="M4 9h5V4" />
+      <path d="M20 9h-5V4" />
+      <path d="M15 20v-5h5" />
+      <path d="M9 20v-5H4" />
+    </>
+  ),
   // ── 菜单：三条横线 ──────────────────────────────────────────────────────
   menu: (
     <>
@@ -552,6 +584,7 @@ export function Icon({ label, name, className, ...props }: IconProps) {
       {...accessibleProps}
       {...props}
     >
+      <title>{label ?? name}</title>
       {ICON_PATHS[name]}
     </svg>
   );
