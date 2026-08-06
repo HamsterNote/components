@@ -50,7 +50,8 @@ export function DemoApp() {
                   <span>精确组件。</span>
                 </h1>
                 <p className="hero__lede">
-                  React 19 与 TypeScript 6 驱动的基础组件。每个状态都可检查、可操作，也可
+                  React 19 与 TypeScript 6 驱动的基础组件。每个状态都
+                  <span className="hero__nowrap">可检查</span>、可操作，也可
                   <span className="hero__nowrap">独立导入。</span>
                 </p>
               </div>

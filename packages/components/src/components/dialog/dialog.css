@@ -166,8 +166,7 @@
     color: var(--hn-color-text-muted);
   }
 
-  .hn-dialog__panel:has(.hn-dialog__actions) .hn-dialog__title,
-  .hn-dialog__panel:has(.hn-dialog__actions) .hn-dialog__description {
+  .hn-dialog__panel:has(.hn-dialog__actions) .hn-dialog__title {
     padding-right: 84px;
   }
 

@@ -228,9 +228,10 @@ decorative treatments. Every effect communicates interactivity, state, or groupi
 
 ## 8. Accepted Debt and Handoff
 
-- Web fonts are loaded from a public font CDN for the Demo; package consumers receive no font side
-  effects and should supply their own font stack. A self-hosted font path can replace this before an
-  offline Demo release.
+- The Demo intentionally relies on installed system fonts (Noto Sans CJK SC in CI) with IBM Plex Sans
+  as an optional first-choice when available. No remote font CDN is used, ensuring deterministic
+  screenshot baselines. Package consumers receive no font side effects and should supply their own
+  font stack.
 - The first release documents components through the live workbench rather than a generated API docs
   site. Public props remain visible through emitted TypeScript declarations.
 - Future components must reuse these tokens, export a typed public API, include keyboard/focus states,
