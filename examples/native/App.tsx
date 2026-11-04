@@ -259,7 +259,9 @@ function IconExamples() {
           </View>
           <View style={styles.iconFeatureCopy}>
             <Text style={[styles.iconFeatureTitle, { color: t.colors.text }]}>pen · 24px</Text>
-            <Text style={styles.cardDescription}>I01 上方为装饰图标</Text>
+            <Text style={[styles.cardDescription, { color: t.colors.textMuted }]}>
+              I01 上方为装饰图标
+            </Text>
           </View>
         </View>
       </ExampleCard>
