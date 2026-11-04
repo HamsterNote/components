@@ -1,4 +1,12 @@
-import { useCallback, useEffect, useRef, useState, type ReactNode, type RefObject } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type ReactNode,
+  type RefObject,
+} from 'react';
 import {
   Keyboard,
   Modal,
@@ -27,8 +35,6 @@ export interface PopoverProps {
   triggerRef?: FocusRef;
   fallbackFocusRef?: FocusRef;
   initialFocusRef?: FocusRef;
-  /** Wrap only the host background in this View; keep Modal outside that View. */
-  backgroundRef?: RefObject<View | null>;
   placement?: Placement;
   anchorOffset?: number;
   viewportMargin?: number;
@@ -48,7 +54,6 @@ export function Popover({
   triggerRef,
   fallbackFocusRef,
   initialFocusRef,
-  backgroundRef,
   placement = 'bottom',
   anchorOffset = 8,
   viewportMargin = 12,
@@ -75,6 +80,10 @@ export function Popover({
   const [keyboardTop, setKeyboardTop] = useState<number | null>(null);
   const liveOpen = useRef(open);
   liveOpen.current = open;
+  // Target ref identities can change without opening/closing the Modal. Read them
+  // at frame execution, rather than making them lifecycle or focus effect inputs.
+  const focusTargets = useRef({ initialFocusRef, triggerRef, fallbackFocusRef, focusKey });
+  focusTargets.current = { initialFocusRef, triggerRef, fallbackFocusRef, focusKey };
   const schedule = useCallback((fn: () => void) => {
     if (!mounted.current) return;
     const epoch = generation.current;
@@ -85,21 +94,28 @@ export function Popover({
     frames.current.add(id);
   }, []);
   const enterFocus = useCallback(() => {
-    if (shown.current && laidOut.current && liveOpen.current && focusedKey.current !== focusKey)
+    const key = focusTargets.current.focusKey;
+    if (shown.current && laidOut.current && liveOpen.current && focusedKey.current !== key)
       schedule(() => {
-        if (liveOpen.current) {
-          focusedKey.current = focusKey;
-          if (!focusTarget(initialFocusRef))
-            focusTarget(titleRef as FocusRef) || focusTarget(closeRef);
-        }
+        if (
+          !liveOpen.current ||
+          focusTargets.current.focusKey !== key ||
+          focusedKey.current === key
+        )
+          return;
+        focusedKey.current = key;
+        if (!focusTarget(focusTargets.current.initialFocusRef))
+          focusTarget(titleRef as FocusRef) || focusTarget(closeRef);
       });
-  }, [initialFocusRef, schedule, focusKey]);
+  }, [schedule]);
   const restore = useCallback(() => {
     if (!liveOpen.current)
       schedule(() => {
-        if (!liveOpen.current) focusTarget(triggerRef) || focusTarget(fallbackFocusRef);
+        if (!liveOpen.current)
+          focusTarget(focusTargets.current.triggerRef) ||
+            focusTarget(focusTargets.current.fallbackFocusRef);
       });
-  }, [schedule, triggerRef, fallbackFocusRef]);
+  }, [schedule]);
   useEffect(() => {
     mounted.current = true;
     return () => {
@@ -109,7 +125,9 @@ export function Popover({
       frames.current.clear();
     };
   }, []);
-  useEffect(() => {
+  useLayoutEffect(() => {
+    // restore and its scheduler are stable; only an open transition restarts this lifecycle.
+    // Reset before RN Web's Modal can emit onShow from a child passive effect.
     generation.current++;
     frames.current.forEach(cancelAnimationFrame);
     frames.current.clear();
@@ -125,23 +143,11 @@ export function Popover({
     }
   }, [open, restore]);
   useEffect(() => {
-    if (!open) return;
-    const bg = backgroundRef?.current;
-    bg?.setNativeProps({
-      accessibilityElementsHidden: true,
-      importantForAccessibility: 'no-hide-descendants',
-    });
-    return () => {
-      if (backgroundRef?.current !== bg) return;
-      bg?.setNativeProps({ accessibilityElementsHidden: false, importantForAccessibility: 'auto' });
-    };
-  }, [open, backgroundRef]);
-  useEffect(() => {
     if (!open) {
       setKeyboardTop(null);
       return;
     }
-    setKeyboardTop(Keyboard.metrics()?.screenY ?? null);
+    setKeyboardTop(Keyboard.metrics?.()?.screenY ?? null);
     const show = Keyboard.addListener('keyboardDidShow', (e) =>
       setKeyboardTop(e.endCoordinates.screenY),
     );
@@ -265,6 +271,7 @@ export function Popover({
               }}
             >
               <Text
+                {...(Platform.OS === 'web' ? { tabIndex: -1 as const } : {})}
                 ref={titleRef}
                 accessible
                 accessibilityRole="header"

@@ -1,0 +1,1634 @@
+{
+  "platform": "web",
+  "entry": "index.js",
+  "modules": [
+    {
+      "path": "index.js",
+      "dependencies": [
+        "node_modules/expo/src/Expo.ts",
+        "App.tsx"
+      ]
+    },
+    {
+      "path": "node_modules/expo/src/Expo.ts",
+      "dependencies": [
+        "node_modules/expo/src/Expo.fx.web.tsx",
+        "node_modules/expo/src/errors/ExpoErrorManager.ts",
+        "node_modules/expo/src/launch/registerRootComponent.tsx",
+        "node_modules/expo/src/environment/ExpoGo.web.ts",
+        "node_modules/expo-modules-core/src/index.ts",
+        "node_modules/expo/src/hooks/useEvent.ts"
+      ]
+    },
+    {
+      "path": "node_modules/expo/src/Expo.fx.web.tsx",
+      "dependencies": [
+        "node_modules/expo/src/winter/index.ts",
+        "node_modules/expo/src/async-require/index.ts",
+        "node_modules/expo/virtual/rsc.js"
+      ]
+    },
+    {
+      "path": "node_modules/expo/src/winter/index.ts",
+      "dependencies": [
+        "node_modules/expo/src/winter/runtime.ts"
+      ]
+    },
+    {
+      "path": "node_modules/expo/src/winter/runtime.ts",
+      "dependencies": [
+        "node_modules/expo/src/async-require/setup.ts",
+        "node_modules/expo/src/winter/ImportMetaRegistry.ts"
+      ]
+    },
+    {
+      "path": "node_modules/expo/src/async-require/setup.ts",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/expo/src/winter/ImportMetaRegistry.ts",
+      "dependencies": [
+        "node_modules/expo/src/utils/getBundleUrl.web.ts"
+      ]
+    },
+    {
+      "path": "node_modules/expo/src/utils/getBundleUrl.web.ts",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/expo/src/async-require/index.ts",
+      "dependencies": [
+        "node_modules/expo/src/async-require/buildAsyncRequire.ts"
+      ]
+    },
+    {
+      "path": "node_modules/expo/src/async-require/buildAsyncRequire.ts",
+      "dependencies": [
+        "node_modules/expo/src/async-require/loadBundle.ts"
+      ]
+    },
+    {
+      "path": "node_modules/expo/src/async-require/loadBundle.ts",
+      "dependencies": [
+        "node_modules/expo/src/async-require/buildUrlForBundle.ts",
+        "node_modules/expo/src/async-require/fetchThenEval.web.ts"
+      ]
+    },
+    {
+      "path": "node_modules/expo/src/async-require/buildUrlForBundle.ts",
+      "dependencies": [
+        "node_modules/expo/src/async-require/getDevServer.ts"
+      ]
+    },
+    {
+      "path": "node_modules/expo/src/async-require/getDevServer.ts",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/expo/src/async-require/fetchThenEval.web.ts",
+      "dependencies": [
+        "node_modules/expo/src/async-require/fetchThenEvalJs.ts"
+      ]
+    },
+    {
+      "path": "node_modules/expo/src/async-require/fetchThenEvalJs.ts",
+      "dependencies": [
+        "node_modules/expo/src/async-require/errors.ts",
+        "node_modules/expo/src/async-require/fetchAsync.ts"
+      ]
+    },
+    {
+      "path": "node_modules/expo/src/async-require/errors.ts",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/expo/src/async-require/fetchAsync.ts",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/expo/virtual/rsc.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/expo/src/errors/ExpoErrorManager.ts",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/expo/src/launch/registerRootComponent.tsx",
+      "dependencies": [
+        "node_modules/expo/src/Expo.fx.web.tsx",
+        "node_modules/react-native-web/dist/exports/AppRegistry/index.js",
+        "node_modules/react-native-web/dist/exports/Platform/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/AppRegistry/index.js",
+      "dependencies": [
+        "node_modules/@babel/runtime/helpers/esm/objectSpread2.js",
+        "node_modules/fbjs/lib/invariant.js",
+        "node_modules/react-native-web/dist/exports/unmountComponentAtNode/index.js",
+        "node_modules/react-native-web/dist/exports/AppRegistry/renderApplication.js"
+      ]
+    },
+    {
+      "path": "node_modules/@babel/runtime/helpers/esm/objectSpread2.js",
+      "dependencies": [
+        "node_modules/@babel/runtime/helpers/esm/defineProperty.js"
+      ]
+    },
+    {
+      "path": "node_modules/@babel/runtime/helpers/esm/defineProperty.js",
+      "dependencies": [
+        "node_modules/@babel/runtime/helpers/esm/toPropertyKey.js"
+      ]
+    },
+    {
+      "path": "node_modules/@babel/runtime/helpers/esm/toPropertyKey.js",
+      "dependencies": [
+        "node_modules/@babel/runtime/helpers/esm/typeof.js",
+        "node_modules/@babel/runtime/helpers/esm/toPrimitive.js"
+      ]
+    },
+    {
+      "path": "node_modules/@babel/runtime/helpers/esm/typeof.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/@babel/runtime/helpers/esm/toPrimitive.js",
+      "dependencies": [
+        "node_modules/@babel/runtime/helpers/esm/typeof.js"
+      ]
+    },
+    {
+      "path": "node_modules/fbjs/lib/invariant.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/unmountComponentAtNode/index.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/AppRegistry/renderApplication.js",
+      "dependencies": [
+        "node_modules/@babel/runtime/helpers/esm/extends.js",
+        "\u0000shim:react-native-web/dist/exports/AppRegistry/AppContainer.js",
+        "node_modules/fbjs/lib/invariant.js",
+        "node_modules/react-native-web/dist/exports/render/index.js",
+        "node_modules/react-native-web/dist/exports/StyleSheet/index.js",
+        "node_modules/react/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/@babel/runtime/helpers/esm/extends.js",
+      "dependencies": []
+    },
+    {
+      "path": "\u0000shim:react-native-web/dist/exports/AppRegistry/AppContainer.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/render/index.js",
+      "dependencies": [
+        "node_modules/react-dom/client.js",
+        "node_modules/react-native-web/dist/exports/StyleSheet/dom/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-dom/client.js",
+      "dependencies": [
+        "node_modules/react-dom/cjs/react-dom-client.production.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-dom/cjs/react-dom-client.production.js",
+      "dependencies": [
+        "node_modules/scheduler/index.js",
+        "node_modules/react/index.js",
+        "node_modules/react-dom/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/scheduler/index.js",
+      "dependencies": [
+        "node_modules/scheduler/cjs/scheduler.production.js"
+      ]
+    },
+    {
+      "path": "node_modules/scheduler/cjs/scheduler.production.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react/index.js",
+      "dependencies": [
+        "node_modules/react/cjs/react.production.js"
+      ]
+    },
+    {
+      "path": "node_modules/react/cjs/react.production.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react-dom/index.js",
+      "dependencies": [
+        "node_modules/react-dom/cjs/react-dom.production.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-dom/cjs/react-dom.production.js",
+      "dependencies": [
+        "node_modules/react/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/StyleSheet/dom/index.js",
+      "dependencies": [
+        "node_modules/react-native-web/dist/modules/canUseDom/index.js",
+        "node_modules/react-native-web/dist/exports/StyleSheet/dom/createCSSStyleSheet.js",
+        "node_modules/react-native-web/dist/exports/StyleSheet/dom/createOrderedCSSStyleSheet.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/modules/canUseDom/index.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/StyleSheet/dom/createCSSStyleSheet.js",
+      "dependencies": [
+        "node_modules/react-native-web/dist/modules/canUseDom/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/StyleSheet/dom/createOrderedCSSStyleSheet.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/StyleSheet/index.js",
+      "dependencies": [
+        "node_modules/@babel/runtime/helpers/esm/objectSpread2.js",
+        "node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js",
+        "node_modules/react-native-web/dist/exports/StyleSheet/compiler/index.js",
+        "node_modules/react-native-web/dist/exports/StyleSheet/dom/index.js",
+        "node_modules/styleq/transform-localize-style.js",
+        "node_modules/react-native-web/dist/exports/StyleSheet/preprocess.js",
+        "node_modules/styleq/dist/styleq.js",
+        "node_modules/react-native-web/dist/exports/StyleSheet/validate.js",
+        "node_modules/react-native-web/dist/modules/canUseDom/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/StyleSheet/compiler/index.js",
+      "dependencies": [
+        "node_modules/@babel/runtime/helpers/esm/objectSpread2.js",
+        "node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js",
+        "node_modules/react-native-web/dist/exports/StyleSheet/compiler/createReactDOMStyle.js",
+        "node_modules/react-native-web/dist/exports/StyleSheet/compiler/hash.js",
+        "node_modules/react-native-web/dist/exports/StyleSheet/compiler/hyphenateStyleName.js",
+        "node_modules/react-native-web/dist/exports/StyleSheet/compiler/normalizeValueWithProperty.js",
+        "node_modules/react-native-web/dist/modules/prefixStyles/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/StyleSheet/compiler/createReactDOMStyle.js",
+      "dependencies": [
+        "node_modules/react-native-web/dist/exports/StyleSheet/compiler/normalizeValueWithProperty.js",
+        "node_modules/react-native-web/dist/modules/canUseDom/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/StyleSheet/compiler/normalizeValueWithProperty.js",
+      "dependencies": [
+        "node_modules/react-native-web/dist/exports/StyleSheet/compiler/unitlessNumbers.js",
+        "node_modules/react-native-web/dist/exports/StyleSheet/compiler/normalizeColor.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/StyleSheet/compiler/unitlessNumbers.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/StyleSheet/compiler/normalizeColor.js",
+      "dependencies": [
+        "node_modules/react-native-web/dist/modules/isWebColor/index.js",
+        "node_modules/react-native-web/dist/exports/processColor/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/modules/isWebColor/index.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/processColor/index.js",
+      "dependencies": [
+        "node_modules/react-native-web/node_modules/@react-native/normalize-colors/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/node_modules/@react-native/normalize-colors/index.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/StyleSheet/compiler/hash.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/StyleSheet/compiler/hyphenateStyleName.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react-native-web/dist/modules/prefixStyles/index.js",
+      "dependencies": [
+        "node_modules/inline-style-prefixer/lib/createPrefixer.js",
+        "node_modules/react-native-web/dist/modules/prefixStyles/static.js"
+      ]
+    },
+    {
+      "path": "node_modules/inline-style-prefixer/lib/createPrefixer.js",
+      "dependencies": [
+        "node_modules/inline-style-prefixer/lib/utils/prefixProperty.js",
+        "node_modules/inline-style-prefixer/lib/utils/prefixValue.js",
+        "node_modules/inline-style-prefixer/lib/utils/addNewValuesOnly.js",
+        "node_modules/inline-style-prefixer/lib/utils/isObject.js"
+      ]
+    },
+    {
+      "path": "node_modules/inline-style-prefixer/lib/utils/prefixProperty.js",
+      "dependencies": [
+        "node_modules/inline-style-prefixer/lib/utils/capitalizeString.js"
+      ]
+    },
+    {
+      "path": "node_modules/inline-style-prefixer/lib/utils/capitalizeString.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/inline-style-prefixer/lib/utils/prefixValue.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/inline-style-prefixer/lib/utils/addNewValuesOnly.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/inline-style-prefixer/lib/utils/isObject.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react-native-web/dist/modules/prefixStyles/static.js",
+      "dependencies": [
+        "node_modules/inline-style-prefixer/lib/plugins/crossFade.js",
+        "node_modules/inline-style-prefixer/lib/plugins/imageSet.js",
+        "node_modules/inline-style-prefixer/lib/plugins/logical.js",
+        "node_modules/inline-style-prefixer/lib/plugins/position.js",
+        "node_modules/inline-style-prefixer/lib/plugins/sizing.js",
+        "node_modules/inline-style-prefixer/lib/plugins/transition.js"
+      ]
+    },
+    {
+      "path": "node_modules/inline-style-prefixer/lib/plugins/crossFade.js",
+      "dependencies": [
+        "node_modules/css-in-js-utils/es/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/css-in-js-utils/es/index.js",
+      "dependencies": [
+        "node_modules/css-in-js-utils/es/assignStyle.js",
+        "node_modules/css-in-js-utils/es/camelCaseProperty.js",
+        "node_modules/css-in-js-utils/es/cssifyDeclaration.js",
+        "node_modules/css-in-js-utils/es/cssifyObject.js",
+        "node_modules/css-in-js-utils/es/hyphenateProperty.js",
+        "node_modules/css-in-js-utils/es/isPrefixedProperty.js",
+        "node_modules/css-in-js-utils/es/isPrefixedValue.js",
+        "node_modules/css-in-js-utils/es/isUnitlessProperty.js",
+        "node_modules/css-in-js-utils/es/normalizeProperty.js",
+        "node_modules/css-in-js-utils/es/resolveArrayValue.js",
+        "node_modules/css-in-js-utils/es/unprefixProperty.js",
+        "node_modules/css-in-js-utils/es/unprefixValue.js"
+      ]
+    },
+    {
+      "path": "node_modules/css-in-js-utils/es/assignStyle.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/css-in-js-utils/es/camelCaseProperty.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/css-in-js-utils/es/cssifyDeclaration.js",
+      "dependencies": [
+        "node_modules/css-in-js-utils/es/hyphenateProperty.js"
+      ]
+    },
+    {
+      "path": "node_modules/css-in-js-utils/es/hyphenateProperty.js",
+      "dependencies": [
+        "node_modules/hyphenate-style-name/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/hyphenate-style-name/index.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/css-in-js-utils/es/cssifyObject.js",
+      "dependencies": [
+        "node_modules/css-in-js-utils/es/cssifyDeclaration.js"
+      ]
+    },
+    {
+      "path": "node_modules/css-in-js-utils/es/isPrefixedProperty.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/css-in-js-utils/es/isPrefixedValue.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/css-in-js-utils/es/isUnitlessProperty.js",
+      "dependencies": [
+        "node_modules/css-in-js-utils/es/hyphenateProperty.js"
+      ]
+    },
+    {
+      "path": "node_modules/css-in-js-utils/es/normalizeProperty.js",
+      "dependencies": [
+        "node_modules/css-in-js-utils/es/camelCaseProperty.js",
+        "node_modules/css-in-js-utils/es/unprefixProperty.js"
+      ]
+    },
+    {
+      "path": "node_modules/css-in-js-utils/es/unprefixProperty.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/css-in-js-utils/es/resolveArrayValue.js",
+      "dependencies": [
+        "node_modules/css-in-js-utils/es/hyphenateProperty.js"
+      ]
+    },
+    {
+      "path": "node_modules/css-in-js-utils/es/unprefixValue.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/inline-style-prefixer/lib/plugins/imageSet.js",
+      "dependencies": [
+        "node_modules/css-in-js-utils/lib/isPrefixedValue.js"
+      ]
+    },
+    {
+      "path": "node_modules/css-in-js-utils/lib/isPrefixedValue.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/inline-style-prefixer/lib/plugins/logical.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/inline-style-prefixer/lib/plugins/position.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/inline-style-prefixer/lib/plugins/sizing.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/inline-style-prefixer/lib/plugins/transition.js",
+      "dependencies": [
+        "node_modules/css-in-js-utils/lib/hyphenateProperty.js",
+        "node_modules/css-in-js-utils/lib/isPrefixedValue.js",
+        "node_modules/inline-style-prefixer/lib/utils/capitalizeString.js"
+      ]
+    },
+    {
+      "path": "node_modules/css-in-js-utils/lib/hyphenateProperty.js",
+      "dependencies": [
+        "node_modules/hyphenate-style-name/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/styleq/transform-localize-style.js",
+      "dependencies": [
+        "node_modules/styleq/dist/transform-localize-style.js"
+      ]
+    },
+    {
+      "path": "node_modules/styleq/dist/transform-localize-style.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/StyleSheet/preprocess.js",
+      "dependencies": [
+        "node_modules/react-native-web/dist/exports/StyleSheet/compiler/normalizeColor.js",
+        "node_modules/react-native-web/dist/exports/StyleSheet/compiler/normalizeValueWithProperty.js"
+      ]
+    },
+    {
+      "path": "node_modules/styleq/dist/styleq.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/StyleSheet/validate.js",
+      "dependencies": [
+        "node_modules/postcss-value-parser/lib/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/postcss-value-parser/lib/index.js",
+      "dependencies": [
+        "node_modules/postcss-value-parser/lib/parse.js",
+        "node_modules/postcss-value-parser/lib/walk.js",
+        "node_modules/postcss-value-parser/lib/stringify.js",
+        "node_modules/postcss-value-parser/lib/unit.js"
+      ]
+    },
+    {
+      "path": "node_modules/postcss-value-parser/lib/parse.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/postcss-value-parser/lib/walk.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/postcss-value-parser/lib/stringify.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/postcss-value-parser/lib/unit.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/Platform/index.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/expo/src/environment/ExpoGo.web.ts",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/index.ts",
+      "dependencies": [
+        "node_modules/expo-modules-core/src/sweet/setUpJsLogger.fx.web.ts",
+        "node_modules/expo-modules-core/src/polyfill/index.web.ts",
+        "node_modules/expo-modules-core/src/EventEmitter.ts",
+        "node_modules/expo-modules-core/src/NativeModule.ts",
+        "node_modules/expo-modules-core/src/SharedObject.ts",
+        "node_modules/expo-modules-core/src/SharedRef.ts",
+        "node_modules/expo-modules-core/src/Platform.ts",
+        "node_modules/expo-modules-core/src/uuid/index.web.ts",
+        "node_modules/expo-modules-core/src/NativeViewManagerAdapter.tsx",
+        "node_modules/expo-modules-core/src/requireNativeModule.web.ts",
+        "node_modules/expo-modules-core/src/registerWebModule.ts",
+        "node_modules/expo-modules-core/src/TypedArrays.types.ts",
+        "node_modules/expo-modules-core/src/PermissionsInterface.ts",
+        "node_modules/expo-modules-core/src/PermissionsHook.ts",
+        "node_modules/expo-modules-core/src/Refs.ts",
+        "node_modules/expo-modules-core/src/hooks/useReleasingSharedObject.ts",
+        "node_modules/expo-modules-core/src/reload.ts",
+        "node_modules/expo-modules-core/src/errors/CodedError.ts",
+        "node_modules/expo-modules-core/src/errors/UnavailabilityError.ts",
+        "node_modules/expo-modules-core/src/LegacyEventEmitter.ts",
+        "node_modules/expo-modules-core/src/NativeModulesProxy.ts"
+      ]
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/sweet/setUpJsLogger.fx.web.ts",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/polyfill/index.web.ts",
+      "dependencies": [
+        "node_modules/expo-modules-core/src/polyfill/dangerous-internal.ts"
+      ]
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/polyfill/dangerous-internal.ts",
+      "dependencies": [
+        "node_modules/expo-modules-core/src/polyfill/CoreModule.ts",
+        "node_modules/expo-modules-core/src/uuid/index.web.ts",
+        "node_modules/expo-modules-core/src/ts-declarations/global.ts"
+      ]
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/polyfill/CoreModule.ts",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/uuid/index.web.ts",
+      "dependencies": [
+        "node_modules/expo-modules-core/src/uuid/lib/sha1.ts",
+        "node_modules/expo-modules-core/src/uuid/lib/v35.ts",
+        "node_modules/expo-modules-core/src/uuid/uuid.types.ts"
+      ]
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/uuid/lib/sha1.ts",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/uuid/lib/v35.ts",
+      "dependencies": [
+        "node_modules/expo-modules-core/src/uuid/lib/bytesToUuid.ts"
+      ]
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/uuid/lib/bytesToUuid.ts",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/uuid/uuid.types.ts",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/ts-declarations/global.ts",
+      "dependencies": [
+        "node_modules/expo-modules-core/src/ts-declarations/EventEmitter.ts",
+        "node_modules/expo-modules-core/src/ts-declarations/NativeModule.ts",
+        "node_modules/expo-modules-core/src/ts-declarations/SharedObject.ts",
+        "node_modules/expo-modules-core/src/ts-declarations/SharedRef.ts"
+      ]
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/ts-declarations/EventEmitter.ts",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/ts-declarations/NativeModule.ts",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/ts-declarations/SharedObject.ts",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/ts-declarations/SharedRef.ts",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/EventEmitter.ts",
+      "dependencies": [
+        "node_modules/expo-modules-core/src/ensureNativeModulesAreInstalled.ts"
+      ]
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/ensureNativeModulesAreInstalled.ts",
+      "dependencies": [
+        "node_modules/expo-modules-core/src/polyfill/index.web.ts"
+      ]
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/NativeModule.ts",
+      "dependencies": [
+        "node_modules/expo-modules-core/src/ensureNativeModulesAreInstalled.ts"
+      ]
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/SharedObject.ts",
+      "dependencies": [
+        "node_modules/expo-modules-core/src/ensureNativeModulesAreInstalled.ts"
+      ]
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/SharedRef.ts",
+      "dependencies": [
+        "node_modules/expo-modules-core/src/ensureNativeModulesAreInstalled.ts"
+      ]
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/Platform.ts",
+      "dependencies": [
+        "node_modules/react-native-web/dist/exports/Platform/index.js",
+        "node_modules/expo-modules-core/src/environment/browser.web.ts"
+      ]
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/environment/browser.web.ts",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/NativeViewManagerAdapter.tsx",
+      "dependencies": [
+        "node_modules/expo-modules-core/src/errors/UnavailabilityError.ts"
+      ]
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/errors/UnavailabilityError.ts",
+      "dependencies": [
+        "node_modules/expo-modules-core/src/errors/CodedError.ts",
+        "node_modules/expo-modules-core/src/Platform.ts"
+      ]
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/errors/CodedError.ts",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/requireNativeModule.web.ts",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/registerWebModule.ts",
+      "dependencies": [
+        "node_modules/expo-modules-core/src/ensureNativeModulesAreInstalled.ts"
+      ]
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/TypedArrays.types.ts",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/PermissionsInterface.ts",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/PermissionsHook.ts",
+      "dependencies": [
+        "node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js",
+        "node_modules/react/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/Refs.ts",
+      "dependencies": [
+        "node_modules/react/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/hooks/useReleasingSharedObject.ts",
+      "dependencies": [
+        "node_modules/react/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/reload.ts",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/LegacyEventEmitter.ts",
+      "dependencies": [
+        "node_modules/invariant/browser.js",
+        "node_modules/react-native-web/dist/exports/NativeEventEmitter/index.js",
+        "node_modules/react-native-web/dist/exports/Platform/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/invariant/browser.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/NativeEventEmitter/index.js",
+      "dependencies": [
+        "node_modules/react-native-web/dist/vendor/react-native/EventEmitter/NativeEventEmitter.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/vendor/react-native/EventEmitter/NativeEventEmitter.js",
+      "dependencies": [
+        "node_modules/react-native-web/dist/exports/Platform/index.js",
+        "node_modules/react-native-web/dist/vendor/react-native/EventEmitter/RCTDeviceEventEmitter.js",
+        "node_modules/fbjs/lib/invariant.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/vendor/react-native/EventEmitter/RCTDeviceEventEmitter.js",
+      "dependencies": [
+        "node_modules/react-native-web/dist/vendor/react-native/vendor/emitter/EventEmitter.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/vendor/react-native/vendor/emitter/EventEmitter.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/NativeModulesProxy.ts",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/expo/src/hooks/useEvent.ts",
+      "dependencies": [
+        "node_modules/react/index.js"
+      ]
+    },
+    {
+      "path": "App.tsx",
+      "dependencies": [
+        "node_modules/react/index.js",
+        "node_modules/react-native-web/dist/exports/ScrollView/index.js",
+        "node_modules/react-native-web/dist/exports/Text/index.js",
+        "node_modules/react-native-web/dist/exports/View/index.js",
+        "node_modules/react-native-safe-area-context/lib/module/index.js",
+        "node_modules/@hamster-note/components-native/dist-web/index.js",
+        "node_modules/@hamster-note/components-native/dist-web/button.js",
+        "node_modules/@hamster-note/components-native/dist-web/icon.js",
+        "node_modules/@hamster-note/components-native/dist-web/popover.js",
+        "node_modules/@hamster-note/components-native/dist-web/menu.js",
+        "node_modules/@hamster-note/components-native/dist-web/text-field.js",
+        "node_modules/@hamster-note/components-native/dist-web/theme.js",
+        "../../fixtures/cross-platform.json",
+        "node_modules/react/jsx-runtime.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/ScrollView/index.js",
+      "dependencies": [
+        "node_modules/@babel/runtime/helpers/esm/objectSpread2.js",
+        "node_modules/@babel/runtime/helpers/esm/extends.js",
+        "node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js",
+        "node_modules/react-native-web/dist/exports/Dimensions/index.js",
+        "node_modules/react-native-web/dist/modules/dismissKeyboard/index.js",
+        "node_modules/fbjs/lib/invariant.js",
+        "node_modules/react-native-web/dist/modules/mergeRefs/index.js",
+        "node_modules/react-native-web/dist/exports/Platform/index.js",
+        "node_modules/react-native-web/dist/exports/ScrollView/ScrollViewBase.js",
+        "node_modules/react-native-web/dist/exports/StyleSheet/index.js",
+        "node_modules/react-native-web/dist/modules/TextInputState/index.js",
+        "node_modules/react-native-web/dist/exports/UIManager/index.js",
+        "node_modules/react-native-web/dist/exports/View/index.js",
+        "node_modules/react/index.js",
+        "node_modules/fbjs/lib/warning.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/Dimensions/index.js",
+      "dependencies": [
+        "node_modules/fbjs/lib/invariant.js",
+        "node_modules/react-native-web/dist/modules/canUseDom/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/modules/dismissKeyboard/index.js",
+      "dependencies": [
+        "node_modules/react-native-web/dist/modules/TextInputState/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/modules/TextInputState/index.js",
+      "dependencies": [
+        "node_modules/react-native-web/dist/exports/UIManager/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/UIManager/index.js",
+      "dependencies": [
+        "node_modules/react-native-web/dist/modules/getBoundingClientRect/index.js",
+        "node_modules/react-native-web/dist/modules/setValueForStyles/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/modules/getBoundingClientRect/index.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react-native-web/dist/modules/setValueForStyles/index.js",
+      "dependencies": [
+        "node_modules/react-native-web/dist/modules/setValueForStyles/dangerousStyleValue.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/modules/setValueForStyles/dangerousStyleValue.js",
+      "dependencies": [
+        "node_modules/react-native-web/dist/modules/unitlessNumbers/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/modules/unitlessNumbers/index.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react-native-web/dist/modules/mergeRefs/index.js",
+      "dependencies": [
+        "node_modules/react/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/ScrollView/ScrollViewBase.js",
+      "dependencies": [
+        "node_modules/@babel/runtime/helpers/esm/extends.js",
+        "node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js",
+        "node_modules/react/index.js",
+        "node_modules/react-native-web/dist/exports/StyleSheet/index.js",
+        "node_modules/react-native-web/dist/exports/View/index.js",
+        "node_modules/react-native-web/dist/modules/useMergeRefs/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/View/index.js",
+      "dependencies": [
+        "node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js",
+        "node_modules/react/index.js",
+        "node_modules/react-native-web/dist/exports/createElement/index.js",
+        "node_modules/react-native-web/dist/modules/forwardedProps/index.js",
+        "node_modules/react-native-web/dist/modules/pick/index.js",
+        "node_modules/react-native-web/dist/modules/useElementLayout/index.js",
+        "node_modules/react-native-web/dist/modules/useMergeRefs/index.js",
+        "node_modules/react-native-web/dist/modules/usePlatformMethods/index.js",
+        "node_modules/react-native-web/dist/modules/useResponderEvents/index.js",
+        "node_modules/react-native-web/dist/exports/StyleSheet/index.js",
+        "node_modules/react-native-web/dist/exports/Text/TextAncestorContext.js",
+        "node_modules/react-native-web/dist/modules/useLocale/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/createElement/index.js",
+      "dependencies": [
+        "node_modules/react-native-web/dist/modules/AccessibilityUtil/index.js",
+        "node_modules/react-native-web/dist/modules/createDOMProps/index.js",
+        "node_modules/react/index.js",
+        "node_modules/react-native-web/dist/modules/useLocale/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/modules/AccessibilityUtil/index.js",
+      "dependencies": [
+        "node_modules/react-native-web/dist/modules/AccessibilityUtil/isDisabled.js",
+        "node_modules/react-native-web/dist/modules/AccessibilityUtil/propsToAccessibilityComponent.js",
+        "node_modules/react-native-web/dist/modules/AccessibilityUtil/propsToAriaRole.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/modules/AccessibilityUtil/isDisabled.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react-native-web/dist/modules/AccessibilityUtil/propsToAccessibilityComponent.js",
+      "dependencies": [
+        "node_modules/react-native-web/dist/modules/AccessibilityUtil/propsToAriaRole.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/modules/AccessibilityUtil/propsToAriaRole.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react-native-web/dist/modules/createDOMProps/index.js",
+      "dependencies": [
+        "node_modules/@babel/runtime/helpers/esm/objectSpread2.js",
+        "node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js",
+        "node_modules/react-native-web/dist/modules/AccessibilityUtil/index.js",
+        "node_modules/react-native-web/dist/exports/StyleSheet/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/modules/useLocale/index.js",
+      "dependencies": [
+        "node_modules/react/index.js",
+        "node_modules/react-native-web/dist/modules/useLocale/isLocaleRTL.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/modules/useLocale/isLocaleRTL.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react-native-web/dist/modules/forwardedProps/index.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react-native-web/dist/modules/pick/index.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react-native-web/dist/modules/useElementLayout/index.js",
+      "dependencies": [
+        "node_modules/react-native-web/dist/modules/useLayoutEffect/index.js",
+        "node_modules/react-native-web/dist/exports/UIManager/index.js",
+        "node_modules/react-native-web/dist/modules/canUseDom/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/modules/useLayoutEffect/index.js",
+      "dependencies": [
+        "node_modules/react/index.js",
+        "node_modules/react-native-web/dist/modules/canUseDom/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/modules/useMergeRefs/index.js",
+      "dependencies": [
+        "node_modules/react/index.js",
+        "node_modules/react-native-web/dist/modules/mergeRefs/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/modules/usePlatformMethods/index.js",
+      "dependencies": [
+        "node_modules/react-native-web/dist/exports/UIManager/index.js",
+        "node_modules/react-native-web/dist/modules/useStable/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/modules/useStable/index.js",
+      "dependencies": [
+        "node_modules/react/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/modules/useResponderEvents/index.js",
+      "dependencies": [
+        "node_modules/react/index.js",
+        "node_modules/react-native-web/dist/modules/useResponderEvents/ResponderSystem.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/modules/useResponderEvents/ResponderSystem.js",
+      "dependencies": [
+        "node_modules/react-native-web/dist/modules/useResponderEvents/createResponderEvent.js",
+        "node_modules/react-native-web/dist/modules/useResponderEvents/ResponderEventTypes.js",
+        "node_modules/react-native-web/dist/modules/useResponderEvents/utils.js",
+        "node_modules/react-native-web/dist/modules/useResponderEvents/ResponderTouchHistoryStore.js",
+        "node_modules/react-native-web/dist/modules/canUseDom/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/modules/useResponderEvents/createResponderEvent.js",
+      "dependencies": [
+        "node_modules/react-native-web/dist/modules/getBoundingClientRect/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/modules/useResponderEvents/ResponderEventTypes.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react-native-web/dist/modules/useResponderEvents/utils.js",
+      "dependencies": [
+        "node_modules/react-native-web/dist/modules/isSelectionValid/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/modules/isSelectionValid/index.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react-native-web/dist/modules/useResponderEvents/ResponderTouchHistoryStore.js",
+      "dependencies": [
+        "node_modules/react-native-web/dist/modules/useResponderEvents/ResponderEventTypes.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/Text/TextAncestorContext.js",
+      "dependencies": [
+        "node_modules/react/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/fbjs/lib/warning.js",
+      "dependencies": [
+        "node_modules/fbjs/lib/emptyFunction.js"
+      ]
+    },
+    {
+      "path": "node_modules/fbjs/lib/emptyFunction.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/Text/index.js",
+      "dependencies": [
+        "node_modules/@babel/runtime/helpers/esm/objectSpread2.js",
+        "node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js",
+        "node_modules/react/index.js",
+        "node_modules/react-native-web/dist/exports/createElement/index.js",
+        "node_modules/react-native-web/dist/modules/forwardedProps/index.js",
+        "node_modules/react-native-web/dist/modules/pick/index.js",
+        "node_modules/react-native-web/dist/modules/useElementLayout/index.js",
+        "node_modules/react-native-web/dist/modules/useMergeRefs/index.js",
+        "node_modules/react-native-web/dist/modules/usePlatformMethods/index.js",
+        "node_modules/react-native-web/dist/modules/useResponderEvents/index.js",
+        "node_modules/react-native-web/dist/exports/StyleSheet/index.js",
+        "node_modules/react-native-web/dist/exports/Text/TextAncestorContext.js",
+        "node_modules/react-native-web/dist/modules/useLocale/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-safe-area-context/lib/module/index.js",
+      "dependencies": [
+        "node_modules/react-native-safe-area-context/lib/module/SafeAreaContext.js",
+        "node_modules/react-native-safe-area-context/lib/module/SafeAreaView.web.js",
+        "node_modules/react-native-safe-area-context/lib/module/InitialWindow.js",
+        "node_modules/react-native-safe-area-context/lib/module/SafeArea.types.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-safe-area-context/lib/module/SafeAreaContext.js",
+      "dependencies": [
+        "node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js",
+        "node_modules/react/index.js",
+        "node_modules/react-native-web/dist/exports/Dimensions/index.js",
+        "node_modules/react-native-web/dist/exports/StyleSheet/index.js",
+        "node_modules/react-native-safe-area-context/lib/module/NativeSafeAreaProvider.web.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-safe-area-context/lib/module/NativeSafeAreaProvider.web.js",
+      "dependencies": [
+        "node_modules/react/index.js",
+        "node_modules/react-native-web/dist/exports/View/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-safe-area-context/lib/module/SafeAreaView.web.js",
+      "dependencies": [
+        "node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js",
+        "node_modules/react/index.js",
+        "node_modules/react-native-web/dist/exports/StyleSheet/index.js",
+        "node_modules/react-native-web/dist/exports/View/index.js",
+        "node_modules/react-native-safe-area-context/lib/module/SafeAreaContext.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-safe-area-context/lib/module/InitialWindow.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react-native-safe-area-context/lib/module/SafeArea.types.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/@hamster-note/components-native/dist-web/index.js",
+      "dependencies": [
+        "node_modules/@hamster-note/components-native/dist-web/chunk-T6J6EVQQ.js",
+        "node_modules/@hamster-note/components-native/dist-web/chunk-HRXG53YQ.js",
+        "node_modules/@hamster-note/components-native/dist-web/chunk-S76QQJW6.js",
+        "node_modules/@hamster-note/components-native/dist-web/chunk-ERO6M2HO.js",
+        "node_modules/@hamster-note/components-native/dist-web/chunk-A4HEM4JL.js",
+        "node_modules/@hamster-note/components-native/dist-web/chunk-XDIHIO6N.js"
+      ]
+    },
+    {
+      "path": "node_modules/@hamster-note/components-native/dist-web/chunk-T6J6EVQQ.js",
+      "dependencies": [
+        "node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js",
+        "node_modules/@hamster-note/components-native/dist-web/chunk-XDIHIO6N.js",
+        "node_modules/react/index.js",
+        "node_modules/react-native-web/dist/exports/Pressable/index.js",
+        "node_modules/react-native-web/dist/exports/Text/index.js",
+        "node_modules/react/jsx-runtime.js"
+      ]
+    },
+    {
+      "path": "node_modules/@hamster-note/components-native/dist-web/chunk-XDIHIO6N.js",
+      "dependencies": [
+        "node_modules/react/index.js",
+        "node_modules/react/jsx-runtime.js"
+      ]
+    },
+    {
+      "path": "node_modules/react/jsx-runtime.js",
+      "dependencies": [
+        "node_modules/react/cjs/react-jsx-runtime.production.js"
+      ]
+    },
+    {
+      "path": "node_modules/react/cjs/react-jsx-runtime.production.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/Pressable/index.js",
+      "dependencies": [
+        "node_modules/@babel/runtime/helpers/esm/extends.js",
+        "node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js",
+        "node_modules/react/index.js",
+        "node_modules/react-native-web/dist/modules/useMergeRefs/index.js",
+        "node_modules/react-native-web/dist/modules/useHover/index.js",
+        "node_modules/react-native-web/dist/modules/usePressEvents/index.js",
+        "node_modules/react-native-web/dist/exports/StyleSheet/index.js",
+        "node_modules/react-native-web/dist/exports/View/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/modules/useHover/index.js",
+      "dependencies": [
+        "node_modules/react-native-web/dist/modules/modality/index.js",
+        "node_modules/react-native-web/dist/modules/useEvent/index.js",
+        "node_modules/react-native-web/dist/modules/useLayoutEffect/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/modules/modality/index.js",
+      "dependencies": [
+        "node_modules/react-native-web/dist/modules/addEventListener/index.js",
+        "node_modules/react-native-web/dist/modules/canUseDom/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/modules/addEventListener/index.js",
+      "dependencies": [
+        "node_modules/react-native-web/dist/modules/canUseDom/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/modules/useEvent/index.js",
+      "dependencies": [
+        "node_modules/react-native-web/dist/modules/addEventListener/index.js",
+        "node_modules/react-native-web/dist/modules/useLayoutEffect/index.js",
+        "node_modules/react-native-web/dist/modules/useStable/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/modules/usePressEvents/index.js",
+      "dependencies": [
+        "node_modules/react-native-web/dist/modules/usePressEvents/PressResponder.js",
+        "node_modules/react/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/modules/usePressEvents/PressResponder.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/@hamster-note/components-native/dist-web/chunk-HRXG53YQ.js",
+      "dependencies": [
+        "node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js",
+        "node_modules/@hamster-note/components-native/dist-web/chunk-XDIHIO6N.js",
+        "node_modules/react-native-web/dist/exports/Platform/index.js",
+        "node_modules/react-native-svg/lib/module/index.js",
+        "node_modules/react/jsx-runtime.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-svg/lib/module/index.js",
+      "dependencies": [
+        "node_modules/react-native-svg/lib/module/ReactNativeSVG.web.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-svg/lib/module/ReactNativeSVG.web.js",
+      "dependencies": [
+        "node_modules/react-native-svg/lib/module/xml.js",
+        "node_modules/react-native-svg/lib/module/utils/fetchData.js",
+        "node_modules/react-native-svg/lib/module/deprecated.js",
+        "node_modules/react-native-svg/lib/module/lib/extract/types.js",
+        "node_modules/react-native-svg/lib/module/elements.web.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-svg/lib/module/xml.js",
+      "dependencies": [
+        "node_modules/react/index.js",
+        "node_modules/react-native-svg/lib/module/utils/fetchData.js",
+        "node_modules/react-native-svg/lib/module/xmlTags.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-svg/lib/module/utils/fetchData.js",
+      "dependencies": [
+        "node_modules/react-native-web/dist/exports/Platform/index.js",
+        "node_modules/buffer/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/buffer/index.js",
+      "dependencies": [
+        "node_modules/base64-js/index.js",
+        "node_modules/ieee754/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/base64-js/index.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/ieee754/index.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react-native-svg/lib/module/xmlTags.js",
+      "dependencies": [
+        "node_modules/react-native-svg/lib/module/elements.web.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-svg/lib/module/elements.web.js",
+      "dependencies": [
+        "node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js",
+        "node_modules/react-native-svg/lib/module/web/utils/index.js",
+        "node_modules/react-native-svg/lib/module/web/WebShape.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-svg/lib/module/web/utils/index.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react-native-svg/lib/module/web/WebShape.js",
+      "dependencies": [
+        "node_modules/react/index.js",
+        "node_modules/react-native-web/dist/exports/createElement/index.js",
+        "node_modules/react-native-svg/lib/module/web/utils/prepare.js",
+        "node_modules/react-native-svg/lib/module/web/utils/convertInt32Color.js",
+        "node_modules/react-native-svg/lib/module/web/utils/index.js",
+        "node_modules/react-native-svg/lib/module/web/utils/hasProperty.js",
+        "node_modules/react-native-svg/lib/module/lib/SvgTouchableMixin.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-svg/lib/module/web/utils/prepare.js",
+      "dependencies": [
+        "node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js",
+        "node_modules/react-native-svg/lib/module/web/utils/hasProperty.js",
+        "node_modules/react-native-svg/lib/module/web/utils/parseTransform.js",
+        "node_modules/react-native-svg/lib/module/lib/resolve.js",
+        "node_modules/react-native-svg/lib/module/lib/resolveAssetUri.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-svg/lib/module/web/utils/hasProperty.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react-native-svg/lib/module/web/utils/parseTransform.js",
+      "dependencies": [
+        "node_modules/react-native-svg/lib/module/lib/extract/extractTransform.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-svg/lib/module/lib/extract/extractTransform.js",
+      "dependencies": [
+        "node_modules/react-native-svg/lib/module/lib/Matrix2D.js",
+        "node_modules/react-native-svg/lib/module/lib/extract/transform.js",
+        "node_modules/react-native-svg/lib/module/lib/extract/transformToRn.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-svg/lib/module/lib/Matrix2D.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react-native-svg/lib/module/lib/extract/transform.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react-native-svg/lib/module/lib/extract/transformToRn.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react-native-svg/lib/module/lib/resolve.js",
+      "dependencies": [
+        "node_modules/react-native-web/dist/exports/StyleSheet/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-svg/lib/module/lib/resolveAssetUri.js",
+      "dependencies": [
+        "node_modules/react-native-web/dist/exports/PixelRatio/index.js",
+        "\u0000polyfill:assets-registry"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/PixelRatio/index.js",
+      "dependencies": [
+        "node_modules/react-native-web/dist/exports/Dimensions/index.js"
+      ]
+    },
+    {
+      "path": "\u0000polyfill:assets-registry",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react-native-svg/lib/module/web/utils/convertInt32Color.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react-native-svg/lib/module/lib/SvgTouchableMixin.js",
+      "dependencies": [
+        "node_modules/react-native-web/dist/exports/Touchable/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/Touchable/index.js",
+      "dependencies": [
+        "node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js",
+        "node_modules/@babel/runtime/helpers/esm/objectSpread2.js",
+        "node_modules/react-native-web/dist/modules/AccessibilityUtil/index.js",
+        "node_modules/react-native-web/dist/exports/Touchable/BoundingDimensions.js",
+        "node_modules/react-native-web/node_modules/@react-native/normalize-colors/index.js",
+        "node_modules/react-native-web/dist/exports/Touchable/Position.js",
+        "node_modules/react/index.js",
+        "node_modules/react-native-web/dist/exports/UIManager/index.js",
+        "node_modules/react-native-web/dist/exports/View/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/Touchable/BoundingDimensions.js",
+      "dependencies": [
+        "node_modules/react-native-web/dist/vendor/react-native/PooledClass/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/vendor/react-native/PooledClass/index.js",
+      "dependencies": [
+        "node_modules/fbjs/lib/invariant.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/Touchable/Position.js",
+      "dependencies": [
+        "node_modules/react-native-web/dist/vendor/react-native/PooledClass/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-svg/lib/module/deprecated.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react-native-svg/lib/module/lib/extract/types.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/@hamster-note/components-native/dist-web/chunk-S76QQJW6.js",
+      "dependencies": [
+        "node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js",
+        "node_modules/@hamster-note/components-native/dist-web/chunk-ERO6M2HO.js",
+        "node_modules/@hamster-note/components-native/dist-web/chunk-XDIHIO6N.js",
+        "node_modules/react/index.js",
+        "node_modules/react-native-web/dist/exports/Pressable/index.js",
+        "node_modules/react-native-web/dist/exports/Text/index.js",
+        "node_modules/react-native-web/dist/exports/View/index.js",
+        "node_modules/react/jsx-runtime.js"
+      ]
+    },
+    {
+      "path": "node_modules/@hamster-note/components-native/dist-web/chunk-ERO6M2HO.js",
+      "dependencies": [
+        "node_modules/@hamster-note/components-native/dist-web/chunk-XDIHIO6N.js",
+        "node_modules/react/index.js",
+        "node_modules/react-native-web/dist/exports/Keyboard/index.js",
+        "node_modules/react-native-web/dist/exports/Modal/index.js",
+        "node_modules/react-native-web/dist/exports/Platform/index.js",
+        "node_modules/react-native-web/dist/exports/Pressable/index.js",
+        "node_modules/react-native-web/dist/exports/ScrollView/index.js",
+        "node_modules/react-native-web/dist/exports/StatusBar/index.js",
+        "node_modules/react-native-web/dist/exports/StyleSheet/index.js",
+        "node_modules/react-native-web/dist/exports/Text/index.js",
+        "node_modules/react-native-web/dist/exports/View/index.js",
+        "node_modules/react-native-web/dist/exports/useWindowDimensions/index.js",
+        "node_modules/react-native-web/dist/exports/AccessibilityInfo/index.js",
+        "node_modules/react-native-web/dist/exports/findNodeHandle/index.js",
+        "node_modules/react/jsx-runtime.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/Keyboard/index.js",
+      "dependencies": [
+        "node_modules/react-native-web/dist/modules/dismissKeyboard/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/Modal/index.js",
+      "dependencies": [
+        "node_modules/@babel/runtime/helpers/esm/extends.js",
+        "node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js",
+        "node_modules/react/index.js",
+        "node_modules/react-native-web/dist/exports/Modal/ModalPortal.js",
+        "node_modules/react-native-web/dist/exports/Modal/ModalAnimation.js",
+        "node_modules/react-native-web/dist/exports/Modal/ModalContent.js",
+        "node_modules/react-native-web/dist/exports/Modal/ModalFocusTrap.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/Modal/ModalPortal.js",
+      "dependencies": [
+        "node_modules/react/index.js",
+        "node_modules/react-dom/index.js",
+        "node_modules/react-native-web/dist/modules/canUseDom/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/Modal/ModalAnimation.js",
+      "dependencies": [
+        "node_modules/react/index.js",
+        "node_modules/react-native-web/dist/exports/StyleSheet/index.js",
+        "node_modules/react-native-web/dist/exports/createElement/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/Modal/ModalContent.js",
+      "dependencies": [
+        "node_modules/@babel/runtime/helpers/esm/extends.js",
+        "node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js",
+        "node_modules/react/index.js",
+        "node_modules/react-native-web/dist/exports/View/index.js",
+        "node_modules/react-native-web/dist/exports/StyleSheet/index.js",
+        "node_modules/react-native-web/dist/modules/canUseDom/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/Modal/ModalFocusTrap.js",
+      "dependencies": [
+        "node_modules/react/index.js",
+        "node_modules/react-native-web/dist/exports/View/index.js",
+        "node_modules/react-native-web/dist/exports/createElement/index.js",
+        "node_modules/react-native-web/dist/exports/StyleSheet/index.js",
+        "node_modules/react-native-web/dist/exports/UIManager/index.js",
+        "node_modules/react-native-web/dist/modules/canUseDom/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/StatusBar/index.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/useWindowDimensions/index.js",
+      "dependencies": [
+        "node_modules/react-native-web/dist/exports/Dimensions/index.js",
+        "node_modules/react/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/AccessibilityInfo/index.js",
+      "dependencies": [
+        "node_modules/react-native-web/dist/modules/canUseDom/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/findNodeHandle/index.js",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/@hamster-note/components-native/dist-web/chunk-A4HEM4JL.js",
+      "dependencies": [
+        "node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js",
+        "node_modules/@hamster-note/components-native/dist-web/chunk-XDIHIO6N.js",
+        "node_modules/react/index.js",
+        "node_modules/react-native-web/dist/exports/AccessibilityInfo/index.js",
+        "node_modules/react-native-web/dist/exports/Text/index.js",
+        "node_modules/react-native-web/dist/exports/TextInput/index.js",
+        "node_modules/react-native-web/dist/exports/View/index.js",
+        "node_modules/react/jsx-runtime.js"
+      ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/TextInput/index.js",
+      "dependencies": [
+        "node_modules/react/index.js",
+        "node_modules/react-native-web/dist/exports/createElement/index.js",
+        "node_modules/react-native-web/dist/modules/forwardedProps/index.js",
+        "node_modules/react-native-web/dist/modules/pick/index.js",
+        "node_modules/react-native-web/dist/modules/useElementLayout/index.js",
+        "node_modules/react-native-web/dist/modules/useLayoutEffect/index.js",
+        "node_modules/react-native-web/dist/modules/useMergeRefs/index.js",
+        "node_modules/react-native-web/dist/modules/usePlatformMethods/index.js",
+        "node_modules/react-native-web/dist/modules/useResponderEvents/index.js",
+        "node_modules/react-native-web/dist/modules/useLocale/index.js",
+        "node_modules/react-native-web/dist/exports/StyleSheet/index.js",
+        "node_modules/react-native-web/dist/modules/TextInputState/index.js"
+      ]
+    },
+    {
+      "path": "node_modules/@hamster-note/components-native/dist-web/button.js",
+      "dependencies": [
+        "node_modules/@hamster-note/components-native/dist-web/chunk-T6J6EVQQ.js",
+        "node_modules/@hamster-note/components-native/dist-web/chunk-XDIHIO6N.js"
+      ]
+    },
+    {
+      "path": "node_modules/@hamster-note/components-native/dist-web/icon.js",
+      "dependencies": [
+        "node_modules/@hamster-note/components-native/dist-web/chunk-HRXG53YQ.js",
+        "node_modules/@hamster-note/components-native/dist-web/chunk-XDIHIO6N.js"
+      ]
+    },
+    {
+      "path": "node_modules/@hamster-note/components-native/dist-web/popover.js",
+      "dependencies": [
+        "node_modules/@hamster-note/components-native/dist-web/chunk-ERO6M2HO.js",
+        "node_modules/@hamster-note/components-native/dist-web/chunk-XDIHIO6N.js"
+      ]
+    },
+    {
+      "path": "node_modules/@hamster-note/components-native/dist-web/menu.js",
+      "dependencies": [
+        "node_modules/@hamster-note/components-native/dist-web/chunk-S76QQJW6.js",
+        "node_modules/@hamster-note/components-native/dist-web/chunk-ERO6M2HO.js",
+        "node_modules/@hamster-note/components-native/dist-web/chunk-XDIHIO6N.js"
+      ]
+    },
+    {
+      "path": "node_modules/@hamster-note/components-native/dist-web/text-field.js",
+      "dependencies": [
+        "node_modules/@hamster-note/components-native/dist-web/chunk-A4HEM4JL.js",
+        "node_modules/@hamster-note/components-native/dist-web/chunk-XDIHIO6N.js"
+      ]
+    },
+    {
+      "path": "node_modules/@hamster-note/components-native/dist-web/theme.js",
+      "dependencies": [
+        "node_modules/@hamster-note/components-native/dist-web/chunk-XDIHIO6N.js"
+      ]
+    },
+    {
+      "path": "../../fixtures/cross-platform.json",
+      "dependencies": []
+    }
+  ]
+}

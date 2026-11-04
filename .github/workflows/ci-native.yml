@@ -19,6 +19,7 @@ jobs:
       - run: corepack enable
       - run: yarn install --frozen-lockfile
       - run: yarn --cwd packages/components-native install --frozen-lockfile
+      - run: yarn test:native
       - run: yarn --cwd packages/components-native build
       - run: mkdir -p artifacts/native && npm pack ./packages/components-native --pack-destination ./artifacts/native
       - run: node --test scripts/release-target.test.mjs
@@ -31,6 +32,8 @@ jobs:
       - run: npx expo install --check react react-native react-native-svg react-native-safe-area-context
         working-directory: examples/native
       - run: MODULE_REPORT_DIR=../../artifacts/native npx expo export --platform ios --platform android --source-maps --max-workers 2
+        working-directory: examples/native
+      - run: CI=false MODULE_REPORT_DIR=../../artifacts/native npx expo export --platform web --source-maps --max-workers 2 --output-dir ../../artifacts/native/expo-web
         working-directory: examples/native
       - run: node scripts/audit-metro.mjs
       - uses: actions/upload-artifact@v4

@@ -1,11 +1,6 @@
 import type { SvgProps } from 'react-native-svg';
-import Svg from 'react-native-svg/src/elements/Svg';
-import Path from 'react-native-svg/src/elements/Path';
-import Rect from 'react-native-svg/src/elements/Rect';
-import Circle from 'react-native-svg/src/elements/Circle';
-import Ellipse from 'react-native-svg/src/elements/Ellipse';
-import Line from 'react-native-svg/src/elements/Line';
-import Polyline from 'react-native-svg/src/elements/Polyline';
+import { Platform } from 'react-native';
+import { Svg, Path, Rect, Circle, Ellipse, Line, Polyline } from './svg-elements';
 import { ICON_GEOMETRY, type IconShape } from '../../../src/shared/icons';
 import type { IconName } from '../../../src/shared/icon-names';
 import { useTheme } from './theme';
@@ -46,11 +41,20 @@ export function Icon({ name, label, size = 24, color, ...props }: IconProps) {
       strokeWidth={1.5}
       strokeLinecap="round"
       strokeLinejoin="round"
-      accessible={label !== undefined}
-      accessibilityLabel={label}
-      accessibilityRole="image"
-      accessibilityElementsHidden={label === undefined}
-      importantForAccessibility={label === undefined ? 'no-hide-descendants' : 'yes'}
+      {...(Platform.OS === 'web'
+        ? {
+            role: label === undefined ? undefined : ('img' as const),
+            'aria-label': label,
+            'aria-hidden': label === undefined,
+          }
+        : {
+            accessible: label !== undefined,
+            accessibilityLabel: label,
+            accessibilityRole: 'image' as const,
+            accessibilityElementsHidden: label === undefined,
+            importantForAccessibility:
+              label === undefined ? ('no-hide-descendants' as const) : ('yes' as const),
+          })}
     >
       {ICON_GEOMETRY[name].map((shape, i) => (
         <Shape shape={shape} key={i} />

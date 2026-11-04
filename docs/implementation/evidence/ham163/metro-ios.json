@@ -4796,9 +4796,9 @@
       "path": "node_modules/@hamster-note/components-native/dist/index.js",
       "dependencies": [
         "node_modules/@hamster-note/components-native/dist/chunk-T6J6EVQQ.js",
-        "node_modules/@hamster-note/components-native/dist/chunk-ECVUY2TG.js",
-        "node_modules/@hamster-note/components-native/dist/chunk-ZNRPAEU6.js",
-        "node_modules/@hamster-note/components-native/dist/chunk-QHVIKWDC.js",
+        "node_modules/@hamster-note/components-native/dist/chunk-OZHJLUQM.js",
+        "node_modules/@hamster-note/components-native/dist/chunk-S76QQJW6.js",
+        "node_modules/@hamster-note/components-native/dist/chunk-ERO6M2HO.js",
         "node_modules/@hamster-note/components-native/dist/chunk-A4HEM4JL.js",
         "node_modules/@hamster-note/components-native/dist/chunk-XDIHIO6N.js"
       ]
@@ -4821,10 +4821,11 @@
       ]
     },
     {
-      "path": "node_modules/@hamster-note/components-native/dist/chunk-ECVUY2TG.js",
+      "path": "node_modules/@hamster-note/components-native/dist/chunk-OZHJLUQM.js",
       "dependencies": [
         "node_modules/@babel/runtime/helpers/objectWithoutProperties.js",
         "node_modules/@hamster-note/components-native/dist/chunk-XDIHIO6N.js",
+        "node_modules/react-native/index.js",
         "node_modules/react-native-svg/src/elements/Svg.tsx",
         "node_modules/react-native-svg/src/elements/Path.tsx",
         "node_modules/react-native-svg/src/elements/Rect.tsx",
@@ -5158,11 +5159,11 @@
       "dependencies": []
     },
     {
-      "path": "node_modules/@hamster-note/components-native/dist/chunk-ZNRPAEU6.js",
+      "path": "node_modules/@hamster-note/components-native/dist/chunk-S76QQJW6.js",
       "dependencies": [
         "node_modules/@babel/runtime/helpers/slicedToArray.js",
         "node_modules/@babel/runtime/helpers/objectWithoutProperties.js",
-        "node_modules/@hamster-note/components-native/dist/chunk-QHVIKWDC.js",
+        "node_modules/@hamster-note/components-native/dist/chunk-ERO6M2HO.js",
         "node_modules/@hamster-note/components-native/dist/chunk-XDIHIO6N.js",
         "node_modules/react/index.js",
         "node_modules/react-native/index.js",
@@ -5170,7 +5171,7 @@
       ]
     },
     {
-      "path": "node_modules/@hamster-note/components-native/dist/chunk-QHVIKWDC.js",
+      "path": "node_modules/@hamster-note/components-native/dist/chunk-ERO6M2HO.js",
       "dependencies": [
         "node_modules/@babel/runtime/helpers/slicedToArray.js",
         "node_modules/@hamster-note/components-native/dist/chunk-XDIHIO6N.js",
@@ -5199,22 +5200,22 @@
     {
       "path": "node_modules/@hamster-note/components-native/dist/icon.js",
       "dependencies": [
-        "node_modules/@hamster-note/components-native/dist/chunk-ECVUY2TG.js",
+        "node_modules/@hamster-note/components-native/dist/chunk-OZHJLUQM.js",
         "node_modules/@hamster-note/components-native/dist/chunk-XDIHIO6N.js"
       ]
     },
     {
       "path": "node_modules/@hamster-note/components-native/dist/popover.js",
       "dependencies": [
-        "node_modules/@hamster-note/components-native/dist/chunk-QHVIKWDC.js",
+        "node_modules/@hamster-note/components-native/dist/chunk-ERO6M2HO.js",
         "node_modules/@hamster-note/components-native/dist/chunk-XDIHIO6N.js"
       ]
     },
     {
       "path": "node_modules/@hamster-note/components-native/dist/menu.js",
       "dependencies": [
-        "node_modules/@hamster-note/components-native/dist/chunk-ZNRPAEU6.js",
-        "node_modules/@hamster-note/components-native/dist/chunk-QHVIKWDC.js",
+        "node_modules/@hamster-note/components-native/dist/chunk-S76QQJW6.js",
+        "node_modules/@hamster-note/components-native/dist/chunk-ERO6M2HO.js",
         "node_modules/@hamster-note/components-native/dist/chunk-XDIHIO6N.js"
       ]
     },

@@ -6,6 +6,7 @@ bun.lock
 
 **/node_modules
 **/dist
+**/dist-web
 **/package-lock.json
 **/yarn.lock
 .agents

@@ -1,0 +1,18 @@
+yarn run v1.22.22
+$ node --test packages/components-native/test/*.test.mjs
+✔ open fallback ref replacement preserves onShow/layout readiness for submenu entry (134.764467ms)
+✔ fallback ref replacement between close and RAF preserves mounted trigger restore (35.220917ms)
+✔ queued entry reads the latest initial focus ref without rescheduling (40.698221ms)
+✔ queued restore reads a replacement trigger and otherwise the latest mounted fallback (25.489013ms)
+✔ iOS dismiss schedules restore using the latest refs at RAF execution (21.490611ms)
+✔ open transitions and unmount still cancel stale focus frames (19.84821ms)
+✔ web without Keyboard.metrics focuses component refs without native handles (18.723809ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1151.708979
+Done in 1.24s.

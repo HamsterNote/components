@@ -36,7 +36,8 @@
       "tests": 69,
       "snapshotUpdates": false,
       "retries": 0,
-      "skipped": 0
+      "skipped": 0,
+      "recordedAt": "577ea63; Web product source unchanged in focus/Expo web fix"
     },
     "webExternalConsumer": "passed: all exports, types and CSS map",
     "painting": {
@@ -45,7 +46,8 @@
       "typecheck": "passed",
       "build": "passed",
       "toolbarTests": 13,
-      "businessSourceChanged": false
+      "businessSourceChanged": false,
+      "recordedAt": "577ea63; painting product source unchanged in focus/Expo web fix"
     },
     "nativePackageBuild": "passed",
     "nativeExternalConsumer": {
@@ -65,7 +67,8 @@
       "iosExport": "passed",
       "androidExport": "passed",
       "selectedSdkDependencyCheck": "passed",
-      "expoPatchCaveat": "Pinned54.0.36; online full checker recommends~54.0.37, not tested"
+      "expoPatchCaveat": "Pinned54.0.36; online full checker recommends~54.0.37, not tested",
+      "webExport": "passed"
     },
     "metro": [
       {
@@ -85,9 +88,9 @@
           "node_modules/@hamster-note/components-native/dist/index.js",
           "node_modules/@hamster-note/components-native/dist/chunk-T6J6EVQQ.js",
           "node_modules/@hamster-note/components-native/dist/chunk-XDIHIO6N.js",
-          "node_modules/@hamster-note/components-native/dist/chunk-ECVUY2TG.js",
-          "node_modules/@hamster-note/components-native/dist/chunk-ZNRPAEU6.js",
-          "node_modules/@hamster-note/components-native/dist/chunk-QHVIKWDC.js",
+          "node_modules/@hamster-note/components-native/dist/chunk-OZHJLUQM.js",
+          "node_modules/@hamster-note/components-native/dist/chunk-S76QQJW6.js",
+          "node_modules/@hamster-note/components-native/dist/chunk-ERO6M2HO.js",
           "node_modules/@hamster-note/components-native/dist/chunk-A4HEM4JL.js",
           "node_modules/@hamster-note/components-native/dist/button.js",
           "node_modules/@hamster-note/components-native/dist/icon.js",
@@ -117,9 +120,9 @@
           "node_modules/@hamster-note/components-native/dist/index.js",
           "node_modules/@hamster-note/components-native/dist/chunk-T6J6EVQQ.js",
           "node_modules/@hamster-note/components-native/dist/chunk-XDIHIO6N.js",
-          "node_modules/@hamster-note/components-native/dist/chunk-ECVUY2TG.js",
-          "node_modules/@hamster-note/components-native/dist/chunk-ZNRPAEU6.js",
-          "node_modules/@hamster-note/components-native/dist/chunk-QHVIKWDC.js",
+          "node_modules/@hamster-note/components-native/dist/chunk-OZHJLUQM.js",
+          "node_modules/@hamster-note/components-native/dist/chunk-S76QQJW6.js",
+          "node_modules/@hamster-note/components-native/dist/chunk-ERO6M2HO.js",
           "node_modules/@hamster-note/components-native/dist/chunk-A4HEM4JL.js",
           "node_modules/@hamster-note/components-native/dist/button.js",
           "node_modules/@hamster-note/components-native/dist/icon.js",
@@ -134,7 +137,47 @@
       }
     ],
     "releaseTargetTests": 9,
-    "openSpecStrict": "passed 1/1"
+    "openSpecStrict": "passed 1/1",
+    "nativeFocusRegression": {
+      "result": "passed",
+      "tests": 7,
+      "beforeFix": "The first two required regressions both failed on 577ea63; initial six-case suite had five failures and one pass.",
+      "runner": "yarn test:native",
+      "boundary": "Real React hooks, actual Popover/focus source, mocked RN events/RAF; not device acceptance"
+    },
+    "expoWeb": {
+      "export": "passed",
+      "graph": {
+        "platform": "web",
+        "totalModules": 249,
+        "roots": [
+          "node_modules/@hamster-note/components-native/dist-web/index.js",
+          "node_modules/@hamster-note/components-native/dist-web/button.js",
+          "node_modules/@hamster-note/components-native/dist-web/icon.js",
+          "node_modules/@hamster-note/components-native/dist-web/popover.js",
+          "node_modules/@hamster-note/components-native/dist-web/menu.js",
+          "node_modules/@hamster-note/components-native/dist-web/text-field.js",
+          "node_modules/@hamster-note/components-native/dist-web/theme.js"
+        ],
+        "forbidden": []
+      },
+      "browser": {
+        "url": "http://127.0.0.1:5292",
+        "checks": [
+          "buttons and controlled Chinese input render from the installed browser entry",
+          "menu opens, focuses its first item, navigates submenu and selects once",
+          "visible menu close returns browser focus to the mounted trigger",
+          "Popover opens without native-only APIs and removed trigger restores fallback"
+        ],
+        "errors": [],
+        "responses500": [],
+        "result": "passed"
+      },
+      "start": "CI=false BROWSER=none npx expo start --web --port 5292 --host localhost --max-workers 2 --clear",
+      "polyfillsOrResolverShims": false,
+      "stoppedAfterTest": true,
+      "limitation": "Chromium smoke; no Safari/physical IME/browser screen reader/full arrow-key menu verification"
+    }
   },
   "acceptance": {
     "web": "Chromium automation passed; no native or physical IME inference",
@@ -145,5 +188,6 @@
   "externalBuildBoundary": "Expo config/Babel are build tools; Metro and runtime modules resolve from external consumer. Runtime tree saved before installing @types/react tooling.",
   "published": false,
   "merged": false,
-  "archived": false
+  "archived": false,
+  "fixBaseline": "577ea63"
 }

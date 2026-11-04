@@ -34,7 +34,6 @@ function Surface() {
   const [mounted, setMounted] = useState(true);
   const [fallback, setFallback] = useState(true);
   const trigger = useRef<View>(null);
-  const background = useRef<View>(null);
   const fallbackRef = useRef<View>(null);
   const input = useRef<TextInput>(null);
   const overlayProps = {
@@ -42,13 +41,16 @@ function Surface() {
     anchorRef: trigger,
     triggerRef: trigger,
     fallbackFocusRef: fallback ? fallbackRef : undefined,
-    backgroundRef: background,
     safeAreaInsets: insets,
     accessibilityLabel: 'P01–P04 操作菜单',
   };
   return (
     <View style={{ flex: 1, paddingTop: insets.top, backgroundColor: t.colors.surface }}>
-      <View ref={background} style={{ flex: 1 }}>
+      <View
+        accessibilityElementsHidden={panel !== null}
+        importantForAccessibility={panel !== null ? 'no-hide-descendants' : 'auto'}
+        style={{ flex: 1 }}
+      >
         <ScrollView
           contentContainerStyle={{ padding: 16, gap: 12, paddingBottom: insets.bottom + 20 }}
         >

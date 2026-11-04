@@ -4,7 +4,7 @@
   "dependencies": {
     "@hamster-note/components-native": {
       "version": "0.1.0-beta.0",
-      "resolved": "file:/tmp/multica-task-1364060506/ham163-native-consumer-EsGt37/native.tgz",
+      "resolved": "file:/tmp/multica-task-1848447687/ham163-native-consumer-RqVQMq/native.tgz",
       "overridden": false,
       "dependencies": {
         "react-native-svg": {

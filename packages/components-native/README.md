@@ -1,6 +1,6 @@
 # @hamster-note/components-native
 
-Expo SDK54 的 iOS/Android 原生基础组件。当前是 `0.1.0-beta.0` 候选；真机读屏与中文键盘验收待执行，尚未发布。Web 使用 `@hamster-note/components`，此包不承诺 RN Web。
+Expo SDK54 的 iOS/Android 原生基础组件。当前是 `0.1.0-beta.0` 候选；真机读屏与中文键盘验收待执行，尚未发布。Web 原有调用方继续使用 `@hamster-note/components`；Expo web 验收可使用本包的 browser 条件构建，宿主安装 SDK54 对应的 react-native-web/react-dom/@expo/metro-runtime。
 
 兼容目标：Expo `>=54.0.36 <55`，RN `>=0.81.5 <0.82`，React `>=19.1.0 <19.2`，SVG `15.12.1`。已构建基线为 Expo54.0.36/RN0.81.5/React19.1.0；区间内其他 patch 组合仍需重新验证。Expo 不属于本库 peer。
 
@@ -31,11 +31,13 @@ import { Button, Icon, Menu, MenuItem, ThemeProvider } from '@hamster-note/compo
 function Example() {
   const [open, setOpen] = useState(false);
   const trigger = useRef<View>(null);
-  const background = useRef<View>(null);
   const insets = useSafeAreaInsets(); // 宿主置于 SafeAreaProvider 内
   return (
     <ThemeProvider mode="light" accent="blue">
-      <View ref={background}>
+      <View
+        accessibilityElementsHidden={open}
+        importantForAccessibility={open ? 'no-hide-descendants' : 'auto'}
+      >
         <Button ref={trigger} accessibilityState={{ expanded: open }} onPress={() => setOpen(true)}>
           <Icon name="menu" />
           菜单
@@ -47,7 +49,6 @@ function Example() {
         accessibilityLabel="操作菜单"
         anchorRef={trigger}
         triggerRef={trigger}
-        backgroundRef={background}
         safeAreaInsets={insets}
       >
         <MenuItem onPress={() => console.log('selected')}>保存</MenuItem>
@@ -72,6 +73,8 @@ Menu 组合支持 MenuItem、MenuLabel、MenuSeparator、MenuSubmenu（可放 Fr
 
 焦点目标请传真实 RN host ref（View/Pressable/TextInput），不要缓存 node handle。`triggerRef` 已卸载时使用 `fallbackFocusRef`，无目标安全结束。Modal onShow 和布局均完成后移动读屏焦点；TextInput 的 focus/blur 与 AccessibilityInfo 的读屏焦点是两条路径，硬件方向键菜单导航不在首期保证内。命名标题为空菜单的入焦目标。取消、遮罩、可见关闭、Android 返回/iOS escape 共用关闭守卫。
 
-为完整背景隔离，`backgroundRef` 指向仅包裹背景的 View，Modal 必须是其兄弟；宿主自行避免该 View 同时被其他状态控制 accessibilityElementsHidden/importantForAccessibility。原生 Modal 还声明 accessibilityViewIsModal。安全区必须由宿主通过 safeAreaInsets 提供（推荐 safe-area-context）；库的默认值只是 Android 状态栏与 margin，无法推断所有 iOS 刘海/底栏。该宿主责任已在示例落实。主题通过 Context 显式传入 Modal，不写宿主全局样式。
+为完整背景隔离，宿主用同一受控 open 状态，在仅包裹背景的 View 声明 accessibilityElementsHidden 与 importantForAccessibility（如上例）；多个弹层时对全部 open 状态取或。Modal 必须是其兄弟。未发布候选已移除 backgroundRef 命令式控制，避免与宿主状态冲突或依赖 RN Web 已移除的 setNativeProps。原生 Modal 还声明 accessibilityViewIsModal。安全区必须由宿主通过 safeAreaInsets 提供（推荐 safe-area-context）；库的默认值只是 Android 状态栏与 margin，无法推断所有 iOS 刘海/底栏。该宿主责任已在示例落实。主题通过 Context 显式传入 Modal，不写宿主全局样式。
 
 颜色映射忠实于 Web 预设；字体用系统回退并允许系统缩放。半透明色使用 RN 支持的 rgba 格式。全部 token 分类和原生设备记录见仓库 `docs/testing/cross-platform-cases.md`。公开发布使用 `native-v0.1.0-beta.0`→beta；稳定推广需三端验收及发布角色批准。不要用构建成功冒充 VoiceOver/TalkBack 或真机输入已通过。
+
+原生构建的 SVG 只导入七个原生图元；browser 条件构建改用 react-native-svg 公共入口，避免把 Fabric 原生模块发给浏览器。两者均不新增库运行依赖，react-native-web/react-dom 仅由 Expo web 宿主安装。浏览器回焦使用组件 ref 的 focus 方法；系统读屏与软键盘仍需各端验收。

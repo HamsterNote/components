@@ -9,12 +9,15 @@
     "bundle": "expo export --platform ios --platform android --source-maps"
   },
   "dependencies": {
+    "@expo/metro-runtime": "~6.1.2",
     "@hamster-note/components-native": "file:../../artifacts/native/hamster-note-components-native-0.1.0-beta.0.tgz",
     "expo": "54.0.36",
     "react": "19.1.0",
+    "react-dom": "19.1.0",
     "react-native": "0.81.5",
     "react-native-safe-area-context": "~5.6.0",
-    "react-native-svg": "15.12.1"
+    "react-native-svg": "15.12.1",
+    "react-native-web": "~0.21.0"
   },
   "devDependencies": {
     "@types/react": "19.1.10",

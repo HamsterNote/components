@@ -1,0 +1,12 @@
+{
+  "url": "http://127.0.0.1:5292",
+  "checks": [
+    "buttons and controlled Chinese input render from the installed browser entry",
+    "menu opens, focuses its first item, navigates submenu and selects once",
+    "visible menu close returns browser focus to the mounted trigger",
+    "Popover opens without native-only APIs and removed trigger restores fallback"
+  ],
+  "errors": [],
+  "responses500": [],
+  "result": "passed"
+}

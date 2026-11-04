@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 const dir = path.resolve(process.argv[2] ?? 'artifacts/native');
 const results = [];
@@ -57,3 +57,23 @@ console.log(
     )
     .join('\n'),
 );
+
+const webGraphPath = path.join(dir, 'metro-web.json');
+if (existsSync(webGraphPath)) {
+  const web = JSON.parse(readFileSync(webGraphPath, 'utf8'));
+  const paths = web.modules.map((m) => m.path);
+  const roots = ['index', 'button', 'icon', 'popover', 'menu', 'text-field', 'theme'].map(
+    (e) => 'node_modules/@hamster-note/components-native/dist-web/' + e + '.js',
+  );
+  for (const root of roots)
+    if (!paths.includes(root)) throw new Error('Missing browser entry: ' + root);
+  const forbidden = paths.filter((p) =>
+    /\/fabric\/|codegenNativeComponent|@hamster-note\/components-native\/dist\//.test(p),
+  );
+  if (forbidden.length) throw new Error('Native-only browser modules: ' + forbidden.join(', '));
+  writeFileSync(
+    path.join(dir, 'metro-web-audit.json'),
+    JSON.stringify({ platform: 'web', totalModules: paths.length, roots, forbidden }, null, 2),
+  );
+  console.log(`web: ${paths.length} modules, seven browser entries, zero native-only modules`);
+}

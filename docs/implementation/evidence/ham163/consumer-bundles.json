@@ -1,7 +1,7 @@
 [
   {
     "platform": "ios",
-    "codeBytes": 9781833,
+    "codeBytes": 9783420,
     "entries": [
       ".",
       "button",
@@ -11,12 +11,12 @@
       "text-field",
       "theme"
     ],
-    "projectRoot": "/tmp/multica-task-1364060506/ham163-native-consumer-EsGt37",
+    "projectRoot": "/tmp/multica-task-1848447687/ham163-native-consumer-RqVQMq",
     "result": "passed"
   },
   {
     "platform": "android",
-    "codeBytes": 9823519,
+    "codeBytes": 9824874,
     "entries": [
       ".",
       "button",
@@ -26,7 +26,7 @@
       "text-field",
       "theme"
     ],
-    "projectRoot": "/tmp/multica-task-1364060506/ham163-native-consumer-EsGt37",
+    "projectRoot": "/tmp/multica-task-1848447687/ham163-native-consumer-RqVQMq",
     "result": "passed"
   }
 ]

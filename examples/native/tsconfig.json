@@ -12,5 +12,6 @@
     "types": ["react", "react-native"],
     "noEmit": true
   },
-  "include": ["App.tsx"]
+  "include": ["App.tsx"],
+  "extends": "expo/tsconfig.base"
 }
