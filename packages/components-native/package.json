@@ -1,7 +1,7 @@
 {
   "name": "@hamster-note/components-native",
   "version": "0.1.0-beta.0",
-  "description": "HamsterNote native foundation components for Expo SDK54, iOS and Android.",
+  "description": "HamsterNote native foundation components for Expo SDK57, iOS and Android.",
   "type": "module",
   "license": "MIT",
   "files": [
@@ -70,20 +70,20 @@
     "typecheck": "tsc --noEmit"
   },
   "peerDependencies": {
-    "react": ">=19.1.0 <19.2.0",
-    "react-native": ">=0.81.5 <0.82.0",
-    "react-native-svg": "15.12.1"
+    "react": ">=19.2.3 <19.3.0",
+    "react-native": ">=0.86.3 <0.87.0",
+    "react-native-svg": "15.15.4"
   },
   "devDependencies": {
-    "@types/react": "19.1.10",
-    "react": "19.1.0",
-    "react-native": "0.81.5",
-    "react-native-svg": "15.12.1",
+    "@types/react": "19.2.17",
+    "react": "19.2.3",
+    "react-native": "0.86.3",
+    "react-native-svg": "15.15.4",
     "tsup": "8.5.0",
     "typescript": "5.9.2"
   },
   "engines": {
-    "node": ">=20.19.4"
+    "node": "^20.19.4 || ^22.13.0 || ^24.3.0 || >=25.0.0"
   },
   "packageManager": "yarn@1.22.22"
 }

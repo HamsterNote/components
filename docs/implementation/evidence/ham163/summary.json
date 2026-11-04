@@ -28,9 +28,13 @@
     "webCheck": {
       "result": "passed",
       "tests": 84,
-      "suites": 8
+      "suites": 8,
+      "recordedAt": "SDK57 upgrade; yarn run check"
     },
-    "webBuild": "passed",
+    "webBuild": {
+      "result": "passed",
+      "recordedAt": "577ea63; historical Web package verification; SDK57 does not modify Web product source"
+    },
     "webE2E": {
       "result": "passed",
       "tests": 69,
@@ -39,7 +43,10 @@
       "skipped": 0,
       "recordedAt": "577ea63; Web product source unchanged in focus/Expo web fix"
     },
-    "webExternalConsumer": "passed: all exports, types and CSS map",
+    "webExternalConsumer": {
+      "result": "passed: all exports, types and CSS map",
+      "recordedAt": "577ea63; historical Web package verification; SDK57 does not modify Web product source"
+    },
     "painting": {
       "revision": "e97f9fec13ea089fb8322f627f213dc0a305375d",
       "workspaceVersion": "0.8.3",
@@ -52,7 +59,7 @@
     "nativePackageBuild": "passed",
     "nativeExternalConsumer": {
       "result": "passed",
-      "runtimePackageCount": 317,
+      "runtimePackageCount": 246,
       "typesLib": [
         "ES2022"
       ],
@@ -66,14 +73,46 @@
       "typecheck": "passed",
       "iosExport": "passed",
       "androidExport": "passed",
-      "selectedSdkDependencyCheck": "passed",
-      "expoPatchCaveat": "Pinned54.0.36; online full checker recommends~54.0.37, not tested",
-      "webExport": "passed"
+      "webExport": "passed",
+      "fullOnlineSdkDependencyCheck": "passed: Dependencies are up to date",
+      "typescript": "6.0.3"
     },
     "metro": [
       {
         "platform": "ios",
-        "totalModules": 633,
+        "totalModules": 641,
+        "roots": [
+          "node_modules/@hamster-note/components-native/dist/index.js",
+          "node_modules/@hamster-note/components-native/dist/button.js",
+          "node_modules/@hamster-note/components-native/dist/icon.js",
+          "node_modules/@hamster-note/components-native/dist/popover.js",
+          "node_modules/@hamster-note/components-native/dist/menu.js",
+          "node_modules/@hamster-note/components-native/dist/text-field.js",
+          "node_modules/@hamster-note/components-native/dist/theme.js"
+        ],
+        "reachableCount": 537,
+        "packageModules": [
+          "node_modules/@hamster-note/components-native/dist/index.js",
+          "node_modules/@hamster-note/components-native/dist/chunk-T6J6EVQQ.js",
+          "node_modules/@hamster-note/components-native/dist/chunk-XDIHIO6N.js",
+          "node_modules/@hamster-note/components-native/dist/chunk-OZHJLUQM.js",
+          "node_modules/@hamster-note/components-native/dist/chunk-S76QQJW6.js",
+          "node_modules/@hamster-note/components-native/dist/chunk-ERO6M2HO.js",
+          "node_modules/@hamster-note/components-native/dist/chunk-A4HEM4JL.js",
+          "node_modules/@hamster-note/components-native/dist/button.js",
+          "node_modules/@hamster-note/components-native/dist/icon.js",
+          "node_modules/@hamster-note/components-native/dist/popover.js",
+          "node_modules/@hamster-note/components-native/dist/menu.js",
+          "node_modules/@hamster-note/components-native/dist/text-field.js",
+          "node_modules/@hamster-note/components-native/dist/theme.js"
+        ],
+        "forbidden": [],
+        "codeFindings": [],
+        "boundary": "Library closure includes React/RN/SVG native runtime; host Expo tools and its winter globals are outside library roots. Native RN internals may name window/Event; those names do not denote a DOM renderer."
+      },
+      {
+        "platform": "android",
+        "totalModules": 639,
         "roots": [
           "node_modules/@hamster-note/components-native/dist/index.js",
           "node_modules/@hamster-note/components-native/dist/button.js",
@@ -102,48 +141,17 @@
         "forbidden": [],
         "codeFindings": [],
         "boundary": "Library closure includes React/RN/SVG native runtime; host Expo tools and its winter globals are outside library roots. Native RN internals may name window/Event; those names do not denote a DOM renderer."
-      },
-      {
-        "platform": "android",
-        "totalModules": 631,
-        "roots": [
-          "node_modules/@hamster-note/components-native/dist/index.js",
-          "node_modules/@hamster-note/components-native/dist/button.js",
-          "node_modules/@hamster-note/components-native/dist/icon.js",
-          "node_modules/@hamster-note/components-native/dist/popover.js",
-          "node_modules/@hamster-note/components-native/dist/menu.js",
-          "node_modules/@hamster-note/components-native/dist/text-field.js",
-          "node_modules/@hamster-note/components-native/dist/theme.js"
-        ],
-        "reachableCount": 533,
-        "packageModules": [
-          "node_modules/@hamster-note/components-native/dist/index.js",
-          "node_modules/@hamster-note/components-native/dist/chunk-T6J6EVQQ.js",
-          "node_modules/@hamster-note/components-native/dist/chunk-XDIHIO6N.js",
-          "node_modules/@hamster-note/components-native/dist/chunk-OZHJLUQM.js",
-          "node_modules/@hamster-note/components-native/dist/chunk-S76QQJW6.js",
-          "node_modules/@hamster-note/components-native/dist/chunk-ERO6M2HO.js",
-          "node_modules/@hamster-note/components-native/dist/chunk-A4HEM4JL.js",
-          "node_modules/@hamster-note/components-native/dist/button.js",
-          "node_modules/@hamster-note/components-native/dist/icon.js",
-          "node_modules/@hamster-note/components-native/dist/popover.js",
-          "node_modules/@hamster-note/components-native/dist/menu.js",
-          "node_modules/@hamster-note/components-native/dist/text-field.js",
-          "node_modules/@hamster-note/components-native/dist/theme.js"
-        ],
-        "forbidden": [],
-        "codeFindings": [],
-        "boundary": "Library closure includes React/RN/SVG native runtime; host Expo tools and its winter globals are outside library roots. Native RN internals may name window/Event; those names do not denote a DOM renderer."
       }
     ],
     "releaseTargetTests": 9,
-    "openSpecStrict": "passed 1/1",
+    "openSpecStrict": "passed: add-expo-native-components is valid",
     "nativeFocusRegression": {
       "result": "passed",
       "tests": 7,
       "beforeFix": "The first two required regressions both failed on 577ea63; initial six-case suite had five failures and one pass.",
       "runner": "yarn test:native",
-      "boundary": "Real React hooks, actual Popover/focus source, mocked RN events/RAF; not device acceptance"
+      "boundary": "Real React hooks, actual Popover/focus source, mocked RN events/RAF; not device acceptance",
+      "recordedAt": "SDK57 tooling rerun"
     },
     "expoWeb": {
       "export": "passed",
@@ -171,7 +179,8 @@
         ],
         "errors": [],
         "responses500": [],
-        "result": "passed"
+        "result": "passed",
+        "baseline": "003ed59 / SDK54; historical, not rerun for SDK57"
       },
       "start": "CI=false BROWSER=none npx expo start --web --port 5292 --host localhost --max-workers 2 --clear",
       "polyfillsOrResolverShims": false,
@@ -185,9 +194,40 @@
     "android": "not executed: physical device/operator/TalkBack/IME/back evidence unavailable",
     "publication": "blocked: npm ENEEDAUTH; scope authority unconfirmed; repository secrets empty; npm-native environment absent"
   },
-  "externalBuildBoundary": "Expo config/Babel are build tools; Metro and runtime modules resolve from external consumer. Runtime tree saved before installing @types/react tooling.",
+  "externalBuildBoundary": "Expo config/Babel are external build tools; Metro worker, serializer, and runtime modules resolve from the external consumer. SDK57 packed-map Expo worker is not paired with vanilla Metro. Runtime tree saved before installing @types/react tooling.",
   "published": false,
   "merged": false,
   "archived": false,
-  "fixBaseline": "577ea63"
+  "fixBaseline": "577ea63",
+  "sdkUpgradeBaseline": "003ed59",
+  "target": {
+    "sdk": 57,
+    "expo": "57.0.31",
+    "bundled": {
+      "react": "19.2.3",
+      "react-dom": "19.2.3",
+      "react-native": "0.86.3",
+      "react-native-svg": "15.15.4",
+      "react-native-safe-area-context": "~5.7.0",
+      "@expo/metro-runtime": "~57.0.17",
+      "react-native-web": "~0.21.0"
+    },
+    "installed": {
+      "expo": "57.0.31",
+      "react": "19.2.3",
+      "react-dom": "19.2.3",
+      "react-native": "0.86.3",
+      "react-native-svg": "15.15.4",
+      "react-native-safe-area-context": "5.7.0",
+      "@expo/metro-runtime": "57.0.17",
+      "react-native-web": "0.21.4",
+      "typescript": "6.0.3"
+    },
+    "environment": {
+      "node": "24.15.0",
+      "yarn": "1.22.22",
+      "npm": "11.12.1"
+    }
+  },
+  "demo": "App.tsx unchanged by SDK57 upgrade; classification UI owned by parallel frontend task."
 }

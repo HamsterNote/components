@@ -14,7 +14,7 @@
       "dependencies": [
         "node_modules/expo/src/Expo.fx.web.tsx",
         "node_modules/expo/src/errors/ExpoErrorManager.ts",
-        "node_modules/expo/src/launch/registerRootComponent.tsx",
+        "node_modules/expo/src/launch/registerRootComponent.web.tsx",
         "node_modules/expo/src/environment/ExpoGo.web.ts",
         "node_modules/expo-modules-core/src/index.ts",
         "node_modules/expo/src/hooks/useEvent.ts"
@@ -82,6 +82,12 @@
     },
     {
       "path": "node_modules/expo/src/async-require/getDevServer.ts",
+      "dependencies": [
+        "node_modules/expo/src/async-require/getFullBundlerUrl.ts"
+      ]
+    },
+    {
+      "path": "node_modules/expo/src/async-require/getFullBundlerUrl.ts",
       "dependencies": []
     },
     {
@@ -114,11 +120,16 @@
       "dependencies": []
     },
     {
-      "path": "node_modules/expo/src/launch/registerRootComponent.tsx",
+      "path": "node_modules/expo/src/launch/registerRootComponent.web.tsx",
       "dependencies": [
         "node_modules/expo/src/Expo.fx.web.tsx",
-        "node_modules/react-native-web/dist/exports/AppRegistry/index.js",
-        "node_modules/react-native-web/dist/exports/Platform/index.js"
+        "node_modules/expo/src/launch/AppRegistry.ts"
+      ]
+    },
+    {
+      "path": "node_modules/expo/src/launch/AppRegistry.ts",
+      "dependencies": [
+        "node_modules/react-native-web/dist/exports/AppRegistry/index.js"
       ]
     },
     {
@@ -564,16 +575,13 @@
       "dependencies": []
     },
     {
-      "path": "node_modules/react-native-web/dist/exports/Platform/index.js",
-      "dependencies": []
-    },
-    {
       "path": "node_modules/expo/src/environment/ExpoGo.web.ts",
       "dependencies": []
     },
     {
       "path": "node_modules/expo-modules-core/src/index.ts",
       "dependencies": [
+        "node_modules/expo-modules-core/src/ts-declarations/global.ts",
         "node_modules/expo-modules-core/src/sweet/setUpJsLogger.fx.web.ts",
         "node_modules/expo-modules-core/src/polyfill/index.web.ts",
         "node_modules/expo-modules-core/src/EventEmitter.ts",
@@ -590,12 +598,39 @@
         "node_modules/expo-modules-core/src/PermissionsHook.ts",
         "node_modules/expo-modules-core/src/Refs.ts",
         "node_modules/expo-modules-core/src/hooks/useReleasingSharedObject.ts",
+        "node_modules/expo-modules-core/src/hooks/useReleasingSharedObjectWithLifecycle.ts",
         "node_modules/expo-modules-core/src/reload.ts",
         "node_modules/expo-modules-core/src/errors/CodedError.ts",
         "node_modules/expo-modules-core/src/errors/UnavailabilityError.ts",
         "node_modules/expo-modules-core/src/LegacyEventEmitter.ts",
-        "node_modules/expo-modules-core/src/NativeModulesProxy.ts"
+        "node_modules/expo-modules-core/src/NativeModulesProxy.ts",
+        "node_modules/expo-modules-core/src/worklets/index.ts"
       ]
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/ts-declarations/global.ts",
+      "dependencies": [
+        "node_modules/expo-modules-core/src/ts-declarations/EventEmitter.ts",
+        "node_modules/expo-modules-core/src/ts-declarations/NativeModule.ts",
+        "node_modules/expo-modules-core/src/ts-declarations/SharedObject.ts",
+        "node_modules/expo-modules-core/src/ts-declarations/SharedRef.ts"
+      ]
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/ts-declarations/EventEmitter.ts",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/ts-declarations/NativeModule.ts",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/ts-declarations/SharedObject.ts",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/ts-declarations/SharedRef.ts",
+      "dependencies": []
     },
     {
       "path": "node_modules/expo-modules-core/src/sweet/setUpJsLogger.fx.web.ts",
@@ -646,31 +681,6 @@
       "dependencies": []
     },
     {
-      "path": "node_modules/expo-modules-core/src/ts-declarations/global.ts",
-      "dependencies": [
-        "node_modules/expo-modules-core/src/ts-declarations/EventEmitter.ts",
-        "node_modules/expo-modules-core/src/ts-declarations/NativeModule.ts",
-        "node_modules/expo-modules-core/src/ts-declarations/SharedObject.ts",
-        "node_modules/expo-modules-core/src/ts-declarations/SharedRef.ts"
-      ]
-    },
-    {
-      "path": "node_modules/expo-modules-core/src/ts-declarations/EventEmitter.ts",
-      "dependencies": []
-    },
-    {
-      "path": "node_modules/expo-modules-core/src/ts-declarations/NativeModule.ts",
-      "dependencies": []
-    },
-    {
-      "path": "node_modules/expo-modules-core/src/ts-declarations/SharedObject.ts",
-      "dependencies": []
-    },
-    {
-      "path": "node_modules/expo-modules-core/src/ts-declarations/SharedRef.ts",
-      "dependencies": []
-    },
-    {
       "path": "node_modules/expo-modules-core/src/EventEmitter.ts",
       "dependencies": [
         "node_modules/expo-modules-core/src/ensureNativeModulesAreInstalled.ts"
@@ -706,6 +716,10 @@
         "node_modules/react-native-web/dist/exports/Platform/index.js",
         "node_modules/expo-modules-core/src/environment/browser.web.ts"
       ]
+    },
+    {
+      "path": "node_modules/react-native-web/dist/exports/Platform/index.js",
+      "dependencies": []
     },
     {
       "path": "node_modules/expo-modules-core/src/environment/browser.web.ts",
@@ -749,13 +763,8 @@
     {
       "path": "node_modules/expo-modules-core/src/PermissionsHook.ts",
       "dependencies": [
-        "node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js",
         "node_modules/react/index.js"
       ]
-    },
-    {
-      "path": "node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js",
-      "dependencies": []
     },
     {
       "path": "node_modules/expo-modules-core/src/Refs.ts",
@@ -765,6 +774,12 @@
     },
     {
       "path": "node_modules/expo-modules-core/src/hooks/useReleasingSharedObject.ts",
+      "dependencies": [
+        "node_modules/expo-modules-core/src/hooks/useReleasingSharedObjectWithLifecycle.ts"
+      ]
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/hooks/useReleasingSharedObjectWithLifecycle.ts",
       "dependencies": [
         "node_modules/react/index.js"
       ]
@@ -811,6 +826,10 @@
     },
     {
       "path": "node_modules/expo-modules-core/src/NativeModulesProxy.ts",
+      "dependencies": []
+    },
+    {
+      "path": "node_modules/expo-modules-core/src/worklets/index.ts",
       "dependencies": []
     },
     {
@@ -1121,7 +1140,6 @@
     {
       "path": "node_modules/react-native-safe-area-context/lib/module/SafeAreaContext.js",
       "dependencies": [
-        "node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js",
         "node_modules/react/index.js",
         "node_modules/react-native-web/dist/exports/Dimensions/index.js",
         "node_modules/react-native-web/dist/exports/StyleSheet/index.js",
@@ -1138,7 +1156,6 @@
     {
       "path": "node_modules/react-native-safe-area-context/lib/module/SafeAreaView.web.js",
       "dependencies": [
-        "node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js",
         "node_modules/react/index.js",
         "node_modules/react-native-web/dist/exports/StyleSheet/index.js",
         "node_modules/react-native-web/dist/exports/View/index.js",
@@ -1167,7 +1184,6 @@
     {
       "path": "node_modules/@hamster-note/components-native/dist-web/chunk-T6J6EVQQ.js",
       "dependencies": [
-        "node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js",
         "node_modules/@hamster-note/components-native/dist-web/chunk-XDIHIO6N.js",
         "node_modules/react/index.js",
         "node_modules/react-native-web/dist/exports/Pressable/index.js",
@@ -1248,7 +1264,6 @@
     {
       "path": "node_modules/@hamster-note/components-native/dist-web/chunk-HRXG53YQ.js",
       "dependencies": [
-        "node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js",
         "node_modules/@hamster-note/components-native/dist-web/chunk-XDIHIO6N.js",
         "node_modules/react-native-web/dist/exports/Platform/index.js",
         "node_modules/react-native-svg/lib/module/index.js",
@@ -1282,24 +1297,8 @@
     {
       "path": "node_modules/react-native-svg/lib/module/utils/fetchData.js",
       "dependencies": [
-        "node_modules/react-native-web/dist/exports/Platform/index.js",
-        "node_modules/buffer/index.js"
+        "node_modules/react-native-web/dist/exports/Platform/index.js"
       ]
-    },
-    {
-      "path": "node_modules/buffer/index.js",
-      "dependencies": [
-        "node_modules/base64-js/index.js",
-        "node_modules/ieee754/index.js"
-      ]
-    },
-    {
-      "path": "node_modules/base64-js/index.js",
-      "dependencies": []
-    },
-    {
-      "path": "node_modules/ieee754/index.js",
-      "dependencies": []
     },
     {
       "path": "node_modules/react-native-svg/lib/module/xmlTags.js",
@@ -1310,7 +1309,6 @@
     {
       "path": "node_modules/react-native-svg/lib/module/elements.web.js",
       "dependencies": [
-        "node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js",
         "node_modules/react-native-svg/lib/module/web/utils/index.js",
         "node_modules/react-native-svg/lib/module/web/WebShape.js"
       ]
@@ -1334,7 +1332,6 @@
     {
       "path": "node_modules/react-native-svg/lib/module/web/utils/prepare.js",
       "dependencies": [
-        "node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js",
         "node_modules/react-native-svg/lib/module/web/utils/hasProperty.js",
         "node_modules/react-native-svg/lib/module/web/utils/parseTransform.js",
         "node_modules/react-native-svg/lib/module/lib/resolve.js",
@@ -1447,7 +1444,6 @@
     {
       "path": "node_modules/@hamster-note/components-native/dist-web/chunk-S76QQJW6.js",
       "dependencies": [
-        "node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js",
         "node_modules/@hamster-note/components-native/dist-web/chunk-ERO6M2HO.js",
         "node_modules/@hamster-note/components-native/dist-web/chunk-XDIHIO6N.js",
         "node_modules/react/index.js",
@@ -1557,7 +1553,6 @@
     {
       "path": "node_modules/@hamster-note/components-native/dist-web/chunk-A4HEM4JL.js",
       "dependencies": [
-        "node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js",
         "node_modules/@hamster-note/components-native/dist-web/chunk-XDIHIO6N.js",
         "node_modules/react/index.js",
         "node_modules/react-native-web/dist/exports/AccessibilityInfo/index.js",

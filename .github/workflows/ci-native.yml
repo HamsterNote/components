@@ -29,7 +29,7 @@ jobs:
       - run: node scripts/build-native-consumer.mjs
       - run: npx tsc --noEmit
         working-directory: examples/native
-      - run: npx expo install --check react react-native react-native-svg react-native-safe-area-context
+      - run: npx expo install --check
         working-directory: examples/native
       - run: MODULE_REPORT_DIR=../../artifacts/native npx expo export --platform ios --platform android --source-maps --max-workers 2
         working-directory: examples/native

@@ -8,5 +8,10 @@
   ],
   "errors": [],
   "responses500": [],
-  "result": "passed"
+  "result": "passed",
+  "baseline": {
+    "commit": "003ed59",
+    "sdk": 54,
+    "note": "Historical browser smoke. SDK57 verification is the three-target export; new Demo browser acceptance is owned by the parallel frontend task."
+  }
 }

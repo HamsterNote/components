@@ -1,8 +1,8 @@
 # @hamster-note/components-native
 
-Expo SDK54 的 iOS/Android 原生基础组件。当前是 `0.1.0-beta.0` 候选；真机读屏与中文键盘验收待执行，尚未发布。Web 原有调用方继续使用 `@hamster-note/components`；Expo web 验收可使用本包的 browser 条件构建，宿主安装 SDK54 对应的 react-native-web/react-dom/@expo/metro-runtime。
+Expo SDK57 的 iOS/Android 原生基础组件。当前是 `0.1.0-beta.0` 候选；真机读屏与中文键盘验收待执行，尚未发布。Web 原有调用方继续使用 `@hamster-note/components`；Expo web 验收可使用本包的 browser 条件构建，宿主安装 SDK57 对应的 react-native-web/react-dom/@expo/metro-runtime。
 
-兼容目标：Expo `>=54.0.36 <55`，RN `>=0.81.5 <0.82`，React `>=19.1.0 <19.2`，SVG `15.12.1`。已构建基线为 Expo54.0.36/RN0.81.5/React19.1.0；区间内其他 patch 组合仍需重新验证。Expo 不属于本库 peer。
+兼容目标：Expo `>=57.0.31 <58`，RN `>=0.86.3 <0.87`，React `>=19.2.3 <19.3`，SVG `15.15.4`。已构建基线为 Expo57.0.31/RN0.86.3/React19.2.3；区间内其他 patch 组合仍需重新验证。Expo 不属于本库 peer。
 
 在仓库根构建候选：
 
@@ -13,14 +13,14 @@ mkdir -p artifacts/native
 npm pack ./packages/components-native --pack-destination ./artifacts/native
 ```
 
-已有 SDK54 项目使用 tarball：
+已有 SDK57 项目使用 tarball：
 
 ```sh
 npx expo install react-native-svg
 npm install /path/to/hamster-note-components-native-0.1.0-beta.0.tgz
 ```
 
-全新项目先选择 SDK54 模板，并把 Expo/RN/React 锁到上述基线。无需 CSS 或 Web 包。仓库验收宿主通过 `npm install ../../artifacts/native/hamster-note-components-native-0.1.0-beta.0.tgz` 安装，`npm start` 启动；测试数据在 `fixtures/cross-platform.json`，不是库源码别名。
+全新项目先选择 SDK57 模板，并把 Expo/RN/React 锁到上述基线。无需 CSS 或 Web 包。仓库验收宿主通过 `npm install ../../artifacts/native/hamster-note-components-native-0.1.0-beta.0.tgz` 安装，`npm start` 启动；测试数据在 `fixtures/cross-platform.json`，不是库源码别名。
 
 ```tsx
 import { useRef, useState } from 'react';

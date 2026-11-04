@@ -1,7 +1,7 @@
 {
-  "consumer": "/tmp/multica-task-1848447687/ham163-native-consumer-RqVQMq",
+  "consumer": "/tmp/multica-task-1622668015/ham163-native-consumer-Qrse0W",
   "tarball": "/home/zhangxiao/multica_workspaces/hamster-arm-d6b65621f809/ham-163-ffe86e345588/workdir/components/artifacts/native/hamster-note-components-native-0.1.0-beta.0.tgz",
-  "packageCount": 317,
+  "packageCount": 246,
   "forbidden": [],
   "typecheck": "passed",
   "entries": [
@@ -15,5 +15,10 @@
   ],
   "lib": [
     "ES2022"
-  ]
+  ],
+  "versions": {
+    "react": "19.2.3",
+    "react-native": "0.86.3",
+    "react-native-svg": "15.15.4"
+  }
 }

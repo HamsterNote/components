@@ -26,17 +26,17 @@
 
 ### 2. 首期版本与依赖证明
 
-2026-11-04 实际查询 `npm view expo-template-blank@sdk-54 version dependencies --json` 得到模板 `54.0.47`，依赖 Expo `~54.0.36`、React `19.1.0`、RN `0.81.5`。以可复现的模板配对作为首期基线，不追逐未验证的新 SDK：
+2026-11-04 实际查询 `npm view expo-template-blank@sdk-57 version dependencies --json` 得到模板 `57.0.33`，依赖 Expo `~57.0.31`、React `19.2.3`、RN `0.86.3`。用户明确指定SDK57（2026-11-04），所以用此模板和expo@57.0.31的bundledNativeModules重新确定兼容基线，替代初始提案选择；即使latest已是58，也不擅自越过用户指定版本：
 
 | 对象 | 提案支持区间 | 验收锁定基线 |
 | --- | --- | --- |
-| Expo 宿主 | `>=54.0.36 <55.0.0` | `54.0.36` |
-| RN peer | `>=0.81.5 <0.82.0` | `0.81.5` |
-| React peer | `>=19.1.0 <19.2.0` | `19.1.0` |
-| react-native-svg peer | 采用 SDK 54 对应 bundledNativeModules 声明的范围 | 经 `expo install` 选择后锁文件固定 |
+| Expo 宿主 | `>=57.0.31 <58.0.0` | `57.0.31` |
+| RN peer | `>=0.86.3 <0.87.0` | `0.86.3` |
+| React peer | `>=19.2.3 <19.3.0` | `19.2.3` |
+| react-native-svg peer | `15.15.4`（原生图元深路径需精确锁定） | `15.15.4` |
 | Web 包 peers | 保留现状 `react ^19.0.0`、`react-dom ^19.0.0` | 根锁文件当前组合 |
 
-Expo 是验收宿主依赖，不是库运行时 peer；库无需调用 Expo API。更高 SDK/RN/React 不在本轮声明中，区间内 patch 更新须在发布候选锁文件下重跑矩阵，不声称验证了区间所有排列。该版本选择是提案决策，不是用户已确认的宿主版本；接入其他宿主需先核对约束。
+Expo 是验收宿主依赖，不是库运行时 peer；库无需调用 Expo API。更高 SDK/RN/React 不在本轮声明中，区间内 patch 更新须在发布候选锁文件下重跑矩阵，不声称验证了区间所有排列。SDK57由用户指定，RN0.86/React19.2来自该SDK的模板配对；只声明此minor窗口以控制未验证组合。安装锁定版本通过不能代替真机行为验收；接入窗口外宿主需修订约束并重验。
 
 依赖证据分两层：①干净临时消费项目只装原生 tarball、React/RN/SVG peers，用安装器依赖树/锁文件核查无 Web 包、react-dom；②以 Metro 对全部公共原生入口导出 iOS/Android bundle，保存实际解析模块清单，检查库可达图无 `react-dom`、CSS、HTML/SVG DOM 渲染器和 `document/window` DOM API。不能以 grep 源码或成功构建单个 Button 代替全入口检查。仓库 Web 开发依赖可以有 react-dom，不能拿混合开发根目录的依赖树当原生发布图。RN 自身的平台全局与宿主工具不等同于库引入的 DOM 运行时；报告需明确检查边界。
 
@@ -93,7 +93,7 @@ Button/MenuItem 用 Pressable，分别声明 `accessibilityRole="button"/"menuit
 - [双渲染器漂移] → 纯数据单源、相同 ID 清单与发布候选矩阵；不承诺像素完全相同。
 - [原生包误引入根 barrel、CSS 或 react-dom peer] → 干净安装图 + 全入口 Metro 模块图双重门禁，检查打包产物而非仅源码。
 - [Modal 关闭后读屏焦点丢失] → onShow/布局后聚焦、关闭后背景恢复、失效句柄守卫与真机读屏验证；未通过不发稳定版。
-- [旧 SDK 目标与真实宿主不匹配] → 明示仅 SDK54 支持窗口；本轮无需假设真实产品版本，升级宿主窗口先修订规格并重新验收。
+- [旧 SDK 目标与真实宿主不匹配] → 明示仅 SDK57 支持窗口；用户要求升级时同步修订规格、安装树和三目标模块图；升级宿主窗口必须重新验证。
 - [新增 npm 包名或发布权限尚未验证] → 实施阶段打包前核对可用性和发布配置；不得请求/记录秘密值，权限缺口作为发布阻塞。
 - [Linux 无法完成 iOS 设备验收] → 由后续设备操作员提供本组件库的证据；HAM-164 与 PencilKit 结果不能代替本矩阵，也不要求本轮执行 Mac 操作。
 
@@ -103,4 +103,4 @@ Button/MenuItem 用 Pressable，分别声明 `accessibilityRole="button"/"menuit
 
 ## Open Questions
 
-不影响本提案架构的待落实项：原生验收设备/操作员与执行日期、新包 npm 发布权限、react-native-svg 经 SDK54 安装器解析的精确 patch。以上在对应实施任务中记录；当前不把它们描述为已就绪，也不阻塞文档评审。
+不影响本提案架构的待落实项：原生验收设备/操作员与执行日期、新包 npm 发布权限、SDK57锁定组合的原生真机行为。以上在对应实施任务中记录；当前不把它们描述为已就绪，也不阻塞文档评审。

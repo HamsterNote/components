@@ -3,7 +3,7 @@
 ## 1. 包结构与可复现宿主
 
 - [x] 1.1 建立 `packages/components-native/` 独立 manifest、锁文件、构建和类型配置，声明设计中的 React/RN/SVG peers 与全部公共入口；以独立目录安装、构建、类型消费验证成功，根包仍非 private 且保持原发布身份。
-- [x] 1.2 建立 `examples/native/` 私有 Expo SDK54 宿主，固定 Expo54.0.36/RN0.81.5/React19.1.0；使用 SDK54 的 `expo install` 解析 SVG 并记录精确版本及兼容范围，以 Expo 依赖兼容检查和 iOS/Android bundle 成功验证。
+- [x] 1.2 建立 `examples/native/` 私有 Expo SDK57 宿主，固定 Expo57.0.31/RN0.86.3/React19.2.3；使用 SDK57 的 `expo install` 解析 SVG 并记录精确版本及兼容范围，以 Expo 依赖兼容检查和 iOS/Android bundle 成功验证。
 - [x] 1.3 将 design 的 B01–H02 共 11 个行为 ID、统一示例数据与证据模板落到 `docs/testing/cross-platform-cases.md` 及 fixtures；核对每 ID 有三端步骤、可见状态/计数、预期和证据字段，并记录原生设备/操作员待落实项，不预填通过。
 
 ## 2. 基础控件与 token

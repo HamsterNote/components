@@ -28,11 +28,11 @@ Web 包 SHALL 保留 0.3.0 根入口及 `./button`、`./icon`、`./badge`、`./c
 
 ### Requirement: 明确版本支持窗口
 
-首期原生发行 SHALL 将支持窗口声明为 Expo `>=54.0.36 <55.0.0`、RN `>=0.81.5 <0.82.0`、React `>=19.1.0 <19.2.0`，并记录验收的实际锁定组合。原生 manifest SHALL 仅约束库所需 RN/React/SVG peers，不强制依赖 Expo 运行时。窗口以外版本 MUST 不宣传为已支持；Web peers SHALL 保留 React/ReactDOM `^19.0.0`。
+首期原生发行 SHALL 将支持窗口声明为 Expo `>=57.0.31 <58.0.0`、RN `>=0.86.3 <0.87.0`、React `>=19.2.3 <19.3.0`，并记录验收的实际锁定组合。原生 manifest SHALL 仅约束库所需 RN/React/SVG peers，不强制依赖 Expo 运行时。窗口以外版本 MUST 不宣传为已支持；Web peers SHALL 保留 React/ReactDOM `^19.0.0`。
 
 #### Scenario: 基线与窗口外版本
 - **WHEN** 消费者查阅兼容表和原生 manifest
-- **THEN** 能找到 SDK54/RN0.81.5/React19.1.0 验收基线、实际 patch 与必要 SVG peer，且更高 SDK 不被标记为已验证，Web peer 契约不变
+- **THEN** 能找到 SDK57/RN0.86.3/React19.2.3 验收基线、实际 patch 与必要 SVG peer，且更高 SDK 不被标记为已验证，Web peer 契约不变
 
 ### Requirement: 独立版本与标签路由
 

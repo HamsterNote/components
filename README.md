@@ -671,6 +671,6 @@ MIT，详见 [LICENSE](./LICENSE)。
 
 ## Expo / React Native
 
-Web 的 import、逐组件子路径与 `styles.css` 保持不变；共享数据抽取对应 Web 兼容补丁候选 `0.3.1`。原生采用独立包 `@hamster-note/components-native@0.1.0-beta.0`，首期目标为 Expo SDK54 / RN0.81.5 / React19.1.0 / SVG15.12.1，仅承诺 iOS/Android。原生无需 Web 包或 CSS。
+Web 的 import、逐组件子路径与 `styles.css` 保持不变；共享数据抽取对应 Web 兼容补丁候选 `0.3.1`。原生采用独立包 `@hamster-note/components-native@0.1.0-beta.0`，首期目标为 Expo SDK57 / RN0.86.3 / React19.2.3 / SVG15.15.4，仅承诺 iOS/Android。原生无需 Web 包或 CSS。
 
 原生包仍为未发布候选，真机与发布权限待落实。安装、API映射、局部主题、safeAreaInsets/backgroundRef/focus refs 约定见 [原生文档](packages/components-native/README.md)；Web/Expo共享行为数据与11组验收步骤见 [三端清单](docs/testing/cross-platform-cases.md)。Web示例用 Demo 的 `?validation=1`，Expo示例在 `examples/native/`，使用构建后的tarball接入。原生版本、标签和发布门禁独立于Web，不涉及painting工具栏、PencilKit或HAM-164。

@@ -1,7 +1,7 @@
 [
   {
     "platform": "ios",
-    "totalModules": 633,
+    "totalModules": 641,
     "roots": [
       "node_modules/@hamster-note/components-native/dist/index.js",
       "node_modules/@hamster-note/components-native/dist/button.js",
@@ -11,7 +11,7 @@
       "node_modules/@hamster-note/components-native/dist/text-field.js",
       "node_modules/@hamster-note/components-native/dist/theme.js"
     ],
-    "reachableCount": 535,
+    "reachableCount": 537,
     "packageModules": [
       "node_modules/@hamster-note/components-native/dist/index.js",
       "node_modules/@hamster-note/components-native/dist/chunk-T6J6EVQQ.js",
@@ -33,7 +33,7 @@
   },
   {
     "platform": "android",
-    "totalModules": 631,
+    "totalModules": 639,
     "roots": [
       "node_modules/@hamster-note/components-native/dist/index.js",
       "node_modules/@hamster-note/components-native/dist/button.js",
@@ -43,7 +43,7 @@
       "node_modules/@hamster-note/components-native/dist/text-field.js",
       "node_modules/@hamster-note/components-native/dist/theme.js"
     ],
-    "reachableCount": 533,
+    "reachableCount": 535,
     "packageModules": [
       "node_modules/@hamster-note/components-native/dist/index.js",
       "node_modules/@hamster-note/components-native/dist/chunk-T6J6EVQQ.js",

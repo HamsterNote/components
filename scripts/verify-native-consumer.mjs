@@ -6,6 +6,8 @@ const out = path.resolve(process.argv[2] ?? 'artifacts/native');
 mkdirSync(out, { recursive: true });
 const consumer = mkdtempSync(path.join(tmpdir(), 'ham163-native-consumer-'));
 const tarball = path.resolve('artifacts/native/hamster-note-components-native-0.1.0-beta.0.tgz');
+const native = JSON.parse(readFileSync('packages/components-native/package.json', 'utf8'));
+const versions = native.devDependencies;
 copyFileSync(tarball, path.join(consumer, 'native.tgz'));
 const manifest = {
   name: 'ham163-isolated-consumer',
@@ -14,9 +16,9 @@ const manifest = {
   type: 'module',
   dependencies: {
     '@hamster-note/components-native': 'file:./native.tgz',
-    react: '19.1.0',
-    'react-native': '0.81.5',
-    'react-native-svg': '15.12.1',
+    react: versions.react,
+    'react-native': versions['react-native'],
+    'react-native-svg': versions['react-native-svg'],
   },
 };
 writeFileSync(path.join(consumer, 'package.json'), JSON.stringify(manifest, null, 2));
@@ -79,7 +81,7 @@ execFileSync(
   [
     'install',
     '--save-dev',
-    '@types/react@19.1.10',
+    '@types/react@' + versions['@types/react'],
     '--ignore-scripts',
     '--registry=https://registry.npmjs.org',
   ],
@@ -103,6 +105,9 @@ writeFileSync(
       typecheck: 'passed',
       entries,
       lib: ['ES2022'],
+      versions: Object.fromEntries(
+        ['react', 'react-native', 'react-native-svg'].map((name) => [name, versions[name]]),
+      ),
     },
     null,
     2,

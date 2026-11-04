@@ -23,6 +23,10 @@ for (const platform of ['ios', 'android']) {
   config.maxWorkers = 2;
   config.watchFolders = [consumer];
   config.resolver.nodeModulesPaths = [path.join(consumer, 'node_modules')];
+  // Keep worker and serializer paired with the consumer's Metro. SDK 57's Expo
+  // worker emits packed maps that require its own Server installation hooks.
+  config.transformerPath = nativeRequire.resolve('metro-transform-worker');
+  config.serializer.customSerializer = undefined;
   config.serializer.getModulesRunBeforeMainModule = () => [];
   config.serializer.getPolyfills = () =>
     ['console', 'error-guard'].map((n) =>

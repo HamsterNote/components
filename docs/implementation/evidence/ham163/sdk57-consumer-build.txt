@@ -1,0 +1,1 @@
+External native consumer: seven entry iOS/Android builds passed
