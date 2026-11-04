@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 // Every public subpath is consumed from the installed tarball, never a source alias.
-import { ThemeProvider, useTheme } from '@hamster-note/components-native';
+import { ThemeProvider, useTheme, type NativeTheme } from '@hamster-note/components-native';
 import {
   Button,
   type ButtonVariant,
@@ -51,13 +51,14 @@ function Section({
   description: string;
   children: ReactNode;
 }) {
+  const t = useTheme();
   return (
     <View style={styles.section}>
-      <Text style={styles.eyebrow}>{eyebrow}</Text>
-      <Text accessibilityRole="header" style={styles.sectionTitle}>
+      <Text style={[styles.eyebrow, { color: t.colors.textMuted }]}>{eyebrow}</Text>
+      <Text accessibilityRole="header" style={[styles.sectionTitle, { color: t.colors.text }]}>
         {title}
       </Text>
-      <Text style={styles.sectionDescription}>{description}</Text>
+      <Text style={[styles.sectionDescription, { color: t.colors.textMuted }]}>{description}</Text>
       {children}
     </View>
   );
@@ -72,12 +73,18 @@ function ExampleCard({
   description: string;
   children: ReactNode;
 }) {
+  const t = useTheme();
   return (
-    <View style={styles.card}>
-      <Text accessibilityRole="header" style={styles.cardTitle}>
+    <View
+      style={[
+        styles.card,
+        { backgroundColor: t.colors.surfaceHover, borderColor: t.colors.border },
+      ]}
+    >
+      <Text accessibilityRole="header" style={[styles.cardTitle, { color: t.colors.text }]}>
         {title}
       </Text>
-      <Text style={styles.cardDescription}>{description}</Text>
+      <Text style={[styles.cardDescription, { color: t.colors.textMuted }]}>{description}</Text>
       <View style={styles.cardBody}>{children}</View>
     </View>
   );
@@ -92,6 +99,7 @@ function CategoryNavigation({
   compact: boolean;
   onChange: (category: Category) => void;
 }) {
+  const t = useTheme();
   const items = CATEGORIES.map((category) => (
     <Pressable
       key={category.id}
@@ -110,18 +118,26 @@ function CategoryNavigation({
       }) => [
         styles.navItem,
         compact ? styles.navItemCompact : null,
-        active === category.id ? styles.navItemActive : null,
-        hovered && active !== category.id ? styles.navItemHovered : null,
-        pressed ? styles.navItemPressed : null,
+        active === category.id
+          ? {
+              backgroundColor: t.colors.surfaceHover,
+              borderColor: t.colors.accent,
+            }
+          : null,
+        hovered && active !== category.id ? { backgroundColor: t.colors.surfaceHover } : null,
+        focused ? { outlineColor: t.colors.focusRingColor } : null,
         focused ? styles.focusRing : null,
       ]}
     >
-      <Text style={[styles.navLabel, active === category.id ? styles.navLabelActive : null]}>
+      <Text
+        style={[
+          styles.navLabel,
+          { color: active === category.id ? t.colors.accent : t.colors.textMuted },
+        ]}
+      >
         {category.label}
       </Text>
-      <Text style={[styles.navDetail, active === category.id ? styles.navDetailActive : null]}>
-        {category.detail}
-      </Text>
+      <Text style={[styles.navDetail, { color: t.colors.textMuted }]}>{category.detail}</Text>
     </Pressable>
   ));
 
@@ -155,6 +171,7 @@ function ButtonExamples({
   onActivate: () => void;
   onToggleDisabled: () => void;
 }) {
+  const t = useTheme();
   return (
     <Section
       eyebrow="BASIC / BUTTON"
@@ -170,10 +187,17 @@ function ButtonExamples({
             B01 激活
           </Button>
           <Button onPress={onToggleDisabled}>{disabled ? '解除禁用' : '切换禁用'}</Button>
-          <View style={styles.statusPill}>
-            <Text style={styles.statusText}>count={count}</Text>
-            <Text style={styles.statusDivider}>·</Text>
-            <Text style={styles.statusText}>disabled={String(disabled)}</Text>
+          <View
+            style={[
+              styles.statusPill,
+              { backgroundColor: t.colors.surface, borderColor: t.colors.border },
+            ]}
+          >
+            <Text style={[styles.statusText, { color: t.colors.textMuted }]}>count={count}</Text>
+            <Text style={[styles.statusDivider, { color: t.colors.borderStrong }]}>·</Text>
+            <Text style={[styles.statusText, { color: t.colors.textMuted }]}>
+              disabled={String(disabled)}
+            </Text>
           </View>
         </View>
       </ExampleCard>
@@ -182,8 +206,8 @@ function ButtonExamples({
         description="同一套主题 token 驱动所有语义；每行对应一种尺寸。"
       >
         {data.sizes.map((size) => (
-          <View key={size} style={styles.matrixRow}>
-            <Text style={styles.matrixLabel}>{size}</Text>
+          <View key={size} style={[styles.matrixRow, { borderBottomColor: t.colors.border }]}>
+            <Text style={[styles.matrixLabel, { color: t.colors.textMuted }]}>{size}</Text>
             <View style={styles.row}>
               {data.variants.map((variant) => (
                 <Button key={variant} variant={variant as ButtonVariant} size={size as ButtonSize}>
@@ -213,6 +237,7 @@ function ButtonExamples({
 }
 
 function IconExamples() {
+  const t = useTheme();
   return (
     <Section
       eyebrow="FOUNDATION / ICON"
@@ -224,11 +249,16 @@ function IconExamples() {
         description="无 label 的图标为装饰内容；有 label 时作为图像提供给辅助技术。"
       >
         <View style={styles.iconFeature}>
-          <View style={styles.iconFeatureGlyph}>
+          <View
+            style={[
+              styles.iconFeatureGlyph,
+              { backgroundColor: t.colors.surface, borderColor: t.colors.border },
+            ]}
+          >
             <Icon name="pen" size={32} />
           </View>
           <View style={styles.iconFeatureCopy}>
-            <Text style={styles.iconFeatureTitle}>pen · 24px</Text>
+            <Text style={[styles.iconFeatureTitle, { color: t.colors.text }]}>pen · 24px</Text>
             <Text style={styles.cardDescription}>I01 上方为装饰图标</Text>
           </View>
         </View>
@@ -236,9 +266,15 @@ function IconExamples() {
       <ExampleCard title="完整图标集" description="统一 24 × 24 视图框；示例以 22px 展示。">
         <View style={styles.iconGrid}>
           {ICON_NAMES.map((name: IconName) => (
-            <View key={name} style={styles.iconItem}>
-              <Icon name={name} label={name} size={22} color="#52525b" />
-              <Text style={styles.iconName}>{name}</Text>
+            <View
+              key={name}
+              style={[
+                styles.iconItem,
+                { backgroundColor: t.colors.surface, borderColor: t.colors.border },
+              ]}
+            >
+              <Icon name={name} label={name} size={22} color={t.colors.textMuted} />
+              <Text style={[styles.iconName, { color: t.colors.textMuted }]}>{name}</Text>
             </View>
           ))}
         </View>
@@ -266,6 +302,7 @@ function FormExamples({
   onRawValueChange: (value: string) => void;
   onToggleError: () => void;
 }) {
+  const t = useTheme();
   return (
     <Section
       eyebrow="FORM / TEXT FIELD"
@@ -282,7 +319,7 @@ function FormExamples({
           error={error ? data.error : undefined}
           disabled={disabled}
         />
-        <Text style={styles.liveValue}>T01 controlled={value}</Text>
+        <Text style={[styles.liveValue, themedInset(t)]}>T01 controlled={value}</Text>
         <View style={styles.row}>
           <Button size="small" onPress={() => input.current?.focus()}>
             聚焦输入框
@@ -305,7 +342,7 @@ function FormExamples({
           onChangeText={onRawValueChange}
           hint="不通过 value 属性控制内容"
         />
-        <Text style={styles.liveValue}>T01 uncontrolled={rawValue}</Text>
+        <Text style={[styles.liveValue, themedInset(t)]}>T01 uncontrolled={rawValue}</Text>
       </ExampleCard>
       <ExampleCard
         title="禁用状态"
@@ -342,6 +379,7 @@ function OverlayExamples({
   onReset: () => void;
   onToggleFallback: () => void;
 }) {
+  const t = useTheme();
   return (
     <Section
       eyebrow="OVERLAY / POPOVER & MENU"
@@ -363,10 +401,14 @@ function OverlayExamples({
               P01 打开菜单
             </Button>
           ) : null}
-          <View style={styles.statusPill}>
-            <Text style={styles.statusText}>P02 selected={selected}</Text>
-            <Text style={styles.statusDivider}>·</Text>
-            <Text style={styles.statusText}>open={panel ?? 'closed'}</Text>
+          <View style={[styles.statusPill, themedInset(t)]}>
+            <Text style={[styles.statusText, { color: t.colors.textMuted }]}>
+              P02 selected={selected}
+            </Text>
+            <Text style={[styles.statusDivider, { color: t.colors.borderStrong }]}>·</Text>
+            <Text style={[styles.statusText, { color: t.colors.textMuted }]}>
+              open={panel ?? 'closed'}
+            </Text>
           </View>
         </View>
       </ExampleCard>
@@ -455,13 +497,14 @@ function ThemeExamples({
               onPress={() => onAccentChange(name)}
               style={({ pressed, focused }: { pressed: boolean; focused?: boolean }) => [
                 styles.accentOption,
-                accent === name ? styles.accentOptionSelected : null,
+                themedInset(t),
+                accent === name ? { borderColor: t.colors.accent } : null,
                 pressed ? styles.navItemPressed : null,
-                focused ? styles.focusRing : null,
+                focused ? { outlineColor: t.colors.focusRingColor } : null,
               ]}
             >
               <View style={[styles.accentDot, { backgroundColor: THEME_ACCENTS[name].accent }]} />
-              <Text style={styles.accentName}>{name}</Text>
+              <Text style={[styles.accentName, { color: t.colors.textMuted }]}>{name}</Text>
             </Pressable>
           ))}
         </View>
@@ -469,10 +512,15 @@ function ThemeExamples({
       <ExampleCard title="当前色板" description="以下色值来自当前上下文，而非示例内的独立副本。">
         <View style={styles.tokenGrid}>
           {colorTokens.map(([name, color]) => (
-            <View key={name} style={styles.colorToken}>
-              <View style={[styles.colorSwatch, { backgroundColor: color }]} />
-              <Text style={styles.tokenName}>{name}</Text>
-              <Text style={styles.tokenValue}>{color}</Text>
+            <View key={name} style={[styles.colorToken, themedInset(t)]}>
+              <View
+                style={[
+                  styles.colorSwatch,
+                  { backgroundColor: color, borderColor: t.colors.border },
+                ]}
+              />
+              <Text style={[styles.tokenName, { color: t.colors.text }]}>{name}</Text>
+              <Text style={[styles.tokenValue, { color: t.colors.textMuted }]}>{color}</Text>
             </View>
           ))}
         </View>
@@ -482,9 +530,9 @@ function ThemeExamples({
         description="组件共享的基准值；单位均为 React Native 逻辑像素。"
       >
         {numericTokens.map(([name, value]) => (
-          <View key={name} style={styles.numericToken}>
-            <Text style={styles.tokenName}>{name}</Text>
-            <Text style={styles.tokenValue}>{value}</Text>
+          <View key={name} style={[styles.numericToken, { borderBottomColor: t.colors.border }]}>
+            <Text style={[styles.tokenName, { color: t.colors.text }]}>{name}</Text>
+            <Text style={[styles.tokenValue, { color: t.colors.textMuted }]}>{value}</Text>
           </View>
         ))}
       </ExampleCard>
@@ -674,32 +722,55 @@ function Surface({
   };
 
   return (
-    <View style={[styles.app, { paddingTop: insets.top }]}>
+    <View style={[styles.app, { paddingTop: insets.top, backgroundColor: t.colors.surface }]}>
       <View
         accessibilityElementsHidden={panel !== null}
         importantForAccessibility={panel !== null ? 'no-hide-descendants' : 'auto'}
-        style={styles.app}
+        style={[styles.app, { backgroundColor: t.colors.surface }]}
       >
-        <View style={[styles.topbar, compact ? styles.topbarCompact : null]}>
+        <View
+          style={[
+            styles.topbar,
+            {
+              borderBottomColor: t.colors.border,
+              backgroundColor: t.colors.surface,
+            },
+            compact ? styles.topbarCompact : null,
+          ]}
+        >
           <View style={styles.brand}>
-            <View style={styles.brandMark}>
-              <Text style={styles.brandMarkText}>HN</Text>
+            <View
+              style={[
+                styles.brandMark,
+                { borderColor: t.colors.border, backgroundColor: t.colors.surfaceHover },
+              ]}
+            >
+              <Text style={[styles.brandMarkText, { color: t.colors.accent }]}>HN</Text>
             </View>
             <View>
-              <Text style={styles.brandTitle}>Hamster Components</Text>
-              <Text style={styles.brandSubtitle}>Native UI kit</Text>
+              <Text style={[styles.brandTitle, { color: t.colors.text }]}>Hamster Components</Text>
+              <Text style={[styles.brandSubtitle, { color: t.colors.textMuted }]}>
+                Native UI kit
+              </Text>
             </View>
           </View>
           <View style={styles.topbarMeta}>
-            <View style={styles.platformPill}>
-              <View style={styles.platformDot} />
-              <Text style={styles.platformText}>React Native · Expo</Text>
+            <View style={[styles.platformPill, { backgroundColor: t.colors.surfaceHover }]}>
+              <View style={[styles.platformDot, { backgroundColor: t.colors.success }]} />
+              <Text style={[styles.platformText, { color: t.colors.textMuted }]}>
+                React Native · Expo
+              </Text>
             </View>
           </View>
         </View>
 
         {compact ? (
-          <View style={styles.compactNavWrap}>
+          <View
+            style={[
+              styles.compactNavWrap,
+              { borderBottomColor: t.colors.border, backgroundColor: t.colors.surface },
+            ]}
+          >
             <CategoryNavigation active={category} compact onChange={setCategory} />
           </View>
         ) : null}
@@ -715,23 +786,30 @@ function Surface({
           <View style={[styles.layout, compact ? styles.layoutCompact : null]}>
             {!compact ? (
               <View style={styles.sidebar}>
-                <Text style={styles.sidebarLabel}>组件</Text>
+                <Text style={[styles.sidebarLabel, { color: t.colors.textMuted }]}>组件</Text>
                 <CategoryNavigation active={category} compact={false} onChange={setCategory} />
-                <View style={styles.sidebarFooter}>
-                  <Text style={styles.sidebarFooterTitle}>跨端组件，统一体验</Text>
-                  <Text style={styles.sidebarFooterText}>
+                <View style={[styles.sidebarFooter, { borderTopColor: t.colors.border }]}>
+                  <Text style={[styles.sidebarFooterTitle, { color: t.colors.textMuted }]}>
+                    跨端组件，统一体验
+                  </Text>
+                  <Text style={[styles.sidebarFooterText, { color: t.colors.textMuted }]}>
                     iOS、Android 与 Web 共享组件 API 和主题 token。
                   </Text>
                 </View>
               </View>
             ) : null}
             <View style={styles.content}>
-              <View style={styles.hero}>
-                <Text style={styles.heroKicker}>COMPONENT EXPLORER</Text>
-                <Text accessibilityRole="header" style={styles.heroTitle}>
+              <View style={[styles.hero, { borderBottomColor: t.colors.border }]}>
+                <Text style={[styles.heroKicker, { color: t.colors.textMuted }]}>
+                  COMPONENT EXPLORER
+                </Text>
+                <Text
+                  accessibilityRole="header"
+                  style={[styles.heroTitle, { color: t.colors.text }]}
+                >
                   为每一端而设计。
                 </Text>
-                <Text style={styles.heroDescription}>
+                <Text style={[styles.heroDescription, { color: t.colors.textMuted }]}>
                   浏览原生组件、交互状态与设计 token。所有示例均可直接操作。
                 </Text>
               </View>
@@ -769,9 +847,11 @@ function Surface({
                 }}
                 onToggleFallback={() => setFallback(!fallback)}
               />
-              <View style={styles.footer}>
-                <Text style={styles.footerText}>@hamster-note/components-native</Text>
-                <Text style={styles.footerText}>
+              <View style={[styles.footer, { borderTopColor: t.colors.border }]}>
+                <Text style={[styles.footerText, { color: t.colors.textMuted }]}>
+                  @hamster-note/components-native
+                </Text>
+                <Text style={[styles.footerText, { color: t.colors.textMuted }]}>
                   {t.mode} / {accent}
                 </Text>
               </View>
@@ -845,17 +925,22 @@ export default function App() {
   );
 }
 
+function themedInset(t: NativeTheme) {
+  return {
+    backgroundColor: t.colors.surface,
+    borderColor: t.colors.border,
+    color: t.colors.textMuted,
+  } as const;
+}
+
 const styles = StyleSheet.create({
   app: {
     flex: 1,
-    backgroundColor: '#fafafa',
   },
   topbar: {
     minHeight: 68,
     paddingHorizontal: 32,
     borderBottomWidth: 1,
-    borderBottomColor: '#e8e8eb',
-    backgroundColor: '#ffffff',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -875,25 +960,20 @@ const styles = StyleSheet.create({
     height: 34,
     borderRadius: 9,
     borderWidth: 1,
-    borderColor: '#dfdfe5',
-    backgroundColor: '#f4f4f6',
     alignItems: 'center',
     justifyContent: 'center',
   },
   brandMarkText: {
-    color: '#625cf5',
     fontSize: 11,
     fontWeight: '700',
     letterSpacing: 0.4,
   },
   brandTitle: {
-    color: '#18181b',
     fontSize: 14,
     lineHeight: 19,
     fontWeight: '600',
   },
   brandSubtitle: {
-    color: '#71717a',
     fontSize: 10,
     lineHeight: 14,
   },
@@ -908,23 +988,18 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     paddingHorizontal: 10,
     borderRadius: 20,
-    backgroundColor: '#f4f4f5',
   },
   platformDot: {
     width: 6,
     height: 6,
     borderRadius: 3,
-    backgroundColor: '#16a34a',
   },
   platformText: {
-    color: '#52525b',
     fontSize: 11,
     fontWeight: '500',
   },
   compactNavWrap: {
     borderBottomWidth: 1,
-    borderBottomColor: '#e8e8eb',
-    backgroundColor: '#ffffff',
   },
   compactNav: {
     paddingHorizontal: 12,
@@ -957,7 +1032,6 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   sidebarLabel: {
-    color: '#a1a1aa',
     fontSize: 10,
     lineHeight: 16,
     fontWeight: '600',
@@ -984,55 +1058,35 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     gap: 1,
   },
-  navItemActive: {
-    backgroundColor: '#ededf9',
-    borderColor: '#dfdef4',
-  },
-  navItemHovered: {
-    backgroundColor: '#f0f0f2',
-  },
   navItemPressed: {
     opacity: 0.72,
   },
   navLabel: {
-    color: '#52525b',
     fontSize: 13,
     lineHeight: 18,
     fontWeight: '500',
   },
-  navLabelActive: {
-    color: '#4f46b8',
-    fontWeight: '600',
-  },
   navDetail: {
-    color: '#a1a1aa',
     fontSize: 10,
     lineHeight: 14,
-  },
-  navDetailActive: {
-    color: '#7770bd',
   },
   focusRing: {
     outlineStyle: 'solid',
     outlineWidth: 2,
-    outlineColor: '#7c83ff',
     outlineOffset: 2,
   },
   sidebarFooter: {
     marginTop: 24,
     padding: 12,
     borderTopWidth: 1,
-    borderTopColor: '#e8e8eb',
     gap: 6,
   },
   sidebarFooterTitle: {
-    color: '#52525b',
     fontSize: 11,
     lineHeight: 16,
     fontWeight: '500',
   },
   sidebarFooterText: {
-    color: '#a1a1aa',
     fontSize: 10,
     lineHeight: 16,
   },
@@ -1043,18 +1097,15 @@ const styles = StyleSheet.create({
   hero: {
     paddingBottom: 32,
     borderBottomWidth: 1,
-    borderBottomColor: '#e8e8eb',
     gap: 10,
   },
   heroKicker: {
-    color: '#71717a',
     fontSize: 10,
     lineHeight: 16,
     fontWeight: '600',
     letterSpacing: 1.4,
   },
   heroTitle: {
-    color: '#18181b',
     fontSize: 30,
     lineHeight: 40,
     fontWeight: '600',
@@ -1062,7 +1113,6 @@ const styles = StyleSheet.create({
   },
   heroDescription: {
     maxWidth: 560,
-    color: '#71717a',
     fontSize: 13,
     lineHeight: 22,
   },
@@ -1071,14 +1121,12 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   eyebrow: {
-    color: '#71717a',
     fontSize: 10,
     lineHeight: 16,
     fontWeight: '600',
     letterSpacing: 1.1,
   },
   sectionTitle: {
-    color: '#18181b',
     fontSize: 23,
     lineHeight: 32,
     fontWeight: '600',
@@ -1086,7 +1134,6 @@ const styles = StyleSheet.create({
   },
   sectionDescription: {
     maxWidth: 640,
-    color: '#71717a',
     fontSize: 13,
     lineHeight: 21,
     marginBottom: 8,
@@ -1094,19 +1141,15 @@ const styles = StyleSheet.create({
   card: {
     padding: 24,
     borderWidth: 1,
-    borderColor: '#e8e8eb',
     borderRadius: 12,
-    backgroundColor: '#f4f4f5',
     gap: 7,
   },
   cardTitle: {
-    color: '#27272a',
     fontSize: 14,
     lineHeight: 20,
     fontWeight: '600',
   },
   cardDescription: {
-    color: '#71717a',
     fontSize: 12,
     lineHeight: 19,
   },
@@ -1129,18 +1172,14 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 11,
     borderRadius: 7,
-    backgroundColor: '#ffffff',
     borderWidth: 1,
-    borderColor: '#e4e4e7',
   },
   statusText: {
-    color: '#52525b',
     fontSize: 11,
     lineHeight: 16,
     fontVariant: ['tabular-nums'],
   },
   statusDivider: {
-    color: '#d4d4d8',
     fontSize: 11,
   },
   matrixRow: {
@@ -1148,10 +1187,8 @@ const styles = StyleSheet.create({
     gap: 8,
     paddingBottom: 12,
     borderBottomWidth: 1,
-    borderBottomColor: '#e4e4e7',
   },
   matrixLabel: {
-    color: '#a1a1aa',
     fontSize: 10,
     lineHeight: 14,
     fontWeight: '500',
@@ -1166,8 +1203,6 @@ const styles = StyleSheet.create({
     height: 56,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#e4e4e7',
-    backgroundColor: '#ffffff',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -1175,7 +1210,6 @@ const styles = StyleSheet.create({
     gap: 3,
   },
   iconFeatureTitle: {
-    color: '#3f3f46',
     fontSize: 13,
     lineHeight: 19,
     fontWeight: '500',
@@ -1196,24 +1230,18 @@ const styles = StyleSheet.create({
     gap: 8,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#e7e7ea',
-    backgroundColor: '#ffffff',
   },
   iconName: {
-    color: '#71717a',
     fontSize: 10,
     lineHeight: 13,
   },
   liveValue: {
     alignSelf: 'stretch',
-    color: '#52525b',
     fontSize: 12,
     lineHeight: 19,
     padding: 10,
     borderRadius: 7,
-    backgroundColor: '#ffffff',
     borderWidth: 1,
-    borderColor: '#e4e4e7',
   },
   accentOption: {
     flexDirection: 'row',
@@ -1223,12 +1251,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#e4e4e7',
-    backgroundColor: '#ffffff',
-  },
-  accentOptionSelected: {
-    borderColor: '#7c83ff',
-    backgroundColor: '#f0f0ff',
   },
   accentDot: {
     width: 13,
@@ -1236,7 +1258,6 @@ const styles = StyleSheet.create({
     borderRadius: 7,
   },
   accentName: {
-    color: '#52525b',
     fontSize: 12,
     lineHeight: 16,
   },
@@ -1252,24 +1273,19 @@ const styles = StyleSheet.create({
     gap: 5,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#e4e4e7',
-    backgroundColor: '#ffffff',
   },
   colorSwatch: {
     height: 36,
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: '#e4e4e7',
     marginBottom: 3,
   },
   tokenName: {
-    color: '#3f3f46',
     fontSize: 12,
     lineHeight: 18,
     fontWeight: '500',
   },
   tokenValue: {
-    color: '#71717a',
     fontSize: 10,
     lineHeight: 16,
   },
@@ -1281,20 +1297,17 @@ const styles = StyleSheet.create({
     gap: 12,
     paddingVertical: 9,
     borderBottomWidth: 1,
-    borderBottomColor: '#e4e4e7',
   },
   footer: {
     marginTop: 40,
     paddingTop: 20,
     borderTopWidth: 1,
-    borderTopColor: '#e8e8eb',
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
     gap: 10,
   },
   footerText: {
-    color: '#a1a1aa',
     fontSize: 10,
     lineHeight: 16,
   },
