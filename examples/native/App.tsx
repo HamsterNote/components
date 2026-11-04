@@ -301,7 +301,7 @@ function FormExamples({
       >
         <TextField
           label="非受控笔记"
-          defaultValue={data.initialText}
+          defaultValue={rawValue}
           onChangeText={onRawValueChange}
           hint="不通过 value 属性控制内容"
         />
@@ -321,6 +321,7 @@ function OverlayExamples({
   panel,
   selected,
   triggerVisible,
+  popoverVisible,
   fallback,
   trigger,
   popoverTrigger,
@@ -332,6 +333,7 @@ function OverlayExamples({
   panel: Panel;
   selected: number;
   triggerVisible: boolean;
+  popoverVisible: boolean;
   fallback: boolean;
   trigger: React.RefObject<View | null>;
   popoverTrigger: React.RefObject<View | null>;
@@ -372,9 +374,11 @@ function OverlayExamples({
         title="长内容弹层"
         description="弹层包含输入框与 40 条可滚动内容；关闭后焦点返回触发器。"
       >
-        <Button ref={popoverTrigger} onPress={() => onOpen('popover')}>
-          P03 超高弹层
-        </Button>
+        {popoverVisible ? (
+          <Button ref={popoverTrigger} onPress={() => onOpen('popover')}>
+            P03 超高弹层
+          </Button>
+        ) : null}
       </ExampleCard>
       <ExampleCard
         title="嵌套主题"
@@ -520,6 +524,7 @@ function Showcase({
   panel,
   selected,
   triggerVisible,
+  popoverVisible,
   fallback,
   trigger,
   popoverTrigger,
@@ -547,6 +552,7 @@ function Showcase({
   panel: Panel;
   selected: number;
   triggerVisible: boolean;
+  popoverVisible: boolean;
   fallback: boolean;
   trigger: React.RefObject<View | null>;
   popoverTrigger: React.RefObject<View | null>;
@@ -586,6 +592,7 @@ function Showcase({
           panel={panel}
           selected={selected}
           triggerVisible={triggerVisible}
+          popoverVisible={popoverVisible}
           fallback={fallback}
           trigger={trigger}
           popoverTrigger={popoverTrigger}
@@ -646,6 +653,7 @@ function Surface({
   const [panel, setPanel] = useState<Panel>(null);
   const [selected, setSelected] = useState(0);
   const [triggerVisible, setTriggerVisible] = useState(true);
+  const [popoverVisible, setPopoverVisible] = useState(true);
   const [mounted, setMounted] = useState(true);
   const [fallback, setFallback] = useState(true);
   const trigger = useRef<View>(null);
@@ -747,6 +755,7 @@ function Surface({
                 panel={panel}
                 selected={selected}
                 triggerVisible={triggerVisible}
+                popoverVisible={popoverVisible}
                 fallback={fallback}
                 trigger={trigger}
                 popoverTrigger={popoverTrigger}
@@ -754,6 +763,7 @@ function Surface({
                 onOpen={openPanel}
                 onReset={() => {
                   setTriggerVisible(true);
+                  setPopoverVisible(true);
                   setMounted(true);
                   setPanel(null);
                 }}
@@ -800,8 +810,13 @@ function Surface({
         </Menu>
       ) : null}
       {mounted ? (
-        <Popover {...overlayProps} triggerRef={popoverTrigger} open={panel === 'popover'}>
-          <Button onPress={() => setTriggerVisible(false)}>P04 移除触发器</Button>
+        <Popover
+          {...overlayProps}
+          anchorRef={popoverTrigger}
+          triggerRef={popoverTrigger}
+          open={panel === 'popover'}
+        >
+          <Button onPress={() => setPopoverVisible(false)}>P04 移除触发器</Button>
           <Button
             onPress={() => {
               setMounted(false);
