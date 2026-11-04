@@ -1,0 +1,18 @@
+yarn run v1.22.22
+$ yarn typecheck && yarn lint && yarn format:check && yarn test
+$ tsc --noEmit
+$ eslint . --max-warnings 0
+$ prettier --check .
+Checking formatting...
+All matched files use Prettier code style!
+$ vitest run
+
+ RUN  v4.1.6 /home/zhangxiao/multica_workspaces/hamster-arm-d6b65621f809/ham-163-ffe86e345588/workdir/components
+
+
+ Test Files  8 passed (8)
+      Tests  84 passed (84)
+   Start at  17:26:18
+   Duration  2.82s (transform 1.15s, setup 1.57s, import 1.39s, tests 1.98s, environment 5.76s)
+
+Done in 17.86s.

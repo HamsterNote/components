@@ -1,0 +1,26 @@
+{
+  "name": "hamster-native-validation",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "start": "expo start",
+    "check": "expo install --check",
+    "bundle": "expo export --platform ios --platform android --source-maps"
+  },
+  "dependencies": {
+    "@expo/metro-runtime": "~57.0.17",
+    "@hamster-note/components-native": "file:../../artifacts/native/hamster-note-components-native-0.1.0-beta.0.tgz",
+    "expo": "57.0.31",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-native": "0.86.3",
+    "react-native-safe-area-context": "~5.7.0",
+    "react-native-svg": "15.15.4",
+    "react-native-web": "~0.21.0"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.17",
+    "typescript": "~6.0.3"
+  }
+}

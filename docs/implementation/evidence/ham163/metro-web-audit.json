@@ -1,0 +1,14 @@
+{
+  "platform": "web",
+  "totalModules": 249,
+  "roots": [
+    "node_modules/@hamster-note/components-native/dist-web/index.js",
+    "node_modules/@hamster-note/components-native/dist-web/button.js",
+    "node_modules/@hamster-note/components-native/dist-web/icon.js",
+    "node_modules/@hamster-note/components-native/dist-web/popover.js",
+    "node_modules/@hamster-note/components-native/dist-web/menu.js",
+    "node_modules/@hamster-note/components-native/dist-web/text-field.js",
+    "node_modules/@hamster-note/components-native/dist-web/theme.js"
+  ],
+  "forbidden": []
+}

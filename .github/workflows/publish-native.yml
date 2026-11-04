@@ -1,0 +1,54 @@
+name: Publish native components
+on:
+  push:
+    tags:
+      - 'native-v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing native-v tag
+        required: true
+        type: string
+      device_acceptance_url:
+        description: Required for latest, link to completed three-platform acceptance
+        required: false
+        type: string
+permissions:
+  contents: read
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: npm-native
+    env:
+      RELEASE_TAG: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+          cache: yarn
+          cache-dependency-path: packages/components-native/yarn.lock
+      - name: Validate target and tag
+        run: node scripts/release-target.mjs "$RELEASE_TAG"
+      - name: Require explicit acceptance for stable promotion
+        env:
+          ACCEPTANCE_URL: ${{ inputs.device_acceptance_url }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          if [ "$PUBLISH_TAG" = latest ]; then
+            test "$EVENT_NAME" = workflow_dispatch
+            test -n "$ACCEPTANCE_URL"
+          fi
+      - run: corepack enable
+      - run: yarn install --frozen-lockfile
+        working-directory: packages/components-native
+      - run: yarn build
+        working-directory: packages/components-native
+      - name: Publish native package only
+        working-directory: packages/components-native
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --access public --tag "$PUBLISH_TAG"

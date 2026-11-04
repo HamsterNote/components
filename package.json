@@ -1,6 +1,6 @@
 {
   "name": "@hamster-note/components",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Reusable React components for HamsterNote products.",
   "type": "module",
   "license": "MIT",
@@ -78,6 +78,7 @@
     "build:demo": "yarn typecheck && vite build",
     "preview": "vite preview --host 0.0.0.0 --port 9810 --strictPort",
     "test": "vitest run",
+    "test:native": "node --test packages/components-native/test/*.test.mjs",
     "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test",
     "test:e2e:update": "playwright test --update-snapshots",

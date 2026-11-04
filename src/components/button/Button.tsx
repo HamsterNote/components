@@ -1,8 +1,9 @@
-import type { ButtonHTMLAttributes, ReactNode } from 'react';
+import { BUTTON_SIZES } from '../../shared/tokens';
+import type { ButtonHTMLAttributes, CSSProperties, ReactNode } from 'react';
 
 export type ButtonVariant =
   'primary' | 'secondary' | 'ghost' | 'danger' | 'warning' | 'success' | 'info';
-export type ButtonSize = 'small' | 'medium' | 'large';
+export type ButtonSize = keyof typeof BUTTON_SIZES;
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   readonly children: ReactNode;
@@ -17,6 +18,7 @@ export function Button({
   ghost = false,
   size = 'medium',
   type = 'button',
+  style,
   variant = 'secondary',
   ...props
 }: ButtonProps) {
@@ -32,8 +34,15 @@ export function Button({
     .filter(Boolean)
     .join(' ');
 
+  const dimensions = BUTTON_SIZES[size];
+  const buttonStyle = {
+    '--hn-button-min-height': `${String(dimensions.height)}px`,
+    '--hn-button-padding': `${String(dimensions.padding)}px`,
+    '--hn-button-font-size': `${String(dimensions.fontSize)}px`,
+    ...style,
+  } as CSSProperties;
   return (
-    <button className={classes} type={type} {...props}>
+    <button className={classes} type={type} {...props} style={buttonStyle}>
       {children}
     </button>
   );

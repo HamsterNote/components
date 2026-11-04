@@ -1,0 +1,114 @@
+{
+  "baseline": "0.3.0",
+  "candidate": "0.3.1",
+  "mappings": [
+    {
+      "entry": ".",
+      "mapping": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.js"
+      }
+    },
+    {
+      "entry": "./button",
+      "mapping": {
+        "types": "./dist/button.d.ts",
+        "import": "./dist/button.js"
+      }
+    },
+    {
+      "entry": "./icon",
+      "mapping": {
+        "types": "./dist/icon.d.ts",
+        "import": "./dist/icon.js"
+      }
+    },
+    {
+      "entry": "./badge",
+      "mapping": {
+        "types": "./dist/badge.d.ts",
+        "import": "./dist/badge.js"
+      }
+    },
+    {
+      "entry": "./confirm",
+      "mapping": {
+        "types": "./dist/confirm.d.ts",
+        "import": "./dist/confirm.js"
+      }
+    },
+    {
+      "entry": "./dialog",
+      "mapping": {
+        "types": "./dist/dialog.d.ts",
+        "import": "./dist/dialog.js"
+      }
+    },
+    {
+      "entry": "./drawer",
+      "mapping": {
+        "types": "./dist/drawer.d.ts",
+        "import": "./dist/drawer.js"
+      }
+    },
+    {
+      "entry": "./kbd",
+      "mapping": {
+        "types": "./dist/kbd.d.ts",
+        "import": "./dist/kbd.js"
+      }
+    },
+    {
+      "entry": "./loading",
+      "mapping": {
+        "types": "./dist/loading.d.ts",
+        "import": "./dist/loading.js"
+      }
+    },
+    {
+      "entry": "./menu",
+      "mapping": {
+        "types": "./dist/menu.d.ts",
+        "import": "./dist/menu.js"
+      }
+    },
+    {
+      "entry": "./note-card",
+      "mapping": {
+        "types": "./dist/note-card.d.ts",
+        "import": "./dist/note-card.js"
+      }
+    },
+    {
+      "entry": "./popover",
+      "mapping": {
+        "types": "./dist/popover.d.ts",
+        "import": "./dist/popover.js"
+      }
+    },
+    {
+      "entry": "./text-field",
+      "mapping": {
+        "types": "./dist/text-field.d.ts",
+        "import": "./dist/text-field.js"
+      }
+    },
+    {
+      "entry": "./theme",
+      "mapping": {
+        "types": "./dist/theme.d.ts",
+        "import": "./dist/theme.js"
+      }
+    },
+    {
+      "entry": "./styles.css",
+      "mapping": "./dist/hamster-note-components.css"
+    }
+  ],
+  "exportsIdentical": true,
+  "peersIdentical": true,
+  "cssByteIdentical": false,
+  "consumer": "/tmp/multica-task-1364060506/ham163-web-consumer-mMa06z",
+  "typecheck": "passed",
+  "build": "passed"
+}

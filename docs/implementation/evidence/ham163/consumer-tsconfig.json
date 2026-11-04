@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "noEmit": true,
+    "lib": [
+      "ES2022"
+    ],
+    "types": [
+      "react",
+      "react-native"
+    ],
+    "skipLibCheck": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "target": "ES2022",
+    "jsx": "react-jsx"
+  },
+  "include": [
+    "entries.ts"
+  ]
+}

@@ -1,15 +1,15 @@
 @layer hamster-note.components {
   .hn-button {
-    min-height: 36px;
+    min-height: var(--hn-button-min-height, 36px);
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    padding: 0 14px;
+    padding: 0 var(--hn-button-padding, 14px);
     border: 1px solid transparent;
     border-radius: var(--hn-radius-md);
     font-family: var(--hn-font-sans);
-    font-size: 13px;
+    font-size: var(--hn-button-font-size, 13px);
     font-weight: 600;
     line-height: 1;
     color: var(--hn-color-text);
@@ -113,15 +113,15 @@
   }
 
   .hn-button--small {
-    min-height: 30px;
-    padding: 0 11px;
-    font-size: 12px;
+    min-height: var(--hn-button-min-height, 30px);
+    padding: 0 var(--hn-button-padding, 11px);
+    font-size: var(--hn-button-font-size, 12px);
   }
 
   .hn-button--large {
-    min-height: 42px;
-    padding: 0 18px;
-    font-size: 14px;
+    min-height: var(--hn-button-min-height, 42px);
+    padding: 0 var(--hn-button-padding, 18px);
+    font-size: var(--hn-button-font-size, 14px);
   }
 
   @media (prefers-reduced-motion: reduce) {

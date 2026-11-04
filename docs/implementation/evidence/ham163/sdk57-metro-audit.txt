@@ -1,0 +1,3 @@
+ios: 641 host modules, 537 library closure, seven public entries, zero forbidden modules
+android: 639 host modules, 535 library closure, seven public entries, zero forbidden modules
+web: 249 modules, seven browser entries, zero native-only modules

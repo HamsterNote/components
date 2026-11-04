@@ -1,0 +1,29 @@
+{
+  "sdk": 57,
+  "expo": "57.0.31",
+  "bundled": {
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-native": "0.86.3",
+    "react-native-svg": "15.15.4",
+    "react-native-safe-area-context": "~5.7.0",
+    "@expo/metro-runtime": "~57.0.17",
+    "react-native-web": "~0.21.0"
+  },
+  "installed": {
+    "expo": "57.0.31",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-native": "0.86.3",
+    "react-native-svg": "15.15.4",
+    "react-native-safe-area-context": "5.7.0",
+    "@expo/metro-runtime": "57.0.17",
+    "react-native-web": "0.21.4",
+    "typescript": "6.0.3"
+  },
+  "environment": {
+    "node": "24.15.0",
+    "yarn": "1.22.22",
+    "npm": "11.12.1"
+  }
+}

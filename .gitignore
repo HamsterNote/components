@@ -1,5 +1,6 @@
 node_modules/
 dist/
+dist-web/
 demo-dist/
 coverage/
 playwright-report/
@@ -8,3 +9,9 @@ test-results/
 .DS_Store
 *.local
 *.log
+
+*.tgz
+.expo/
+artifacts/
+
+/painting/

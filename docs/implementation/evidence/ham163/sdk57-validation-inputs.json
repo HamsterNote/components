@@ -1,0 +1,13 @@
+{
+  "sha256": {
+    "examples/native/App.tsx": "fb0d9933e7f0404649d65c36fbef21a4ebe50efc299250ef84ac3747c2cfe6f6",
+    "examples/native/package.json": "318e0626b71c932dacaf22bdbeb5a581a586cc93221d4cc984d28781301f9c86",
+    "examples/native/package-lock.json": "bbc49a2b3cfc00109a628b78c3c36fd65ed030e11bfc1b243e918eb3cc91f726",
+    "examples/native/metro.config.js": "b4a95cc16d440c66709fae11fced91151f9c650006070608557196e7a53eef70",
+    "packages/components-native/package.json": "ba01e03e79c14b70c454e633d2eebf849e99db890b5e06d684629ed5ae607fc1",
+    "scripts/verify-native-consumer.mjs": "ff22d0256dacb4578e5a429a45f6505e87780004e72956afa592be1571bf981e",
+    "scripts/build-native-consumer.mjs": "2989ab37d6e2f3c018780a13346fd13793c09da4ce9f6cac16757d2c7bd81e06",
+    "artifacts/native/hamster-note-components-native-0.1.0-beta.0.tgz": "9663e205c9efeb830c95489bf04f6e4e6f0a9cab4cb51cc730aec47a2025b20a"
+  },
+  "scope": "SDK57 version/configuration/specification upgrade; App.tsx unchanged by this agent"
+}

@@ -1,0 +1,11 @@
+{
+  "initialText": "仓鼠笔记",
+  "changedText": "中文输入测试",
+  "label": "笔记名称",
+  "hint": "输入笔记名称",
+  "error": "名称不能为空",
+  "variants": ["primary", "secondary", "danger", "warning", "success", "info"],
+  "sizes": ["small", "medium", "large"],
+  "accents": ["violet", "blue", "teal", "orange", "pink"],
+  "cases": ["B01", "B02", "I01", "T01", "T02", "P01", "P02", "P03", "P04", "H01", "H02"]
+}

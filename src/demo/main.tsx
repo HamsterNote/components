@@ -15,6 +15,7 @@ import '../components/note-card/note-card.css';
 import '../components/popover/popover.css';
 import '../components/text-field/text-field.css';
 import '../components/theme/theme.css';
+import { CrossPlatformDemo } from './CrossPlatformDemo';
 import { DemoApp } from './DemoApp';
 import './demo.css';
 import './demo-code.css';
@@ -37,6 +38,6 @@ if (!(rootElement instanceof HTMLElement)) {
 
 createRoot(rootElement).render(
   <StrictMode>
-    <DemoApp />
+    {new URLSearchParams(location.search).has('validation') ? <CrossPlatformDemo /> : <DemoApp />}
   </StrictMode>,
 );

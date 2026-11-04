@@ -1,0 +1,32 @@
+[
+  {
+    "platform": "ios",
+    "codeBytes": 8391327,
+    "entries": [
+      ".",
+      "button",
+      "icon",
+      "popover",
+      "menu",
+      "text-field",
+      "theme"
+    ],
+    "projectRoot": "/tmp/multica-task-1622668015/ham163-native-consumer-Qrse0W",
+    "result": "passed"
+  },
+  {
+    "platform": "android",
+    "codeBytes": 8435673,
+    "entries": [
+      ".",
+      "button",
+      "icon",
+      "popover",
+      "menu",
+      "text-field",
+      "theme"
+    ],
+    "projectRoot": "/tmp/multica-task-1622668015/ham163-native-consumer-Qrse0W",
+    "result": "passed"
+  }
+]
