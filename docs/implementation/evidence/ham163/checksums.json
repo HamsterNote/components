@@ -1,0 +1,19 @@
+{
+  "docs/implementation/evidence/ham163/consumer-package.json": "06e6b9ad2c550154db23f633859b93f5713663c6c32f3776416e7da1052f3c88",
+  "docs/implementation/evidence/ham163/consumer-tsconfig.json": "436bd3403b0f1e570c09e3eab3bb1dced4ae0fc9923a74ad142ba2eaaee1e324",
+  "docs/implementation/evidence/ham163/consumer-entries.ts": "bed03a80f9d49c8d590bf5aeb7f0293ed828031c3e8bef2f3737b2d1c3669eab",
+  "docs/implementation/evidence/ham163/consumer-result.json": "aa459b91fe8da723c68b0561f26e085a2eec46adf95ada2bfc54f846ea14b76d",
+  "docs/implementation/evidence/ham163/metro-android.json": "077b1cfb79e3588e07f480fa5b1ea6d9a3b1e5443c5b09802ecc916210fdb1a2",
+  "docs/implementation/evidence/ham163/consumer-package-lock.json": "c681f36101c453573a3c00d21e875e48400281f5c053f149083e0aa9d978b943",
+  "docs/implementation/evidence/ham163/github-secret-names.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+  "docs/implementation/evidence/ham163/web-exports-comparison.json": "308203e14e0bd5f9cae694c5bd9a9b7e5ab0eab541decff9b04a967bc212be49",
+  "docs/implementation/evidence/ham163/summary.json": "9f58c238fa2eab4b053ded5e8ad5c27661d4b036f7ab8412fa88fdfb8adc4066",
+  "docs/implementation/evidence/ham163/consumer-bundles.json": "950034a738fcf8a7b0f02238270a12bb398a0b3faa6f301109332d71cca44b93",
+  "docs/implementation/evidence/ham163/metro-audit.json": "144183da2af07dc8dc4fccf6bdafdf9af27b41b93ea703d5e7156c89bae87950",
+  "docs/implementation/evidence/ham163/metro-ios.json": "cca40d40435869a4ef7c1472ce184ddf5c33e472e112c6a854ee27a9276a682e",
+  "docs/implementation/evidence/ham163/consumer-tree.json": "2fad7bdf0dc6d57b31218aeddd59f82469935516194a6141d84fce2fe4d80023",
+  "docs/implementation/evidence/ham163/github-environments.json": "57a2281784dbb51f8aa8126fe24039cfdacec078cf4a6c4c8165fe3969dc2b05",
+  "artifacts/native/hamster-note-components-native-0.1.0-beta.0.tgz": "804d7ca59eeb36093685da240521cc9c79fc4b2c70b987a7c4ce640f00e30017",
+  "artifacts/web/hamster-note-components-0.3.1.tgz": "7aada90f9049264ec40b0d2fb1c32d926962e715ba9ccaa466f49a17f1fa80c9",
+  "artifacts/web/hamster-note-components-0.3.0.tgz": "c8ac1f636e3c493bf24dd10e5cecf92a4a608c2cbaac76f7229f6cbe61809638"
+}

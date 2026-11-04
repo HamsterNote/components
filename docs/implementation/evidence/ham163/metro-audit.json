@@ -1,0 +1,66 @@
+[
+  {
+    "platform": "ios",
+    "totalModules": 633,
+    "roots": [
+      "node_modules/@hamster-note/components-native/dist/index.js",
+      "node_modules/@hamster-note/components-native/dist/button.js",
+      "node_modules/@hamster-note/components-native/dist/icon.js",
+      "node_modules/@hamster-note/components-native/dist/popover.js",
+      "node_modules/@hamster-note/components-native/dist/menu.js",
+      "node_modules/@hamster-note/components-native/dist/text-field.js",
+      "node_modules/@hamster-note/components-native/dist/theme.js"
+    ],
+    "reachableCount": 535,
+    "packageModules": [
+      "node_modules/@hamster-note/components-native/dist/index.js",
+      "node_modules/@hamster-note/components-native/dist/chunk-T6J6EVQQ.js",
+      "node_modules/@hamster-note/components-native/dist/chunk-XDIHIO6N.js",
+      "node_modules/@hamster-note/components-native/dist/chunk-ECVUY2TG.js",
+      "node_modules/@hamster-note/components-native/dist/chunk-ZNRPAEU6.js",
+      "node_modules/@hamster-note/components-native/dist/chunk-QHVIKWDC.js",
+      "node_modules/@hamster-note/components-native/dist/chunk-A4HEM4JL.js",
+      "node_modules/@hamster-note/components-native/dist/button.js",
+      "node_modules/@hamster-note/components-native/dist/icon.js",
+      "node_modules/@hamster-note/components-native/dist/popover.js",
+      "node_modules/@hamster-note/components-native/dist/menu.js",
+      "node_modules/@hamster-note/components-native/dist/text-field.js",
+      "node_modules/@hamster-note/components-native/dist/theme.js"
+    ],
+    "forbidden": [],
+    "codeFindings": [],
+    "boundary": "Library closure includes React/RN/SVG native runtime; host Expo tools and its winter globals are outside library roots. Native RN internals may name window/Event; those names do not denote a DOM renderer."
+  },
+  {
+    "platform": "android",
+    "totalModules": 631,
+    "roots": [
+      "node_modules/@hamster-note/components-native/dist/index.js",
+      "node_modules/@hamster-note/components-native/dist/button.js",
+      "node_modules/@hamster-note/components-native/dist/icon.js",
+      "node_modules/@hamster-note/components-native/dist/popover.js",
+      "node_modules/@hamster-note/components-native/dist/menu.js",
+      "node_modules/@hamster-note/components-native/dist/text-field.js",
+      "node_modules/@hamster-note/components-native/dist/theme.js"
+    ],
+    "reachableCount": 533,
+    "packageModules": [
+      "node_modules/@hamster-note/components-native/dist/index.js",
+      "node_modules/@hamster-note/components-native/dist/chunk-T6J6EVQQ.js",
+      "node_modules/@hamster-note/components-native/dist/chunk-XDIHIO6N.js",
+      "node_modules/@hamster-note/components-native/dist/chunk-ECVUY2TG.js",
+      "node_modules/@hamster-note/components-native/dist/chunk-ZNRPAEU6.js",
+      "node_modules/@hamster-note/components-native/dist/chunk-QHVIKWDC.js",
+      "node_modules/@hamster-note/components-native/dist/chunk-A4HEM4JL.js",
+      "node_modules/@hamster-note/components-native/dist/button.js",
+      "node_modules/@hamster-note/components-native/dist/icon.js",
+      "node_modules/@hamster-note/components-native/dist/popover.js",
+      "node_modules/@hamster-note/components-native/dist/menu.js",
+      "node_modules/@hamster-note/components-native/dist/text-field.js",
+      "node_modules/@hamster-note/components-native/dist/theme.js"
+    ],
+    "forbidden": [],
+    "codeFindings": [],
+    "boundary": "Library closure includes React/RN/SVG native runtime; host Expo tools and its winter globals are outside library roots. Native RN internals may name window/Event; those names do not denote a DOM renderer."
+  }
+]

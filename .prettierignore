@@ -3,3 +3,15 @@ demo-dist
 .omo
 node_modules
 bun.lock
+
+**/node_modules
+**/dist
+**/package-lock.json
+**/yarn.lock
+.agents
+openspec
+artifacts
+
+painting
+
+docs/implementation/evidence

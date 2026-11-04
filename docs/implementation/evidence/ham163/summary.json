@@ -1,0 +1,149 @@
+{
+  "issue": "HAM-163",
+  "date": "2026-11-04",
+  "planningCommit": "ca0f77f",
+  "webBaseline": "0.3.0 / ac783da",
+  "webCandidate": "0.3.1",
+  "nativeCandidate": "0.1.0-beta.0",
+  "tasks": {
+    "checked": 13,
+    "total": 24,
+    "deviceDependentComponents": [
+      "2.2",
+      "2.3",
+      "2.4",
+      "2.5",
+      "3.1",
+      "3.2",
+      "3.3",
+      "3.4"
+    ],
+    "blocked": [
+      "4.5",
+      "5.3",
+      "5.4"
+    ]
+  },
+  "checks": {
+    "webCheck": {
+      "result": "passed",
+      "tests": 84,
+      "suites": 8
+    },
+    "webBuild": "passed",
+    "webE2E": {
+      "result": "passed",
+      "tests": 69,
+      "snapshotUpdates": false,
+      "retries": 0,
+      "skipped": 0
+    },
+    "webExternalConsumer": "passed: all exports, types and CSS map",
+    "painting": {
+      "revision": "e97f9fec13ea089fb8322f627f213dc0a305375d",
+      "workspaceVersion": "0.8.3",
+      "typecheck": "passed",
+      "build": "passed",
+      "toolbarTests": 13,
+      "businessSourceChanged": false
+    },
+    "nativePackageBuild": "passed",
+    "nativeExternalConsumer": {
+      "result": "passed",
+      "runtimePackageCount": 317,
+      "typesLib": [
+        "ES2022"
+      ],
+      "entries": 7,
+      "metroPlatforms": [
+        "ios",
+        "android"
+      ]
+    },
+    "nativeExpoHost": {
+      "typecheck": "passed",
+      "iosExport": "passed",
+      "androidExport": "passed",
+      "selectedSdkDependencyCheck": "passed",
+      "expoPatchCaveat": "Pinned54.0.36; online full checker recommends~54.0.37, not tested"
+    },
+    "metro": [
+      {
+        "platform": "ios",
+        "totalModules": 633,
+        "roots": [
+          "node_modules/@hamster-note/components-native/dist/index.js",
+          "node_modules/@hamster-note/components-native/dist/button.js",
+          "node_modules/@hamster-note/components-native/dist/icon.js",
+          "node_modules/@hamster-note/components-native/dist/popover.js",
+          "node_modules/@hamster-note/components-native/dist/menu.js",
+          "node_modules/@hamster-note/components-native/dist/text-field.js",
+          "node_modules/@hamster-note/components-native/dist/theme.js"
+        ],
+        "reachableCount": 535,
+        "packageModules": [
+          "node_modules/@hamster-note/components-native/dist/index.js",
+          "node_modules/@hamster-note/components-native/dist/chunk-T6J6EVQQ.js",
+          "node_modules/@hamster-note/components-native/dist/chunk-XDIHIO6N.js",
+          "node_modules/@hamster-note/components-native/dist/chunk-ECVUY2TG.js",
+          "node_modules/@hamster-note/components-native/dist/chunk-ZNRPAEU6.js",
+          "node_modules/@hamster-note/components-native/dist/chunk-QHVIKWDC.js",
+          "node_modules/@hamster-note/components-native/dist/chunk-A4HEM4JL.js",
+          "node_modules/@hamster-note/components-native/dist/button.js",
+          "node_modules/@hamster-note/components-native/dist/icon.js",
+          "node_modules/@hamster-note/components-native/dist/popover.js",
+          "node_modules/@hamster-note/components-native/dist/menu.js",
+          "node_modules/@hamster-note/components-native/dist/text-field.js",
+          "node_modules/@hamster-note/components-native/dist/theme.js"
+        ],
+        "forbidden": [],
+        "codeFindings": [],
+        "boundary": "Library closure includes React/RN/SVG native runtime; host Expo tools and its winter globals are outside library roots. Native RN internals may name window/Event; those names do not denote a DOM renderer."
+      },
+      {
+        "platform": "android",
+        "totalModules": 631,
+        "roots": [
+          "node_modules/@hamster-note/components-native/dist/index.js",
+          "node_modules/@hamster-note/components-native/dist/button.js",
+          "node_modules/@hamster-note/components-native/dist/icon.js",
+          "node_modules/@hamster-note/components-native/dist/popover.js",
+          "node_modules/@hamster-note/components-native/dist/menu.js",
+          "node_modules/@hamster-note/components-native/dist/text-field.js",
+          "node_modules/@hamster-note/components-native/dist/theme.js"
+        ],
+        "reachableCount": 533,
+        "packageModules": [
+          "node_modules/@hamster-note/components-native/dist/index.js",
+          "node_modules/@hamster-note/components-native/dist/chunk-T6J6EVQQ.js",
+          "node_modules/@hamster-note/components-native/dist/chunk-XDIHIO6N.js",
+          "node_modules/@hamster-note/components-native/dist/chunk-ECVUY2TG.js",
+          "node_modules/@hamster-note/components-native/dist/chunk-ZNRPAEU6.js",
+          "node_modules/@hamster-note/components-native/dist/chunk-QHVIKWDC.js",
+          "node_modules/@hamster-note/components-native/dist/chunk-A4HEM4JL.js",
+          "node_modules/@hamster-note/components-native/dist/button.js",
+          "node_modules/@hamster-note/components-native/dist/icon.js",
+          "node_modules/@hamster-note/components-native/dist/popover.js",
+          "node_modules/@hamster-note/components-native/dist/menu.js",
+          "node_modules/@hamster-note/components-native/dist/text-field.js",
+          "node_modules/@hamster-note/components-native/dist/theme.js"
+        ],
+        "forbidden": [],
+        "codeFindings": [],
+        "boundary": "Library closure includes React/RN/SVG native runtime; host Expo tools and its winter globals are outside library roots. Native RN internals may name window/Event; those names do not denote a DOM renderer."
+      }
+    ],
+    "releaseTargetTests": 9,
+    "openSpecStrict": "passed 1/1"
+  },
+  "acceptance": {
+    "web": "Chromium automation passed; no native or physical IME inference",
+    "ios": "not executed: physical device/operator/VoiceOver/IME/focus evidence unavailable",
+    "android": "not executed: physical device/operator/TalkBack/IME/back evidence unavailable",
+    "publication": "blocked: npm ENEEDAUTH; scope authority unconfirmed; repository secrets empty; npm-native environment absent"
+  },
+  "externalBuildBoundary": "Expo config/Babel are build tools; Metro and runtime modules resolve from external consumer. Runtime tree saved before installing @types/react tooling.",
+  "published": false,
+  "merged": false,
+  "archived": false
+}

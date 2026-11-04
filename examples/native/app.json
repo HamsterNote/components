@@ -1,0 +1,14 @@
+{
+  "expo": {
+    "name": "Hamster Native Validation",
+    "slug": "hamster-native-validation",
+    "version": "1.0.0",
+    "orientation": "default",
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "note.hamster.components.validation"
+    }
+  }
+}

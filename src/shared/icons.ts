@@ -1,0 +1,1483 @@
+export interface IconShape {
+  readonly tag: 'path' | 'rect' | 'circle' | 'ellipse' | 'line' | 'polyline';
+  readonly attrs: Readonly<Record<string, string>>;
+}
+export const ICON_GEOMETRY = {
+  file: [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M14 3v5h5',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M9 13h6',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M9 17h6',
+      },
+    },
+  ],
+  save: [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M5 4h11l3 3v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M8 4v5h7V4',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M8 14h8v7H8z',
+      },
+    },
+  ],
+  study: [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M12 6c-1.5-1.2-3.5-2-6-2H3v13h3c2.5 0 4.5.8 6 2 1.5-1.2 3.5-2 6-2h3V4h-3c-2.5 0-4.5.8-6 2z',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M12 6v13',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M5.5 8.5h3',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M5.5 11.5h3',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M15.5 8.5h3',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M15.5 11.5h3',
+      },
+    },
+  ],
+  switch: [
+    {
+      tag: 'rect',
+      attrs: {
+        height: '12',
+        rx: '6',
+        width: '18',
+        x: '3',
+        y: '6',
+      },
+    },
+    {
+      tag: 'circle',
+      attrs: {
+        cx: '15',
+        cy: '12',
+        r: '3.2',
+      },
+    },
+  ],
+  mouse: [
+    {
+      tag: 'rect',
+      attrs: {
+        height: '16',
+        rx: '8',
+        width: '11',
+        x: '6.5',
+        y: '4',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M12 7v4',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M12 7a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0V8a1 1 0 0 1 1-1z',
+      },
+    },
+  ],
+  line: [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M5 19L19 5',
+      },
+    },
+    {
+      tag: 'circle',
+      attrs: {
+        cx: '5',
+        cy: '19',
+        r: '1.2',
+      },
+    },
+    {
+      tag: 'circle',
+      attrs: {
+        cx: '19',
+        cy: '5',
+        r: '1.2',
+      },
+    },
+  ],
+  curve: [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M4 18C4 12 9 12 12 12S20 12 20 6',
+      },
+    },
+    {
+      tag: 'circle',
+      attrs: {
+        cx: '4',
+        cy: '18',
+        r: '1.2',
+      },
+    },
+    {
+      tag: 'circle',
+      attrs: {
+        cx: '20',
+        cy: '6',
+        r: '1.2',
+      },
+    },
+  ],
+  polygon: [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M12 4l7 5-2.5 9h-9L5 9z',
+      },
+    },
+    {
+      tag: 'circle',
+      attrs: {
+        cx: '12',
+        cy: '4',
+        r: '1.1',
+      },
+    },
+    {
+      tag: 'circle',
+      attrs: {
+        cx: '19',
+        cy: '9',
+        r: '1.1',
+      },
+    },
+    {
+      tag: 'circle',
+      attrs: {
+        cx: '16.5',
+        cy: '18',
+        r: '1.1',
+      },
+    },
+    {
+      tag: 'circle',
+      attrs: {
+        cx: '7.5',
+        cy: '18',
+        r: '1.1',
+      },
+    },
+    {
+      tag: 'circle',
+      attrs: {
+        cx: '5',
+        cy: '9',
+        r: '1.1',
+      },
+    },
+  ],
+  lasso: [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M9 6.5c3.5-2 8.5-.5 9 2.5s-2 6.5-6 6.5-7.5-2-7-5.5 2-3 4-3.5z',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M8 15.5c.5 2.5-.5 4.5-3.5 4.5',
+      },
+    },
+    {
+      tag: 'circle',
+      attrs: {
+        cx: '4.5',
+        cy: '20',
+        r: '1.2',
+      },
+    },
+  ],
+  rectangle: [
+    {
+      tag: 'rect',
+      attrs: {
+        height: '12',
+        rx: '1.5',
+        width: '16',
+        x: '4',
+        y: '6',
+      },
+    },
+  ],
+  ellipse: [
+    {
+      tag: 'ellipse',
+      attrs: {
+        cx: '12',
+        cy: '12',
+        rx: '8',
+        ry: '6',
+      },
+    },
+  ],
+  pen: [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M4 20l3.5-1 11-11-2.5-2.5-11 11-1 3.5z',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M14.5 6.5l3 3',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M4 20l1-3.5',
+      },
+    },
+  ],
+  eraser: [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M15 4l5 5-9 9H6l-2-2 9-9z',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M9 10l5 5',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M13 20h7',
+      },
+    },
+  ],
+  magnet: [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M4 10v3a6 6 0 0 0 12 0V5a1 1 0 0 0-1-1h-3a1 1 0 0 0-1 1v8a1 1 0 0 1-2 0V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1z',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M11 4h4',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M4 10h4',
+      },
+    },
+  ],
+  locate: [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z',
+      },
+    },
+    {
+      tag: 'circle',
+      attrs: {
+        cx: '12',
+        cy: '10',
+        r: '2.5',
+      },
+    },
+  ],
+  delete: [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M4 7h16',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M6 7l1 13a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1l1-13',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M10 11v6',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M14 11v6',
+      },
+    },
+  ],
+  add: [
+    {
+      tag: 'circle',
+      attrs: {
+        cx: '12',
+        cy: '12',
+        r: '9',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M12 8v8',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M8 12h8',
+      },
+    },
+  ],
+  copy: [
+    {
+      tag: 'rect',
+      attrs: {
+        height: '13',
+        rx: '1.5',
+        width: '10',
+        x: '8',
+        y: '8',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M11 8V5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1h-3',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M11 12h4',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M11 15h4',
+      },
+    },
+  ],
+  paste: [
+    {
+      tag: 'rect',
+      attrs: {
+        height: '15',
+        rx: '1.5',
+        width: '12',
+        x: '6',
+        y: '5',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M9 5V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M11 11h2',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M11 14h2',
+      },
+    },
+  ],
+  info: [
+    {
+      tag: 'circle',
+      attrs: {
+        cx: '12',
+        cy: '12',
+        r: '9',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M12 11v5',
+      },
+    },
+    {
+      tag: 'circle',
+      attrs: {
+        cx: '12',
+        cy: '8',
+        r: '0.5',
+        fill: 'currentColor',
+        stroke: 'none',
+      },
+    },
+  ],
+  touch: [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M9 11V5.5a1.5 1.5 0 0 1 3 0V11',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M12 11v-.5a1.5 1.5 0 0 1 3 0V12',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M15 12v-.5a1.5 1.5 0 0 1 3 0v5.5a5 5 0 0 1-5 5h-2a5 5 0 0 1-4-2l-3-4a1.5 1.5 0 0 1 2.4-1.8L9 16V9a1.5 1.5 0 0 1 0 0v2',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M6 4.5a3 3 0 0 1 1-3',
+      },
+    },
+  ],
+  edit: [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M14 5l5 5L8 21H3v-5z',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M12 7l5 5',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M3 21h18',
+      },
+    },
+  ],
+  comment: [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M8 9h8',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M8 13h5',
+      },
+    },
+  ],
+  keyboard: [
+    {
+      tag: 'rect',
+      attrs: {
+        height: '12',
+        rx: '1.5',
+        width: '20',
+        x: '2',
+        y: '6',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M6 10h0',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M10 10h0',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M14 10h0',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M18 10h0',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M6 14h12',
+      },
+    },
+  ],
+  type: [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M5 6h14',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M12 6v13',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M9 19h6',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M16 13l1.5 4 .3.8a2 2 0 0 0 1.7 1.2c1.2 0 2-1 2-2.2 0-.8-.4-1.6-1-2.4L18 12',
+      },
+    },
+  ],
+  handle: [
+    {
+      tag: 'circle',
+      attrs: {
+        cx: '9',
+        cy: '6',
+        r: '1.4',
+        fill: 'currentColor',
+        stroke: 'none',
+      },
+    },
+    {
+      tag: 'circle',
+      attrs: {
+        cx: '15',
+        cy: '6',
+        r: '1.4',
+        fill: 'currentColor',
+        stroke: 'none',
+      },
+    },
+    {
+      tag: 'circle',
+      attrs: {
+        cx: '9',
+        cy: '12',
+        r: '1.4',
+        fill: 'currentColor',
+        stroke: 'none',
+      },
+    },
+    {
+      tag: 'circle',
+      attrs: {
+        cx: '15',
+        cy: '12',
+        r: '1.4',
+        fill: 'currentColor',
+        stroke: 'none',
+      },
+    },
+    {
+      tag: 'circle',
+      attrs: {
+        cx: '9',
+        cy: '18',
+        r: '1.4',
+        fill: 'currentColor',
+        stroke: 'none',
+      },
+    },
+    {
+      tag: 'circle',
+      attrs: {
+        cx: '15',
+        cy: '18',
+        r: '1.4',
+        fill: 'currentColor',
+        stroke: 'none',
+      },
+    },
+  ],
+  card: [
+    {
+      tag: 'rect',
+      attrs: {
+        height: '14',
+        rx: '2',
+        width: '18',
+        x: '3',
+        y: '5',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M3 10h18',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M7 14h6',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M7 17h4',
+      },
+    },
+  ],
+  minimap: [
+    {
+      tag: 'rect',
+      attrs: {
+        height: '18',
+        rx: '2',
+        width: '18',
+        x: '3',
+        y: '3',
+      },
+    },
+    {
+      tag: 'rect',
+      attrs: {
+        height: '7',
+        rx: '1',
+        width: '9',
+        x: '7',
+        y: '7',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M7 17h6',
+      },
+    },
+  ],
+  'font-size': [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M5 16L9 7l4 9',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M6.5 13h5',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M15 18l2.5-5 2.5 5',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M16 16.5h3',
+      },
+    },
+  ],
+  drag: [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M18 11V6a2 2 0 0 0-4 0v5',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M14 10V4a2 2 0 0 0-4 0v6',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M10 10.5V6a2 2 0 0 0-4 0v8',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15',
+      },
+    },
+  ],
+  crop: [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M6 2v14a2 2 0 0 0 2 2h14',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M18 22V8a2 2 0 0 0-2-2H2',
+      },
+    },
+  ],
+  search: [
+    {
+      tag: 'circle',
+      attrs: {
+        cx: '11',
+        cy: '11',
+        r: '7',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M21 21l-4.3-4.3',
+      },
+    },
+  ],
+  close: [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M6 6l12 12',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M18 6L6 18',
+      },
+    },
+  ],
+  check: [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M5 12.5l4.5 4.5L19 7.5',
+      },
+    },
+  ],
+  'chevron-down': [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M6 9l6 6 6-6',
+      },
+    },
+  ],
+  'chevron-up': [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M6 15l6-6 6 6',
+      },
+    },
+  ],
+  'chevron-left': [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M15 6l-6 6 6 6',
+      },
+    },
+  ],
+  'chevron-right': [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M9 6l6 6-6 6',
+      },
+    },
+  ],
+  'arrow-up': [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M12 19V5',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M6 11l6-6 6 6',
+      },
+    },
+  ],
+  'arrow-down': [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M12 5v14',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M6 13l6 6 6-6',
+      },
+    },
+  ],
+  'arrow-left': [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M19 12H5',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M11 6l-6 6 6 6',
+      },
+    },
+  ],
+  'arrow-right': [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M5 12h14',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M13 6l6 6-6 6',
+      },
+    },
+  ],
+  settings: [
+    {
+      tag: 'circle',
+      attrs: {
+        cx: '12',
+        cy: '12',
+        r: '3',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M12 2.5v3',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M12 18.5v3',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M21.5 12h-3',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M5.5 12h-3',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M18.7 5.3l-2.1 2.1',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M7.4 16.6l-2.1 2.1',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M18.7 18.7l-2.1-2.1',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M7.4 7.4L5.3 5.3',
+      },
+    },
+  ],
+  user: [
+    {
+      tag: 'circle',
+      attrs: {
+        cx: '12',
+        cy: '8',
+        r: '4',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M4 20c0-4 4-6 8-6s8 2 8 6',
+      },
+    },
+  ],
+  home: [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M4 11l8-7 8 7',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M6 10v9a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-9',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M10 20v-5h4v5',
+      },
+    },
+  ],
+  star: [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 17.9l-5.2 2.6 1-5.8L3.5 9.7l5.9-.9z',
+      },
+    },
+  ],
+  bookmark: [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M6 4h12a1 1 0 0 1 1 1v15l-7-4-7 4V5a1 1 0 0 1 1-1z',
+      },
+    },
+  ],
+  link: [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M9 15l6-6',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M10.5 6.5l1-1a3.5 3.5 0 0 1 5 5l-1 1',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M13.5 17.5l-1 1a3.5 3.5 0 0 1-5-5l1-1',
+      },
+    },
+  ],
+  image: [
+    {
+      tag: 'rect',
+      attrs: {
+        height: '16',
+        rx: '1.5',
+        width: '18',
+        x: '3',
+        y: '4',
+      },
+    },
+    {
+      tag: 'circle',
+      attrs: {
+        cx: '8.5',
+        cy: '9.5',
+        r: '1.5',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M4 17l5-5 4 4 3-3 4 4',
+      },
+    },
+  ],
+  calendar: [
+    {
+      tag: 'rect',
+      attrs: {
+        height: '16',
+        rx: '1.5',
+        width: '18',
+        x: '3',
+        y: '5',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M3 9h18',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M8 3v4',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M16 3v4',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M7 13h2',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M11 13h2',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M15 13h2',
+      },
+    },
+  ],
+  clock: [
+    {
+      tag: 'circle',
+      attrs: {
+        cx: '12',
+        cy: '12',
+        r: '9',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M12 7v5l3.5 2',
+      },
+    },
+  ],
+  bell: [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M6 17h12l-1.2-2V11a4.8 4.8 0 0 0-9.6 0v4z',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M10 17a2 2 0 0 0 4 0',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M12 5v1.5',
+      },
+    },
+  ],
+  download: [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M12 4v10',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M8 10l4 4 4-4',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M4 19h16',
+      },
+    },
+  ],
+  upload: [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M12 16V6',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M8 10l4-4 4 4',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M4 19h16',
+      },
+    },
+  ],
+  share: [
+    {
+      tag: 'circle',
+      attrs: {
+        cx: '6',
+        cy: '12',
+        r: '2.5',
+      },
+    },
+    {
+      tag: 'circle',
+      attrs: {
+        cx: '18',
+        cy: '6',
+        r: '2.5',
+      },
+    },
+    {
+      tag: 'circle',
+      attrs: {
+        cx: '18',
+        cy: '18',
+        r: '2.5',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M8.2 10.8l7.6-3.6',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M8.2 13.2l7.6 3.6',
+      },
+    },
+  ],
+  undo: [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M9 7L4 12l5 5',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M4 12h11a5 5 0 0 1 0 10h-3',
+      },
+    },
+  ],
+  redo: [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M15 7l5 5-5 5',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M20 12H9a5 5 0 0 0 0 10h3',
+      },
+    },
+  ],
+  'zoom-in': [
+    {
+      tag: 'circle',
+      attrs: {
+        cx: '11',
+        cy: '11',
+        r: '7',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M21 21l-4.3-4.3',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M11 8v6',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M8 11h6',
+      },
+    },
+  ],
+  'zoom-out': [
+    {
+      tag: 'circle',
+      attrs: {
+        cx: '11',
+        cy: '11',
+        r: '7',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M21 21l-4.3-4.3',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M8 11h6',
+      },
+    },
+  ],
+  fullscreen: [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M9 4H4v5',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M15 4h5v5',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M20 15v5h-5',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M9 20H4v-5',
+      },
+    },
+  ],
+  'fullscreen-exit': [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M4 9h5V4',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M20 9h-5V4',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M15 20v-5h5',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M9 20v-5H4',
+      },
+    },
+  ],
+  menu: [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M4 7h16',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M4 12h16',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M4 17h16',
+      },
+    },
+  ],
+  more: [
+    {
+      tag: 'circle',
+      attrs: {
+        cx: '12',
+        cy: '5',
+        r: '1.4',
+        fill: 'currentColor',
+        stroke: 'none',
+      },
+    },
+    {
+      tag: 'circle',
+      attrs: {
+        cx: '12',
+        cy: '12',
+        r: '1.4',
+        fill: 'currentColor',
+        stroke: 'none',
+      },
+    },
+    {
+      tag: 'circle',
+      attrs: {
+        cx: '12',
+        cy: '19',
+        r: '1.4',
+        fill: 'currentColor',
+        stroke: 'none',
+      },
+    },
+  ],
+  filter: [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M4 5h16l-6 8v6l-4-2v-4z',
+      },
+    },
+  ],
+  sort: [
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M8 4v16',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M5 7l3-3 3 3',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M11 17l-3 3-3-3',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M14 8h6',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M14 12h6',
+      },
+    },
+    {
+      tag: 'path',
+      attrs: {
+        d: 'M14 16h6',
+      },
+    },
+  ],
+} as const satisfies Record<string, readonly IconShape[]>;

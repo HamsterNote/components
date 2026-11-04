@@ -1,0 +1,32 @@
+[
+  {
+    "platform": "ios",
+    "codeBytes": 9781833,
+    "entries": [
+      ".",
+      "button",
+      "icon",
+      "popover",
+      "menu",
+      "text-field",
+      "theme"
+    ],
+    "projectRoot": "/tmp/multica-task-1364060506/ham163-native-consumer-EsGt37",
+    "result": "passed"
+  },
+  {
+    "platform": "android",
+    "codeBytes": 9823519,
+    "entries": [
+      ".",
+      "button",
+      "icon",
+      "popover",
+      "menu",
+      "text-field",
+      "theme"
+    ],
+    "projectRoot": "/tmp/multica-task-1364060506/ham163-native-consumer-EsGt37",
+    "result": "passed"
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "name": "ham163-isolated-consumer",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@hamster-note/components-native": "file:./native.tgz",
+    "react": "19.1.0",
+    "react-native": "0.81.5",
+    "react-native-svg": "15.12.1"
+  }
+}

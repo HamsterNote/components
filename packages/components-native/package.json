@@ -1,0 +1,81 @@
+{
+  "name": "@hamster-note/components-native",
+  "version": "0.1.0-beta.0",
+  "description": "HamsterNote native foundation components for Expo SDK54, iOS and Android.",
+  "type": "module",
+  "license": "MIT",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "react-native": "./dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "react-native": "./dist/index.js",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./button": {
+      "types": "./dist/button.d.ts",
+      "react-native": "./dist/button.js",
+      "import": "./dist/button.js",
+      "default": "./dist/button.js"
+    },
+    "./icon": {
+      "types": "./dist/icon.d.ts",
+      "react-native": "./dist/icon.js",
+      "import": "./dist/icon.js",
+      "default": "./dist/icon.js"
+    },
+    "./popover": {
+      "types": "./dist/popover.d.ts",
+      "react-native": "./dist/popover.js",
+      "import": "./dist/popover.js",
+      "default": "./dist/popover.js"
+    },
+    "./menu": {
+      "types": "./dist/menu.d.ts",
+      "react-native": "./dist/menu.js",
+      "import": "./dist/menu.js",
+      "default": "./dist/menu.js"
+    },
+    "./text-field": {
+      "types": "./dist/text-field.d.ts",
+      "react-native": "./dist/text-field.js",
+      "import": "./dist/text-field.js",
+      "default": "./dist/text-field.js"
+    },
+    "./theme": {
+      "types": "./dist/theme.d.ts",
+      "react-native": "./dist/theme.js",
+      "import": "./dist/theme.js",
+      "default": "./dist/theme.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc --noEmit && tsup",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": ">=19.1.0 <19.2.0",
+    "react-native": ">=0.81.5 <0.82.0",
+    "react-native-svg": "15.12.1"
+  },
+  "devDependencies": {
+    "@types/react": "19.1.10",
+    "react": "19.1.0",
+    "react-native": "0.81.5",
+    "react-native-svg": "15.12.1",
+    "tsup": "8.5.0",
+    "typescript": "5.9.2"
+  },
+  "engines": {
+    "node": ">=20.19.4"
+  },
+  "packageManager": "yarn@1.22.22"
+}

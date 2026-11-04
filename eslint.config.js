@@ -6,7 +6,23 @@ import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   {
-    ignores: ['dist', 'demo-dist', 'coverage', 'node_modules', 'playwright-report', 'test-results', '.omo', 'apps/demo/demo-dist', 'packages/*/dist', 'packages/*/node_modules'],
+    ignores: [
+      'painting/**',
+      'docs/implementation/evidence/**',
+      'packages/components-native/**',
+      'examples/native/**',
+      'artifacts/**',
+      'dist',
+      'demo-dist',
+      'coverage',
+      'node_modules',
+      'playwright-report',
+      'test-results',
+      '.omo',
+      'apps/demo/demo-dist',
+      'packages/*/dist',
+      'packages/*/node_modules',
+    ],
   },
   eslint.configs.recommended,
   ...tseslint.configs.strictTypeChecked,

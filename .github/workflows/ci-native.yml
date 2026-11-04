@@ -1,0 +1,40 @@
+name: Native package verification
+on:
+  pull_request:
+    branches: [main, dev]
+permissions:
+  contents: read
+jobs:
+  native:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+          cache-dependency-path: |
+            yarn.lock
+            packages/components-native/yarn.lock
+      - run: corepack enable
+      - run: yarn install --frozen-lockfile
+      - run: yarn --cwd packages/components-native install --frozen-lockfile
+      - run: yarn --cwd packages/components-native build
+      - run: mkdir -p artifacts/native && npm pack ./packages/components-native --pack-destination ./artifacts/native
+      - run: node --test scripts/release-target.test.mjs
+      - run: node scripts/verify-native-consumer.mjs
+      - run: npm ci --ignore-scripts
+        working-directory: examples/native
+      - run: node scripts/build-native-consumer.mjs
+      - run: npx tsc --noEmit
+        working-directory: examples/native
+      - run: npx expo install --check react react-native react-native-svg react-native-safe-area-context
+        working-directory: examples/native
+      - run: MODULE_REPORT_DIR=../../artifacts/native npx expo export --platform ios --platform android --source-maps --max-workers 2
+        working-directory: examples/native
+      - run: node scripts/audit-metro.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: native-install-and-metro-evidence
+          path: artifacts/native/

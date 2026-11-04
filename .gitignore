@@ -8,3 +8,9 @@ test-results/
 .DS_Store
 *.local
 *.log
+
+*.tgz
+.expo/
+artifacts/
+
+/painting/
